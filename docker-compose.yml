@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "8000:80" 
+    volumes:
+        - ./ob-backend:/src/ob-backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    command: sleep infinity

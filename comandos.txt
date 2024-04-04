@@ -1,0 +1,6 @@
+Crear Archivo Test
+    //dotnet new mstest -n ob.Domain.Tests
+    //dotnet add package Moq
+    //dotnet sln add ob-tests/ob.Domain.Tests
+    //dotnet add ob-tests/ob.Domain.Tests reference ob-backend/ob.Domain
+

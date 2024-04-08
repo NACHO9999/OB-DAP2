@@ -6,7 +6,7 @@ public class AdministradorTest
     [TestMethod]
     public void NuevoAdministrador()
     {
-       //Arrange & Act
+        //Arrange & Act
         Administrador nuevoAdministrador = new("Juan", "Sosa", "jsosa@gmail.com", "Contra12345");
 
         //Assert
@@ -14,5 +14,26 @@ public class AdministradorTest
         Assert.AreEqual("Sosa", nuevoAdministrador.Apellido);
         Assert.AreEqual("jsosa@gmail.com", nuevoAdministrador.Email);
         Assert.AreEqual("Contra12345", nuevoAdministrador.Contrasena);
+    }
+
+    [TestMethod]
+    public void AltaAdministrador()
+    {
+        //Arrange
+        Administrador nuevoAdministrador = new();
+
+        //Act
+        Administrador administrador = nuevoAdministrador.AltaAdministrador(
+            "Juan",
+            "Sosa",
+            "jsosa@gmail.com",
+            "Contra12345"
+        );
+
+        //Assert
+        Assert.AreEqual("Juan", administrador.Nombre);
+        Assert.AreEqual("Sosa", administrador.Apellido);
+        Assert.AreEqual("jsosa@gmail.com", administrador.Email);
+        Assert.AreEqual("Contra12345", administrador.Contrasena);
     }
 }

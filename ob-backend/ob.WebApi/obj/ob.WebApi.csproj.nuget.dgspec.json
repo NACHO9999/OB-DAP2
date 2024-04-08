@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj": {}
+    "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj": {}
   },
   "projects": {
-    "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj": {
+    "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj",
         "projectName": "ob.WebApi",
-        "projectPath": "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj",
+        "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj",
         "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
-        "outputPath": "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.webapi\\obj\\",
+        "outputPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.webapi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ORT\\DAP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj": {}
+    "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj": {}
   },
   "projects": {
-    "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj": {
+    "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj",
         "projectName": "ob.Domain",
-        "projectPath": "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj",
+        "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj",
         "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
-        "outputPath": "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.Domain\\obj\\",
+        "outputPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -62,14 +62,14 @@
         }
       }
     },
-    "D:\\ORT\\DAP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj": {
+    "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ORT\\DAP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj",
         "projectName": "ob.Domain.Tests",
-        "projectPath": "D:\\ORT\\DAP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj",
+        "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj",
         "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
-        "outputPath": "D:\\ORT\\DAP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\obj\\",
+        "outputPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -84,8 +84,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj": {
-                "projectPath": "D:\\ORT\\DAP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj"
+              "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj": {
+                "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj"
               }
             }
           }

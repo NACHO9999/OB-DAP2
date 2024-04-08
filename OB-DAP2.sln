@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ob.WebApi", "ob.WebApi\ob.WebApi.csproj", "{B433A6B2-C99D-4B70-AEAA-5E973DBA8677}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ob-tests", "ob-tests", "{978CABFE-3DB8-419C-8E13-AFD32D38E9CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ob.Domain.Tests", "ob-tests\ob.Domain.Tests\ob.Domain.Tests.csproj", "{EE245F86-087F-45A7-8AC4-F03827E73DF1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ob-backend", "ob-backend", "{A91C391B-009B-43A6-AEF6-8AEC4CBB9FCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ob.Domain", "ob-backend\ob.Domain\ob.Domain.csproj", "{05BD43D7-4F26-4779-AFCA-5722143D9B4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ob.WebApi", "ob-backend\ob.webapi\ob.WebApi.csproj", "{5AA24034-9D33-474C-B12B-8CE51C9F64BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +27,14 @@ Global
 		{EE245F86-087F-45A7-8AC4-F03827E73DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE245F86-087F-45A7-8AC4-F03827E73DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE245F86-087F-45A7-8AC4-F03827E73DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05BD43D7-4F26-4779-AFCA-5722143D9B4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05BD43D7-4F26-4779-AFCA-5722143D9B4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05BD43D7-4F26-4779-AFCA-5722143D9B4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05BD43D7-4F26-4779-AFCA-5722143D9B4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA24034-9D33-474C-B12B-8CE51C9F64BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA24034-9D33-474C-B12B-8CE51C9F64BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA24034-9D33-474C-B12B-8CE51C9F64BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA24034-9D33-474C-B12B-8CE51C9F64BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,5 +44,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EE245F86-087F-45A7-8AC4-F03827E73DF1} = {978CABFE-3DB8-419C-8E13-AFD32D38E9CC}
+		{05BD43D7-4F26-4779-AFCA-5722143D9B4B} = {A91C391B-009B-43A6-AEF6-8AEC4CBB9FCB}
+		{5AA24034-9D33-474C-B12B-8CE51C9F64BD} = {A91C391B-009B-43A6-AEF6-8AEC4CBB9FCB}
 	EndGlobalSection
 EndGlobal

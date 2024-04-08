@@ -1,0 +1,12 @@
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.AssemblyInfoInputs.cache
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.AssemblyInfo.cs
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.csproj.CoreCompileInputs.cache
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.sourcelink.json
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\bin\Debug\net8.0\ob.Domain.deps.json
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\bin\Debug\net8.0\ob.Domain.dll
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\bin\Debug\net8.0\ob.Domain.pdb
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.dll
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\refint\ob.Domain.dll
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.pdb
+D:\ORT\DAP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ref\ob.Domain.dll

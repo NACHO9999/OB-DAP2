@@ -29,10 +29,10 @@ namespace ob.Domain
 
         //public void EliminarInvitacion(Invitacion invitacion) { }
 
-        //public Categoria AltaCategoria(string nombre)
-        //{
-            //return new Categoria(nombre);
-        //}
+        public Categoria AltaCategoria(string nombre)
+        {
+            return new Categoria(nombre);
+        }
 
         public void ModificarInvitacion(Invitacion invitacion, DateTime nuevaFechaLimite)
         {

@@ -36,4 +36,17 @@ public class AdministradorTest
         Assert.AreEqual("jsosa@gmail.com", administrador.Email);
         Assert.AreEqual("Contra12345", administrador.Contrasena);
     }
+
+    [TestMethod]
+    public void AltaCategoria()
+    {
+        //Arrange
+        Administrador nuevoAdministrador = new();
+
+        //Act
+        Categoria categoria = nuevoAdministrador.AltaCategoria("Limpieza");
+
+        //Assert
+        Assert.AreEqual("Limpieza", categoria.Nombre);
+    }
 }

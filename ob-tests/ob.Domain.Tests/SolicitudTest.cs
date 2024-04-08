@@ -1,7 +1,7 @@
 namespace ob.Domain.Tests;
 
 [TestClass]
-public class UnitTest1
+public class SolicitudTest
 {
     [TestMethod]
     public void TestMethod1()

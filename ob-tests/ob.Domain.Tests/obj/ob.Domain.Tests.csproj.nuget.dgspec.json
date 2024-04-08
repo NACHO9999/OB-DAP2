@@ -4,14 +4,14 @@
     "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj": {
+    "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj",
-        "projectName": "ob.Domain.Tests",
-        "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj",
+        "projectName": "ob.Domain",
+        "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj",
         "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\obj\\",
+        "outputPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -42,6 +42,68 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj",
+        "projectName": "ob.Domain.Tests",
+        "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\ob.Domain.Tests.csproj",
+        "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-tests\\ob.Domain.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj": {
+                "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.Domain\\ob.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "MSTest.TestAdapter": {
               "target": "Package",
@@ -49,7 +111,7 @@
             },
             "MSTest.TestFramework": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.3.1, )"
             },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",

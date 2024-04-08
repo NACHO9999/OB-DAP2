@@ -1,10 +1,28 @@
 namespace ob.Domain.Tests;
 
 [TestClass]
-public class UnitTest1
+public class CategoriaTest
 {
     [TestMethod]
-    public void TestMethod1()
+    public void NuevaCategoria()
     {
+        //Arrange & Act
+        Categoria nuevaCategoria = new("Limpieza");
+
+        //Assert
+        Assert.AreEqual("Limpieza", nuevaCategoria.Nombre);
+    }
+
+    [TestMethod]
+    public void CambiarNombreCategoria()
+    {
+        //Arrange
+        Categoria nuevaCategoria = new("Limpieza");
+
+        //Act
+        nuevaCategoria.CambiarNombre("Seguridad");
+
+        //Assert
+        Assert.AreEqual("Seguridad", nuevaCategoria.Nombre);
     }
 }

@@ -2,8 +2,8 @@ namespace ob.Domain
 {
     public class Categoria
     {
-        public int Id { get; private set; }
-        public string Nombre { get; private set; }
+        public int Id { get; set; }
+        public string Nombre { get; set; }
 
         public Categoria(string nombre)
         {

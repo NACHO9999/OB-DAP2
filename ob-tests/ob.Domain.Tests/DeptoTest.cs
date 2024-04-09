@@ -11,7 +11,6 @@ namespace ob.Domain.Tests
         [TestMethod]
         public void NuevoDepto(){
             //Arrange
-            Dueno dueno = new Dueno();
             int piso = 1;
             int numero = 1;
             Dueno dueno1 = new Dueno();

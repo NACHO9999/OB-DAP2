@@ -10,5 +10,17 @@ namespace ob.Domain
         public EstadoSolicitud Estado { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
+
+        public Solicitud(Mantenimiento perMan, string descripcion, Depto depto, EstadoSolicitud estado, DateTime fechaInicio, DateTime fechaFin)
+        {
+            PerMan = perMan;
+            Descripcion = descripcion;
+            Depto = depto;
+            Estado = estado;
+            FechaInicio = fechaInicio;
+            FechaFin = fechaFin;
+        }
+
+        public Solicitud() { }
     }
 }

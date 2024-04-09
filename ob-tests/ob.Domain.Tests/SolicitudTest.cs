@@ -4,7 +4,18 @@ namespace ob.Domain.Tests;
 public class SolicitudTest
 {
     [TestMethod]
-    public void TestMethod1()
+    public void NuevaSolicitud()
     {
+        //Arrange
+        Mantenimiento perMan = new Mantenimiento(
+            "Juan",
+            "Sosa",
+            "jsosa@gmail.com",
+            "Contra12345"
+        );
+        string descripcion = "Reparar puerta";
+        Depto depto = new Depto();
+        EstadoSolicitud estado = new EstadoSolicitud("Abierto");
+
     }
 }

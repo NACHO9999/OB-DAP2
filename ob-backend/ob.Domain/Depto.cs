@@ -6,7 +6,7 @@ namespace ob.Domain
         public int Numero { get; set; }
         public Dueno Dueno { get; set; }
         public int CantidadCuartos { get; set; }
-        public int CantidadBaños { get; set; }
+        public int CantidadBanos { get; set; }
         public bool ConTerraza { get; set; }
     }
 }

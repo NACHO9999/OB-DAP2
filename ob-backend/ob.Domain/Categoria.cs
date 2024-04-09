@@ -9,18 +9,6 @@ namespace ob.Domain
         {
             Nombre = nombre;
         }
-
-        public void CambiarNombre(string nuevoNombre)
-        {
-            if (!string.IsNullOrWhiteSpace(nuevoNombre))
-            {
-                Nombre = nuevoNombre;
-            }
-            else
-            {
-                throw new ArgumentException("El nombre de la categoría no puede estar vacío", nameof(nuevoNombre));
-            }
-        }
     }
     
 }

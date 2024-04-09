@@ -4,7 +4,10 @@ namespace ob.Domain.Tests;
 public class EncargadoTest
 {
     [TestMethod]
-    public void TestMethod1()
+    public void NuevoEncargado()
     {
+        // Arrange
+        Encargado encargado = new Encargado();
+
     }
 }

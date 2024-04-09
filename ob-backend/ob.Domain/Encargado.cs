@@ -12,15 +12,5 @@ namespace ob.Domain
             Contrasena = contrasena;
             Edificios = new List<Edificio>();
         }
-
-        //public Solicitud CrearSolicitud(string descripcion, Depto departamento, Categoria categoria)
-        //{
-            //return new Solicitud(descripcion, departamento, categoria);
-        //}
-
-        //public void AsignarSolicitud(Solicitud solicitud, Mantenimiento personal)
-        //{
-            // Lógica para asignar la solicitud
-        //}
     }
 }

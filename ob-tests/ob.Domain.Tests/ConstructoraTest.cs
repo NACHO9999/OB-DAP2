@@ -4,7 +4,12 @@ namespace ob.Domain.Tests;
 public class ConstructoraTest
 {
     [TestMethod]
-    public void TestMethod1()
+    public void NuevaConstructora()
     {
+        //Arrange & Act
+        Constructora nuevaConstructora = new Constructora("Constructora");
+
+        //Assert
+        Assert.AreEqual("Constructora", nuevaConstructora.Nombre);
     }
 }

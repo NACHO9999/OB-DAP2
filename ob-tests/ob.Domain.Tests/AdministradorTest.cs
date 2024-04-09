@@ -7,7 +7,7 @@ public class AdministradorTest
     public void NuevoAdministrador()
     {
         //Arrange & Act
-        Administrador nuevoAdministrador = new("Juan", "Sosa", "jsosa@gmail.com", "Contra12345");
+        Administrador nuevoAdministrador = new Administrador("Juan", "Sosa", "jsosa@gmail.com", "Contra12345");
 
         //Assert
         Assert.AreEqual("Juan", nuevoAdministrador.Nombre);

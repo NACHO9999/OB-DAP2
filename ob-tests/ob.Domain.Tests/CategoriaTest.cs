@@ -7,7 +7,7 @@ public class CategoriaTest
     public void NuevaCategoria()
     {
         //Arrange & Act
-        Categoria nuevaCategoria = new("Limpieza");
+        Categoria nuevaCategoria = new Categoria("Limpieza");
 
         //Assert
         Assert.AreEqual("Limpieza", nuevaCategoria.Nombre);

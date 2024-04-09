@@ -1,4 +1,4 @@
-using Enums
+using Enums;
 
 namespace ob.Domain.Tests;
 
@@ -18,9 +18,14 @@ public class SolicitudTest
         Dueno dueno = new Dueno();
         string descripcion = "Reparar puerta";
         Depto depto = new Depto(1, 1, dueno, 1, 1, true);
-        EstadoSolicitud estado = EstadoSolicitud.Abierto;
-        DateTime fechaInicio = DateTime.Now;
-        DateTime fechaFin = DateTime.Now;
 
+        //Act
+        Solicitud solicitud = new Solicitud(perMan, descripcion, depto);
+
+        //Assert
+        Assert.AreEqual(perMan, solicitud.PerMan);
+        Assert.AreEqual(descripcion, solicitud.Descripcion);
+        Assert.AreEqual(depto, solicitud.Depto);
+        Assert.AreEqual(EstadoSolicitud.Abierto, solicitud.Estado);
     }
 }

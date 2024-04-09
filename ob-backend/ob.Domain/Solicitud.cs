@@ -11,14 +11,13 @@ namespace ob.Domain
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
 
-        public Solicitud(Mantenimiento perMan, string descripcion, Depto depto, EstadoSolicitud estado, DateTime fechaInicio, DateTime fechaFin)
+        public Solicitud(Mantenimiento perMan, string descripcion, Depto depto)
         {
             PerMan = perMan;
             Descripcion = descripcion;
             Depto = depto;
-            Estado = estado;
-            FechaInicio = fechaInicio;
-            FechaFin = fechaFin;
+            Estado = EstadoSolicitud.Abierto;
+            FechaInicio = DateTime.Now;
         }
 
         public Solicitud() { }

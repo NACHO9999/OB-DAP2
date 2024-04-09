@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ob.Domain
-build_property.ProjectDir = c:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\
+build_property.ProjectDir = C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-backend\ob.Domain\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

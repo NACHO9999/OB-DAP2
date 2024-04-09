@@ -7,9 +7,33 @@ namespace ob.Domain.Tests
     [TestClass]
     public class DeptoTest
     {
+
+        [TestMethod]
+        public void NuevoDepto(){
+            //Arrange
+            Dueno dueno = new Dueno();
+            int piso = 1;
+            int numero = 1;
+            Dueno dueno1 = new Dueno();
+            int cantidadCuartos = 1;
+            int cantidadBanos = 1;
+            bool conTerraza = true;
+
+            //Act
+            Depto depto = new Depto(piso, numero, dueno1, cantidadCuartos, cantidadBanos, conTerraza);
+
+            //Assert
+            Assert.AreEqual(piso, depto.Piso);
+            Assert.AreEqual(numero, depto.Numero);
+            Assert.AreEqual(dueno1, depto.Dueno);
+            Assert.AreEqual(cantidadCuartos, depto.CantidadCuartos);
+            Assert.AreEqual(cantidadBanos, depto.CantidadBanos);
+            Assert.AreEqual(conTerraza, depto.ConTerraza);
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void NuevoDepto_InvalidPiso_ExceptionThrown()
+        public void NuevoDepto_InvalidPiso()
         {
             // Arrange
             int expectedPiso = -1; // Invalid piso value
@@ -20,7 +44,7 @@ namespace ob.Domain.Tests
             bool expectedConTerraza = true;
 
             // Act
-            Depto depto = new Depto()
+            Depto depto = new Depto(expectedPiso, expectedNumero, expectedDueno, expectedCantidadCuartos, expectedCantidadBanos, expectedConTerraza)
             {
                 Piso = expectedPiso,
                 Numero = expectedNumero,
@@ -32,6 +56,7 @@ namespace ob.Domain.Tests
 
             // Assert
             // Exception is expected to be thrown
+        
         }
 
         [TestMethod]
@@ -47,7 +72,7 @@ namespace ob.Domain.Tests
             bool expectedConTerraza = true;
 
             // Act
-            Depto depto = new Depto()
+            Depto depto = new Depto(expectedPiso, expectedNumero, expectedDueno, expectedCantidadCuartos, expectedCantidadBanos, expectedConTerraza)
             {
                 Piso = expectedPiso,
                 Numero = expectedNumero,
@@ -74,7 +99,7 @@ namespace ob.Domain.Tests
             bool expectedConTerraza = true;
 
             // Act
-            Depto depto = new Depto()
+            Depto depto = new Depto(expectedPiso, expectedNumero, expectedDueno, expectedCantidadCuartos, expectedCantidadBanos, expectedConTerraza)
             {
                 Piso = expectedPiso,
                 Numero = expectedNumero,
@@ -101,7 +126,7 @@ namespace ob.Domain.Tests
             bool expectedConTerraza = true;
 
             // Act
-            Depto depto = new Depto()
+            Depto depto = new Depto(expectedPiso, expectedNumero, expectedDueno, expectedCantidadCuartos, expectedCantidadBanos, expectedConTerraza)
             {
                 Piso = expectedPiso,
                 Numero = expectedNumero,
@@ -128,7 +153,7 @@ namespace ob.Domain.Tests
             bool expectedConTerraza = true;
 
             // Act
-            Depto depto = new Depto()
+            Depto depto = new Depto(expectedPiso, expectedNumero, expectedDueno, expectedCantidadCuartos, expectedCantidadBanos, expectedConTerraza)
             {
                 Piso = expectedPiso,
                 Numero = expectedNumero,
@@ -154,7 +179,7 @@ namespace ob.Domain.Tests
             bool expectedConTerraza = true;
 
             // Act
-            Depto depto = new Depto()
+            Depto depto = new Depto(expectedPiso, expectedNumero, expectedDueno, expectedCantidadCuartos, expectedCantidadBanos, expectedConTerraza)
             {
                 Piso = expectedPiso,
                 Numero = expectedNumero,

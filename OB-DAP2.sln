@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ob.Domain", "ob-backend\ob.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ob.WebApi", "ob-backend\ob.webapi\ob.WebApi.csproj", "{5AA24034-9D33-474C-B12B-8CE51C9F64BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ob.BusinessLogic", "ob-backend\ob.BusinessLogic\ob.BusinessLogic.csproj", "{EFECCDD6-0741-4E28-8CE1-7A4630EFA33B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{5AA24034-9D33-474C-B12B-8CE51C9F64BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AA24034-9D33-474C-B12B-8CE51C9F64BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AA24034-9D33-474C-B12B-8CE51C9F64BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFECCDD6-0741-4E28-8CE1-7A4630EFA33B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFECCDD6-0741-4E28-8CE1-7A4630EFA33B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFECCDD6-0741-4E28-8CE1-7A4630EFA33B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFECCDD6-0741-4E28-8CE1-7A4630EFA33B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +52,6 @@ Global
 		{EE245F86-087F-45A7-8AC4-F03827E73DF1} = {978CABFE-3DB8-419C-8E13-AFD32D38E9CC}
 		{05BD43D7-4F26-4779-AFCA-5722143D9B4B} = {A91C391B-009B-43A6-AEF6-8AEC4CBB9FCB}
 		{5AA24034-9D33-474C-B12B-8CE51C9F64BD} = {A91C391B-009B-43A6-AEF6-8AEC4CBB9FCB}
+		{EFECCDD6-0741-4E28-8CE1-7A4630EFA33B} = {A91C391B-009B-43A6-AEF6-8AEC4CBB9FCB}
 	EndGlobalSection
 EndGlobal

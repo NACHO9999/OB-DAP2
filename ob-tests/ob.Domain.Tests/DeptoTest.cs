@@ -5,6 +5,29 @@ namespace ob.Domain.Tests
     [TestClass]
     public class DeptoTests
     {
+
+        [TestMethod]
+        public void NuevoDepto(){
+            //Arrange
+            int piso = 1;
+            int numero = 1;
+            Dueno dueno1 = new Dueno();
+            int cantidadCuartos = 1;
+            int cantidadBanos = 1;
+            bool conTerraza = true;
+
+            //Act
+            Depto depto = new Depto(piso, numero, dueno1, cantidadCuartos, cantidadBanos, conTerraza);
+
+            //Assert
+            Assert.AreEqual(piso, depto.Piso);
+            Assert.AreEqual(numero, depto.Numero);
+            Assert.AreEqual(dueno1, depto.Dueno);
+            Assert.AreEqual(cantidadCuartos, depto.CantidadCuartos);
+            Assert.AreEqual(cantidadBanos, depto.CantidadBanos);
+            Assert.AreEqual(conTerraza, depto.ConTerraza);
+        }
+
         [TestMethod]
         public void Constructor_ValidValues_SetProperties()
         {

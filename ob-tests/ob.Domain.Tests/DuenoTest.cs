@@ -1,27 +1,79 @@
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ob.Domain.Tests;
 
+
+
+
 [TestClass]
-public class DuenoTest
+public class DuenoTests
 {
     [TestMethod]
-    public void NuevoDueno()
+    public void Nombre_SetValidValue_Success()
     {
         // Arrange
-        var dueno = new Dueno
-        {
-            Nombre = "Juan",
-            Apellido = "Perez",
-            Email = "jperez@gmail.com"
-        };
+        Dueno dueno = new Dueno("John", "Doe", "john.doe@example.com");
 
         // Act
-        var nombre = dueno.Nombre;
-        var apellido = dueno.Apellido;
-        var email = dueno.Email;
+        dueno.Nombre = "Jane";
 
         // Assert
-        Assert.AreEqual("Juan", nombre);
-        Assert.AreEqual("Perez", apellido);
-        Assert.AreEqual("jperez@gmail.com", email);
+        Assert.AreEqual("Jane", dueno.Nombre);
+    }
+
+    [TestMethod]
+    public void Nombre_SetInvalidValue_ThrowsArgumentException()
+    {
+        // Arrange
+        Dueno dueno = new Dueno("John", "Doe", "john.doe@example.com");
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => dueno.Nombre = "");
+    }
+
+    [TestMethod]
+    public void Apellido_SetValidValue_Success()
+    {
+        // Arrange
+        Dueno dueno = new Dueno("John", "Doe", "john.doe@example.com");
+
+        // Act
+        dueno.Apellido = "Smith";
+
+        // Assert
+        Assert.AreEqual("Smith", dueno.Apellido);
+    }
+
+    [TestMethod]
+    public void Apellido_SetInvalidValue_ThrowsArgumentException()
+    {
+        // Arrange
+        Dueno dueno = new Dueno("John", "Doe", "john.doe@example.com");
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => dueno.Apellido = "");
+    }
+
+    [TestMethod]
+    public void Email_SetValidValue_Success()
+    {
+        // Arrange
+        Dueno dueno = new Dueno("John", "Doe", "john.doe@example.com");
+
+        // Act
+        dueno.Email = "jane.smith@example.com";
+
+        // Assert
+        Assert.AreEqual("jane.smith@example.com", dueno.Email);
+    }
+
+    [TestMethod]
+    public void Email_SetInvalidValue_ThrowsArgumentException()
+    {
+        // Arrange
+        Dueno dueno = new Dueno("John", "Doe", "john.doe@example.com");
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => dueno.Email = "invalid-email");
     }
 }

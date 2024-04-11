@@ -1,23 +1,80 @@
 namespace ob.Domain.Tests;
 
+
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 [TestClass]
-public class MantenimientoTest
+public class MantenimientoTests
 {
     [TestMethod]
-    public void NuevoMantenimiento()
+    public void Nombre_SetValidValue_Success()
     {
-        //Arrange & Act
-        Mantenimiento nuevoMantenimiento = new Mantenimiento(
-            "Juan",
-            "Sosa",
-            "jsosa@gmail.com",
-            "Contra12345"
-        );
+        // Arrange
+        Mantenimiento usuario = new Mantenimiento("John", "Doe", "john.doe@example.com", "password");
 
-        //Assert
-        Assert.AreEqual("Juan", nuevoMantenimiento.Nombre);
-        Assert.AreEqual("Sosa", nuevoMantenimiento.Apellido);
-        Assert.AreEqual("jsosa@gmail.com", nuevoMantenimiento.Email);
-        Assert.AreEqual("Contra12345", nuevoMantenimiento.Contrasena);
+        // Act
+        usuario.Nombre = "Jane";
+
+        // Assert
+        Assert.AreEqual("Jane", usuario.Nombre);
     }
+
+    [TestMethod]
+    public void Nombre_SetInvalidValue_ThrowsException()
+    {
+        // Arrange
+        Mantenimiento usuario = new Mantenimiento("John", "Doe", "john.doe@example.com", "password");
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => usuario.Nombre = "");
+    }
+
+    [TestMethod]
+    public void Apellido_SetValidValue_Success()
+    {
+        // Arrange
+        Mantenimiento usuario = new Mantenimiento("John", "Doe", "john.doe@example.com", "password");
+
+        // Act
+        usuario.Apellido = "Smith";
+
+        // Assert
+        Assert.AreEqual("Smith", usuario.Apellido);
+    }
+
+    [TestMethod]
+    public void Apellido_SetInvalidValue_ThrowsException()
+    {
+        // Arrange
+        Mantenimiento usuario = new Mantenimiento("John", "Doe", "john.doe@example.com", "password");
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => usuario.Apellido = "");
+    }
+
+    [TestMethod]
+    public void Email_SetValidValue_Success()
+    {
+        // Arrange
+        Mantenimiento usuario = new Mantenimiento("John", "Doe", "john.doe@example.com", "password");
+
+        // Act
+        usuario.Email = "jane.smith@example.com";
+
+        // Assert
+        Assert.AreEqual("jane.smith@example.com", usuario.Email);
+    }
+
+    [TestMethod]
+    public void Email_SetInvalidValue_ThrowsException()
+    {
+        // Arrange
+        Mantenimiento usuario = new Mantenimiento("John", "Doe", "john.doe@example.com", "password");
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => usuario.Email = "invalid-email");
+    }
+    
+    
 }

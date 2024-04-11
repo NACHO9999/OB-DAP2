@@ -11,7 +11,7 @@ namespace ob.Domain.Tests
             //Arrange
             int piso = 1;
             int numero = 1;
-            Dueno dueno1 = new Dueno();
+            Dueno dueno1 = new Dueno("John", "Doe", "johndoe@e.com");
             int cantidadCuartos = 1;
             int cantidadBanos = 1;
             bool conTerraza = true;

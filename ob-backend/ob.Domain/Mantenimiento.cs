@@ -5,10 +5,6 @@ namespace ob.Domain
         public Mantenimiento(string nombre, string apellido, string email, string contrasena)
             : base(nombre, apellido, email, contrasena)
         {
-            Nombre = nombre;
-            Apellido = apellido;
-            Email = email;
-            Contrasena = contrasena;
         }
     }
 }

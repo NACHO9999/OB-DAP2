@@ -238,3 +238,13 @@ C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net
 C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.pdb
 C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.genruntimeconfig.cache
 C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ref\ob.Domain.Tests.dll
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\bin\Debug\net8.0\CoverletSourceRootsMapping_ob.Domain.Tests
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.csproj.AssemblyReference.cache
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.AssemblyInfoInputs.cache
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.AssemblyInfo.cs
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.sourcelink.json
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.dll
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\refint\ob.Domain.Tests.dll
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-tests\ob.Domain.Tests\obj\Debug\net8.0\ob.Domain.Tests.pdb

@@ -22,3 +22,15 @@ C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\
 C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\refint\ob.Domain.dll
 C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.pdb
 C:\Users\nacho\Documents\ORT\DaP2\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ref\ob.Domain.dll
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\bin\Debug\net8.0\ob.Domain.deps.json
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\bin\Debug\net8.0\ob.Domain.dll
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\bin\Debug\net8.0\ob.Domain.pdb
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.AssemblyInfoInputs.cache
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.AssemblyInfo.cs
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.sourcelink.json
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.dll
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\refint\ob.Domain.dll
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ob.Domain.pdb
+C:\Users\Usuario\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\Desktop\OB-DAP2\ob-backend\ob.Domain\obj\Debug\net8.0\ref\ob.Domain.dll

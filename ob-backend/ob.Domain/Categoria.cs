@@ -2,12 +2,15 @@ namespace ob.Domain
 {
     public class Categoria
     {
-        public int Id { get; private set; }
-        public string Nombre { get; private set; }
+        private string _nombre;
+        public string Nombre {
+            get { return _nombre; }
+            set {Validator.ValidateString(value); _nombre = value;}
+        }
 
         public Categoria(string nombre)
         {
-            Nombre = nombre;
+            _nombre = nombre;
         }
     }
     

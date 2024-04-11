@@ -428,24 +428,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nacho\\.nuget\\packages\\": {}
+    "C:\\Users\\Usuario\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\\Desktop\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj",
       "projectName": "ob.WebApi",
-      "projectPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj",
-      "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nacho\\Documents\\ORT\\DaP2\\OB-DAP2\\ob-backend\\ob.webapi\\obj\\",
+      "projectPath": "C:\\Users\\Usuario\\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\\Desktop\\OB-DAP2\\ob-backend\\ob.webapi\\ob.WebApi.csproj",
+      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Usuario\\OneDrive - Facultad de Ingenieria - Universidad ORT Uruguay\\Desktop\\OB-DAP2\\ob-backend\\ob.webapi\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

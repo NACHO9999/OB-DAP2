@@ -75,5 +75,5 @@ public class AdministradorTests
         Assert.ThrowsException<ArgumentException>(() => usuario.Email = "invalid-email");
     }
     
-    // Add more tests for other properties and scenarios as needed
+
 }

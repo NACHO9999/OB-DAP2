@@ -1,28 +1,78 @@
 namespace ob.Domain.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 [TestClass]
-public class InvitacionTest
+public class InvitacionTests
 {
     [TestMethod]
-    public void NuevaInvitacion()
+    public void Email_SetValidValue_Success()
     {
-        //Arrange
+        // Arrange
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
 
-        string email = "jsosa@gmail.com";
-        string nombre = "Juan";
-        DateTime fechaExpiracion = DateTime.Now;
+        // Act
+        invitacion.Email = "another@example.com";
 
-        //Act
-        Invitacion nuevaInvitacion = new Invitacion
-        {
-            Email = email,
-            Nombre = nombre,
-            FechaExpiracion = fechaExpiracion
-        };
+        // Assert
+        Assert.AreEqual("another@example.com", invitacion.Email);
+    }
 
-        //Assert
-        Assert.AreEqual(email, nuevaInvitacion.Email);
-        Assert.AreEqual(nombre, nuevaInvitacion.Nombre);
-        Assert.AreEqual(fechaExpiracion, nuevaInvitacion.FechaExpiracion);
+    [TestMethod]
+    public void Email_SetInvalidValue_ThrowsArgumentException()
+    {
+        // Arrange
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => invitacion.Email = "invalid-email");
+    }
+
+    [TestMethod]
+    public void Nombre_SetValidValue_Success()
+    {
+        // Arrange
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+
+        // Act
+        invitacion.Nombre = "Jane Smith";
+
+        // Assert
+        Assert.AreEqual("Jane Smith", invitacion.Nombre);
+    }
+
+    [TestMethod]
+    public void Nombre_SetInvalidValue_ThrowsArgumentException()
+    {
+        // Arrange
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => invitacion.Nombre = "");
+    }
+
+    [TestMethod]
+    public void FechaExpiracion_SetValidValue_Success()
+    {
+        // Arrange
+        DateTime validDate = DateTime.Now.AddDays(7);
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", validDate);
+
+        // Act
+        invitacion.FechaExpiracion = validDate.AddDays(1);
+
+        // Assert
+        Assert.AreEqual(validDate.AddDays(1), invitacion.FechaExpiracion);
+    }
+
+    [TestMethod]
+    public void FechaExpiracion_SetPastDate_ThrowsArgumentException()
+    {
+        // Arrange
+        DateTime pastDate = DateTime.Now.AddDays(-1);
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => invitacion.FechaExpiracion = pastDate);
     }
 }

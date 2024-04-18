@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <ProjectReference Include="..\ob.Domain\ob.Domain.csproj" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ob.IDataAccess\ob.IDataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

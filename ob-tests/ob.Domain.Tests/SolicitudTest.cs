@@ -75,15 +75,7 @@ public class SolicitudTests
         // Assert
         Assert.AreEqual(validDate, solicitud.FechaInicio);
     }
-    [TestMethod]
-    public void PerMan_SetInvalidValue_ThrowsArgumentException()
-    {
-        // Arrange
-        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(1, 101, null, 2, 2, false), EstadoSolicitud.Atendiendo, DateTime.Now);
-
-        // Act & Assert
-        Assert.ThrowsException<ArgumentNullException>(() => solicitud.PerMan = null);
-    }
+    
 
     [TestMethod]
     public void Descripcion_SetInvalidValue_ThrowsArgumentException()

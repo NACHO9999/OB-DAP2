@@ -29,26 +29,26 @@ public class EdificioTests
     }
 
     [TestMethod]
-    public void Dirección_SetValidValue_Success()
+    public void Direccion_SetValidValue_Success()
     {
         // Arrange
         Edificio edificio = new Edificio("Edificio A", "123 Main St", "City", new Constructora("Gomez"), 1000, new List<Depto>());
 
         // Act
-        edificio.Dirección = "456 Elm St";
+        edificio.Direccion = "456 Elm St";
 
         // Assert
-        Assert.AreEqual("456 Elm St", edificio.Dirección);
+        Assert.AreEqual("456 Elm St", edificio.Direccion);
     }
 
     [TestMethod]
-    public void Dirección_SetInvalidValue_ThrowsArgumentException()
+    public void Direccion_SetInvalidValue_ThrowsArgumentException()
     {
         // Arrange
         Edificio edificio = new Edificio("Edificio A", "123 Main St", "City", new Constructora("Gomez"), 1000, new List<Depto>());
 
         // Act & Assert
-        Assert.ThrowsException<ArgumentException>(() => edificio.Dirección = "");
+        Assert.ThrowsException<ArgumentException>(() => edificio.Direccion = "");
     }
 
     [TestMethod]

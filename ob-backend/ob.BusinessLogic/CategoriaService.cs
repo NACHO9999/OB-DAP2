@@ -23,6 +23,7 @@ public class CategoriaService : ICategoriaService
             throw new Exception("La categoria ya existe");
         }
         _repository.Insert(categoria);
+        _repository.Save();
     }
     private bool CategoriaExists(string nombre)
     {

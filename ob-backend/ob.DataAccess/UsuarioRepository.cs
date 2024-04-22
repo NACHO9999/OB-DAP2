@@ -9,7 +9,11 @@ namespace ob.DataAccess
         {
             Context = context;
         }
-       
+        private bool EmailExists(string email)
+        {
+            return Get(u => u.Email == email) != null;
+        }
+
 
         // Example method to retrieve alldad Encargados
         public IEnumerable<Encargado> GetAllEncargados()
@@ -52,7 +56,7 @@ namespace ob.DataAccess
                 throw new Exception("No hay persona de mantenimiento con este mail");
             }
         }
-       
+
 
         public void AddEncargado(string nombre, string apellido, string email, string contrasena)
         {
@@ -82,9 +86,9 @@ namespace ob.DataAccess
             }
         }
 
-        
 
-        
+
+
 
     }
 }

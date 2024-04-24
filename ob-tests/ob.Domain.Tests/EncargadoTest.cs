@@ -11,7 +11,7 @@ public class EncargadoTests
     public void Nombre_SetValidValue_Success()
     {
         // Arrange
-        Encargado usuario = new Encargado("John", "Doe", "john.doe@example.com", "password");
+        Encargado usuario = new Encargado("John",  "john.doe@example.com", "password");
 
         // Act
         usuario.Nombre = "Jane";
@@ -24,7 +24,7 @@ public class EncargadoTests
     public void Nombre_SetInvalidValue_ThrowsException()
     {
         // Arrange
-        Encargado usuario = new Encargado("John", "Doe", "john.doe@example.com", "password");
+        Encargado usuario = new Encargado("John",  "john.doe@example.com", "password");
 
         // Act & Assert
         Assert.ThrowsException<ArgumentException>(() => usuario.Nombre = "");
@@ -34,7 +34,7 @@ public class EncargadoTests
     public void Apellido_SetValidValue_Success()
     {
         // Arrange
-        Encargado usuario = new Encargado("John", "Doe", "john.doe@example.com", "password");
+        Encargado usuario = new Encargado("John",  "john.doe@example.com", "password");
 
         // Act
         usuario.Apellido = "Smith";
@@ -47,7 +47,7 @@ public class EncargadoTests
     public void Apellido_SetInvalidValue_ThrowsException()
     {
         // Arrange
-        Encargado usuario = new Encargado("John", "Doe", "john.doe@example.com", "password");
+        Encargado usuario = new Encargado("John",  "john.doe@example.com", "password");
 
         // Act & Assert
         Assert.ThrowsException<ArgumentException>(() => usuario.Apellido = "");
@@ -57,7 +57,7 @@ public class EncargadoTests
     public void Email_SetValidValue_Success()
     {
         // Arrange
-        Encargado usuario = new Encargado("John", "Doe", "john.doe@example.com", "password");
+        Encargado usuario = new Encargado("John",  "john.doe@example.com", "password");
 
         // Act
         usuario.Email = "jane.smith@example.com";
@@ -70,7 +70,7 @@ public class EncargadoTests
     public void Email_SetInvalidValue_ThrowsException()
     {
         // Arrange
-        Encargado usuario = new Encargado("John", "Doe", "john.doe@example.com", "password");
+        Encargado usuario = new Encargado("John",  "john.doe@example.com", "password");
 
         // Act & Assert
         Assert.ThrowsException<ArgumentException>(() => usuario.Email = "invalid-email");

@@ -21,10 +21,11 @@ public class MantenimientoService : IMantenimientoService
             throw new Exception("El mantenimiento ya existe");
         }
         _repository.Insert(mantenimiento);
+        _repository.Save();
     }
     public Mantenimiento GetMantenimientoByEmail(string email)
     {
-        var usuario = _repository.Get(u => u.Email == email);
+        var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower());
         if (usuario is Mantenimiento mantenimiento)
         {
             return mantenimiento;
@@ -54,6 +55,7 @@ public class MantenimientoService : IMantenimientoService
         {
             solicitud.Estado = EstadoSolicitud.Cerrado;
             solicitud.FechaFin = DateTime.Now;
+            _solicitudService.EditarSolicitud(solicitud);
 
         }
         else

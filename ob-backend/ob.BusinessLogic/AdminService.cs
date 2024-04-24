@@ -15,7 +15,6 @@ public class AdminService : IAdminService
         _repository = repository;
         _categoriaService = categoriaService;
         _invitacionService = invitacionService;
-
     }
 
     public IEnumerable<Administrador> GetAllEncargados()
@@ -33,7 +32,7 @@ public class AdminService : IAdminService
     }
     public Administrador GetAdminByEmail(string email)
     {
-        var usuario = _repository.Get(u => u.Email == email);
+        var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower());
         if (usuario is Administrador administrador)
         {
             return administrador;
@@ -57,7 +56,6 @@ public class AdminService : IAdminService
     public void AltaCategoria(Categoria categoria)
     {
         _categoriaService.CrearCategoria(categoria);
-        _repository.Save();
     }
     
 }

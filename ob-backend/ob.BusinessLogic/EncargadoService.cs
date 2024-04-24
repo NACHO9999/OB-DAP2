@@ -1,6 +1,6 @@
 using ob.Domain;
 using ob.IBusinessLogic;
-
+using Enums;
 namespace ob.BusinessLogic;
 
 using ob.IDataAccess;
@@ -10,11 +10,13 @@ public class EncargadoService : IEncargadoService
     private readonly IUsuarioRepository _repository;
     private readonly IEdificioService _edificioService;
     private readonly IMantenimientoService _mantenimientoService;
-    public EncargadoService(IUsuarioRepository repository, IEdificioService edificioService, IMantenimientoService mantenimientoService)
+    private readonly ISolicitudService _solicitudService;
+    public EncargadoService(IUsuarioRepository repository, IEdificioService edificioService, IMantenimientoService mantenimientoService, ISolicitudService solicitudService)
     {
         _repository = repository;
         _edificioService = edificioService;
         _mantenimientoService = mantenimientoService;
+        _solicitudService = solicitudService;
     }
 
     public void CrearEncargado(Encargado encargado)
@@ -27,10 +29,9 @@ public class EncargadoService : IEncargadoService
         _repository.Save();
     }
 
-
     public Encargado GetEncargadoByEmail(string email)
     {
-        var usuario = _repository.Get(u => u.Email == email, new List<string> { "Edificios" });
+        var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower(), new List<string> { "Edificios.Deptos" });
         if (usuario is Encargado encargado)
         {
             return encargado;
@@ -42,7 +43,7 @@ public class EncargadoService : IEncargadoService
     }
     public IEnumerable<Encargado> GetAllEncargados()
     {
-        return _repository.GetAll<Encargado>(encargado => true, new List<string> { "Edificios" });
+        return _repository.GetAll<Encargado>(encargado => true, new List<string> { "Edificios.Deptos" });
     }
     public void CrearEdificio(Encargado encargado, Edificio edificio)
     {
@@ -58,37 +59,99 @@ public class EncargadoService : IEncargadoService
     }
     public void BorrarEdificio(string nombre)
     {
-       var edificio = _edificioService.GetEdificioByNombre(nombre);
+        var edificio = _edificioService.GetEdificioByNombre(nombre);
         _edificioService.BorrarEdificio(edificio);
         _repository.Save();
     }
     public Edificio GetEdificioByNombre(Encargado encargado, string nombre)
     {
 
-        var edificio = encargado.Edificios.FirstOrDefault(e => e.Nombre == nombre);
+        var edificio = encargado.Edificios.FirstOrDefault(e => e.Nombre.ToLower() == nombre.ToLower());
         if (edificio == null)
         {
             throw new Exception("No Edificio found with the specified name.");
         }
         return edificio;
     }
-    public void CrearMantenimiento(Mantenimiento mantenimiento) 
+    public void CrearMantenimiento(Mantenimiento mantenimiento)
     {
         _mantenimientoService.CrearMantenimiento(mantenimiento);
-        _repository.Save();
     }
-    public void CrearSolicitud(Solicitud solicitud) { }
-    public void AsignarSolicitud(Solicitud solicitud, Mantenimiento mantenimiento) { }
-    public Solicitud GetSolicitudByCategoria(string? categoria)
+    public void CrearSolicitud(Solicitud solicitud)
     {
-        return null;
+        _solicitudService.CrearSolicitud(solicitud);
     }
-    public Solicitud GetSolicitudByEdificio(string? edificio)
+    public void AsignarSolicitud(Solicitud solicitud, Mantenimiento mantenimiento)
     {
-        return null;
+        solicitud.PerMan = mantenimiento;
+        _solicitudService.EditarSolicitud(solicitud);
     }
-    public Solicitud GetSolicitudByMantenimiento(string? mantenimiento)
+
+    public int[] GetSolicitudByEdificio(Edificio edificio)
     {
-        return null;
+        int[] array = new int[3];
+        var lista = _solicitudService.GetSolicitudesByEdificio(edificio);
+        foreach (var solicitud in lista)
+        {
+            if (solicitud.Estado == EstadoSolicitud.Abierto)
+            {
+                array[0]++;
+            }
+            else if (solicitud.Estado == EstadoSolicitud.Atendiendo)
+            {
+                array[1]++;
+            }
+            else if (solicitud.Estado == EstadoSolicitud.Cerrado)
+            {
+                array[2]++;
+            }
+        }
+        return array;
+    }
+    public int[] GetSolicitudByMantenimiento(Mantenimiento mantenimiento)
+    {
+        int[] retorno = new int[3];
+        var lista = _solicitudService.GetSolicitudesByMantenimiento(mantenimiento);
+        foreach (var solicitud in lista)
+        {
+            if (solicitud.Estado == EstadoSolicitud.Abierto)
+            {
+                retorno[0]++;
+            }
+            else if (solicitud.Estado == EstadoSolicitud.Atendiendo)
+            {
+                retorno[1]++;
+            }
+            else if (solicitud.Estado == EstadoSolicitud.Cerrado)
+            {
+                retorno[2]++;
+            }
+
+        }
+        return retorno;
+    }
+    public TimeSpan? TiempoPromedioAtencion(Mantenimiento mantenimiento)
+    {
+        var lista = _solicitudService.GetSolicitudesByMantenimiento(mantenimiento);
+        TimeSpan? tiempoTotal = null;
+        int cantidad = 0;
+
+        foreach (var solicitud in lista)
+        {
+            if (solicitud.Estado == EstadoSolicitud.Cerrado)
+            {
+                var tiempoAtencion = solicitud.FechaFin - solicitud.FechaInicio;
+                tiempoTotal ??= TimeSpan.Zero; // Initialize tiempoTotal if null
+                tiempoTotal += tiempoAtencion;
+                cantidad++;
+            }
+        }
+
+        if (cantidad == 0)
+        {
+            return null; // No closed requests, return null
+        }
+
+        return TimeSpan.FromTicks(tiempoTotal.Value.Ticks / cantidad); // Calculate average time
     }
 }

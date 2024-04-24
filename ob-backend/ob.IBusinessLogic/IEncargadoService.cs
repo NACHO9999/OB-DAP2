@@ -14,7 +14,7 @@ public interface IEncargadoService
     void CrearMantenimiento(Mantenimiento mantenimiento);
     void CrearSolicitud(Solicitud solicitud);
     void AsignarSolicitud(Solicitud solicitud, Mantenimiento mantenimiento);
-    Solicitud GetSolicitudByCategoria(string? categoria);
-    Solicitud GetSolicitudByEdificio(string? edificio);
-    Solicitud GetSolicitudByMantenimiento(string? mantenimiento);
+    int [] GetSolicitudByEdificio(Edificio edificio);
+    int [] GetSolicitudByMantenimiento(Mantenimiento mantenimiento);
+    TimeSpan? TiempoPromedioAtencion(Mantenimiento mantenimiento);
 }

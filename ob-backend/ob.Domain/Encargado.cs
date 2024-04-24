@@ -4,7 +4,7 @@ namespace ob.Domain
     {
         public List<Edificio> Edificios { get; set; }
 
-        public Encargado(string nombre, string apellido, string email, string contrasena) : base(nombre, apellido, email, contrasena)
+        public Encargado(string nombre,  string email, string contrasena) : base(nombre, "null",  email, contrasena)
         {
             Edificios = new List<Edificio>();
         }

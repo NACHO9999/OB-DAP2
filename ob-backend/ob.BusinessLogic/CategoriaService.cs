@@ -27,7 +27,11 @@ public class CategoriaService : ICategoriaService
     }
     private bool CategoriaExists(string nombre)
     {
-        return _repository.Get(c => c.Nombre == nombre) != null;
+        return _repository.Get(c => c.Nombre.ToLower() == nombre.ToLower()) != null;
+    }
+    public IEnumerable<Categoria> GetAllCategorias()
+    {
+        return _repository.GetAll<Categoria>();
     }
 
 }

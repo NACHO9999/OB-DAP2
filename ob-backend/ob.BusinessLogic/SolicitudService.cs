@@ -25,7 +25,7 @@ public class SolicitudService : ISolicitudService
     {
         List<Solicitud> solicitudesInEdificio = new List<Solicitud>();
 
-        foreach (var solicitud in _repository.GetAll<Solicitud>()) // Assuming GetAllSolicitudes() returns all solicitudes
+        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud=> true, new List<string> { "Depto" })) 
         {
             if (edificio.Deptos.Contains(solicitud.Depto))
             {
@@ -36,11 +36,28 @@ public class SolicitudService : ISolicitudService
 
         return solicitudesInEdificio;
     }
+    public IEnumerable<Solicitud> GetSolicitudes ()
+    {
+        return _repository.GetAll<Solicitud>(solicitud=> true, new List<string> { "Categoria", "PerMan", "Depto" });
+    }
+    public List<Solicitud> GetSolicitudesByCategoria(Categoria categoria)
+    {
+        List<Solicitud> solicitudesByCategoria = new List<Solicitud>();
+
+        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud=> true, new List<string> { "Categoria" })) 
+        {
+            if (solicitud.Categoria == categoria)
+            {
+                solicitudesByCategoria.Add(solicitud);
+            }
+        }
+        return solicitudesByCategoria;
+    }
     public List<Solicitud> GetSolicitudesByMantenimiento(Mantenimiento mant)
     {
         List<Solicitud> solicitudesByMantenimiento = new List<Solicitud>();
 
-        foreach (var solicitud in _repository.GetAll<Solicitud>()) // Assuming GetAllSolicitudes() returns all solicitudes
+        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud=> true, new List<string> { "PerMan" })) 
         {
             if (solicitud.PerMan == mant)
             {

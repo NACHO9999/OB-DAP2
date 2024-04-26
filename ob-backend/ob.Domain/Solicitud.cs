@@ -4,18 +4,12 @@ namespace ob.Domain
 {
     public class Solicitud
     {
-        private Mantenimiento _perMan;
-        public Mantenimiento PerMan
-        {
-            get { return _perMan; }
-            set
-            {
-                Validator.IsNotNull(value);
-                _perMan = value;
-            }
-        }
+        
+        public Mantenimiento? PerMan;
+        
         private string _descripcion;
-        public string Descripcion {
+        public string Descripcion
+        {
             get { return _descripcion; }
             set
             {
@@ -25,7 +19,8 @@ namespace ob.Domain
             }
         }
         private Depto _depto;
-        public Depto Depto {
+        public Depto Depto
+        {
             get { return _depto; }
             set
             {
@@ -33,8 +28,19 @@ namespace ob.Domain
                 _depto = value;
             }
         }
+        private Categoria _categoria;
+        public Categoria Categoria
+        {
+            get { return _categoria; }
+            set
+            {
+                Validator.IsNotNull(value);
+                _categoria = value;
+            }
+        }
         private EstadoSolicitud _estado;
-        public EstadoSolicitud Estado {
+        public EstadoSolicitud Estado
+        {
             get { return _estado; }
             set
             {
@@ -42,18 +48,38 @@ namespace ob.Domain
                 _estado = value;
             }
         }
-        
+
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaFin { get; set; }
 
-        public Solicitud(Mantenimiento perMan, string descripcion, Depto depto, EstadoSolicitud estado, DateTime fechaInicio)
+        public Solicitud(string descripcion, Depto depto, Categoria categoria, EstadoSolicitud estado, DateTime fechaInicio)
         {
-            _perMan = perMan;
             _descripcion = descripcion;
             _depto = depto;
+            _categoria = categoria;
             _estado = estado;
             FechaInicio = fechaInicio;
-            
+        }
+
+
+
+        public Solicitud(Mantenimiento perMan, string descripcion, Depto depto, Categoria categoria, EstadoSolicitud estado, DateTime fechaInicio)
+        {
+            PerMan = perMan;
+            _descripcion = descripcion;
+            _depto = depto;
+            _categoria = categoria;
+            _estado = estado;
+            FechaInicio = fechaInicio;
+
+        }
+        public Solicitud(string descripcion, Depto depto, Categoria categoria,  DateTime fechaInicio)
+        {
+            _descripcion = descripcion;
+            _depto = depto;
+            _categoria = categoria;
+            _estado = EstadoSolicitud.Abierto;
+            FechaInicio = fechaInicio;
         }
 
 

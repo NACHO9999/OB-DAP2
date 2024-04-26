@@ -5,17 +5,16 @@ namespace ob.IBusinessLogic;
 public interface IEncargadoService
 {
     void CrearEncargado(Encargado encargado);
-    void BorrarEncargado(string email);
-    void EditarEncargado(Encargado encargado);
+    IEnumerable<Encargado> GetAllEncargados();
     Encargado GetEncargadoByEmail(string email);
-    void CrearEdificio(Edificio edificio);
+    void CrearEdificio(Encargado encargado, Edificio edificio);
     void EditarEdificio(Edificio edificio);
     void BorrarEdificio(string nombre);
-    Edificio GetEdificioByNombre(string nombre);
+    Edificio GetEdificioByNombre(Encargado encargado, string nombre);
     void CrearMantenimiento(Mantenimiento mantenimiento);
     void CrearSolicitud(Solicitud solicitud);
     void AsignarSolicitud(Solicitud solicitud, Mantenimiento mantenimiento);
-    Solicitud GetSolicitudByCategoria(string? categoria);
-    Solicitud GetSolicitudByEdificio(string? edificio);
-    Solicitud GetSolicitudByMantenimiento(string? mantenimiento);
+    int [] GetSolicitudByEdificio(Edificio edificio);
+    int [] GetSolicitudByMantenimiento(Mantenimiento mantenimiento);
+    TimeSpan? TiempoPromedioAtencion(Mantenimiento mantenimiento);
 }

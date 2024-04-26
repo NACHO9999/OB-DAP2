@@ -5,10 +5,8 @@ namespace ob.IBusinessLogic;
 public interface IAdminService
 {
     void CrearAdmin(Administrador admin);
-    void BorrarAdmin(string email);
-    void EditarAdmin(Administrador admin);
     Administrador GetAdminByEmail(string email);
-    void InvitarEncargado(Encargado encargado);
+    void InvitarEncargado(string email, string nombre, DateTime fechaLimite);
     void EliminarInvitacion(string email);
     void AltaCategoria(Categoria categoria);
 }

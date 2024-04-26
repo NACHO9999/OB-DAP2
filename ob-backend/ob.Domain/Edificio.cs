@@ -12,7 +12,7 @@ namespace ob.Domain
             }
         }
         private string _dirección;
-        public string Dirección {
+        public string Direccion {
             get { return _dirección; }
             set {
                 Validator.ValidateStringMaxLength(value, 200);

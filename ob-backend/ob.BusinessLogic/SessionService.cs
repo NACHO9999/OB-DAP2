@@ -1,6 +1,7 @@
 using ob.Domain;
 using ob.IBusinessLogic;
 using ob.IDataAccess;
+using ob.Exceptions.BusinessLogicExceptions;
 namespace ob.BusinessLogic;
 
 
@@ -35,7 +36,7 @@ public class SessionService : ISessionService
         var user = _usuarioRepository.Get(u => u.Email == email && u.Contrasena == password);
 
         if (user == null)
-            throw new ArgumentException("Invalid credentials");
+            throw new InvalidCredentialException("Invalid credentials");
 
         var session = new Session() { Usuario = user };
         _sessionRepository.Insert(session);

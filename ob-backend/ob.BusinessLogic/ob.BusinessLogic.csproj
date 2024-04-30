@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Exceptions\ob.Exceptions.csproj" />
     <ProjectReference Include="..\ob.Domain\ob.Domain.csproj" />
     <ProjectReference Include="..\ob.IBusinessLogic\ob.IBusinessLogic.csproj" />
     <ProjectReference Include="..\ob.IDataAccess\ob.IDataAccess.csproj" />

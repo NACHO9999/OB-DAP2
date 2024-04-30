@@ -1,6 +1,8 @@
 using ob.Domain;
 using ob.IBusinessLogic;
 using ob.IDataAccess;
+using ob.Exceptions.BusinessLogicExceptions;
+
 
 namespace ob.BusinessLogic;
 
@@ -17,15 +19,12 @@ public class AdminService : IAdminService
         _invitacionService = invitacionService;
     }
 
-    public IEnumerable<Administrador> GetAllEncargados()
-    {
-        return _repository.GetAll<Administrador>();
-    }
+    
     public void CrearAdmin(Administrador admin)
     {
         if (_repository.EmailExists(admin.Email))
         {
-            throw new Exception("El email ya existe");
+            throw new AlreadyExistsException("El email ya está en uso.");
         }
         _repository.Insert(admin);
         _repository.Save();
@@ -39,7 +38,7 @@ public class AdminService : IAdminService
         }
         else
         {
-            throw new Exception("No Administrador found with the specified email.");
+            throw new ResourceNotFoundException("No se encontró el administrador.");
         }
     }
     public void InvitarEncargado(string email, string nombre, DateTime fecha)

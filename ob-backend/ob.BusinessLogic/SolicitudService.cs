@@ -2,6 +2,7 @@ using ob.Domain;
 using Enums;
 using ob.IDataAccess;
 using ob.IBusinessLogic;
+using ob.Exceptions.BusinessLogicExceptions;
 namespace ob.BusinessLogic;
 
 public class SolicitudService : ISolicitudService
@@ -21,6 +22,21 @@ public class SolicitudService : ISolicitudService
         _repository.Update(solicitud);
         _repository.Save();
     }
+    public Solicitud GetSolicitudById(Guid id)
+    {
+        if (SolicitudExists(id))
+        {
+            return _repository.Get(s => s.Id == id);
+        }
+        else
+        {
+            throw new ResourceNotFoundException("No se encontró la solicitud.");
+        }
+    }
+    private bool SolicitudExists(Guid id)
+    {
+        return _repository.Get(s => s.Id == id) != null;
+    }   
     public List<Solicitud> GetSolicitudesByEdificio(Edificio edificio)
     {
         List<Solicitud> solicitudesInEdificio = new List<Solicitud>();

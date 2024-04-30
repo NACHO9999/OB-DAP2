@@ -2,7 +2,7 @@ namespace ob.Domain
 {
     public class Edificio
     {
-        private string _nombre;
+            private string _nombre;
         public string Nombre {
             get { return _nombre; }
             set {
@@ -53,6 +53,8 @@ namespace ob.Domain
                 _deptos = value;
             }
         }
+
+        protected Edificio() { }
 
         public Edificio(string nombre, string dirección, string ubicación, Constructora empresaConstructora, decimal gastosComunes, List<Depto> deptos)
         {

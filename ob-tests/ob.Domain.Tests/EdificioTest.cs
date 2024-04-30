@@ -127,12 +127,13 @@ public class EdificioTests
     {
         // Arrange
         List<Depto> deptos = new List<Depto>();
-        deptos.Add(new Depto(1, 101, null, 2, 1, false));
         Edificio edificio = new Edificio("Edificio A", "123 Main St", "City", new Constructora("Gomez"), 1000, deptos);
+        deptos.Add(new Depto(edificio, 1, 101, null, 2, 1, false));
+       
 
         // Act
         List<Depto> newDeptos = new List<Depto>();
-        newDeptos.Add(new Depto(2, 102, null, 3, 2, true));
+        newDeptos.Add(new Depto(edificio, 2, 102, null, 3, 2, true));
         edificio.Deptos = newDeptos;
 
         // Assert

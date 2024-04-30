@@ -1,6 +1,7 @@
 using ob.Domain;
 using ob.IDataAccess;
 using ob.IBusinessLogic;
+using ob.Exceptions.BusinessLogicExceptions;
 namespace ob.BusinessLogic;
 public class DuenoService: IDuenoService
 {
@@ -13,7 +14,7 @@ public class DuenoService: IDuenoService
     {
         if (DuenoExists(dueno.Email))
         {
-            throw new Exception("El dueño ya existe");
+            throw new AlreadyExistsException("El dueño ya existe");
         }
         _repository.Insert(dueno);
         _repository.Save();

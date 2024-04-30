@@ -1,4 +1,5 @@
 using ob.Domain;
+using ob.Exceptions.BusinessLogicExceptions;
 using ob.IBusinessLogic;
 using ob.IDataAccess;
 namespace ob.BusinessLogic;
@@ -15,7 +16,7 @@ public class InvitacionService : IInvitacionService
     {
         if (InvitacionExiste(invitacion.Email))
         {
-            throw new Exception("La invitacion ya existe");
+            throw new AlreadyExistsException("La invitacion ya existe");
         }
         _repository.Insert(invitacion); 
         _repository.Save();
@@ -26,6 +27,10 @@ public class InvitacionService : IInvitacionService
     }
     public void EliminarInvitacion(string email)
     {
+        if (!InvitacionExiste(email))
+        {
+            throw new ResourceNotFoundException("No se encontró la invitacion.");
+        }
         var invitacion = _repository.Get(i => i.Email.ToLower() == email.ToLower());
         _repository.Delete(invitacion);
         _repository.Save();

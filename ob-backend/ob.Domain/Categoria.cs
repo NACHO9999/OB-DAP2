@@ -2,6 +2,7 @@ namespace ob.Domain
 {
     public class Categoria
     {
+
         private string _nombre;
         public string Nombre {
             get { return _nombre; }

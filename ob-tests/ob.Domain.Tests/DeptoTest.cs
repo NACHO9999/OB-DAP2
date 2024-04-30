@@ -5,9 +5,18 @@ namespace ob.Domain.Tests
     [TestClass]
     public class DeptoTests
     {
+        protected static Edificio? SharedEdificio;
+
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            SharedEdificio = new Edificio("Edificio", "Direccion", "ubicacion", new Constructora("Constructora"), 1000, new List<Depto>());
+        }
 
         [TestMethod]
-        public void NuevoDepto(){
+        public void NuevoDepto()
+        {
             //Arrange
             int piso = 1;
             int numero = 1;
@@ -17,7 +26,7 @@ namespace ob.Domain.Tests
             bool conTerraza = true;
 
             //Act
-            Depto depto = new Depto(piso, numero, dueno1, cantidadCuartos, cantidadBanos, conTerraza);
+            Depto depto = new Depto(SharedEdificio, piso, numero, dueno1, cantidadCuartos, cantidadBanos, conTerraza);
 
             //Assert
             Assert.AreEqual(piso, depto.Piso);
@@ -40,7 +49,7 @@ namespace ob.Domain.Tests
             bool conTerraza = true;
 
             // Act
-            Depto depto = new Depto(piso, numero, dueno, cantidadCuartos, cantidadBanos, conTerraza);
+            Depto depto = new Depto(SharedEdificio, piso, numero, dueno, cantidadCuartos, cantidadBanos, conTerraza);
 
             // Assert
             Assert.AreEqual(piso, depto.Piso);
@@ -55,7 +64,7 @@ namespace ob.Domain.Tests
         public void Piso_SetValidValue_Success()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act
             depto.Piso = 10;
@@ -68,7 +77,7 @@ namespace ob.Domain.Tests
         public void Piso_SetInvalidValue_ThrowsException()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(() => depto.Piso = -1);
@@ -78,7 +87,7 @@ namespace ob.Domain.Tests
         public void Numero_SetValidValue_Success()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act
             depto.Numero = 102;
@@ -91,7 +100,7 @@ namespace ob.Domain.Tests
         public void Numero_SetInvalidValue_ThrowsException()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(() => depto.Numero = -1);
@@ -101,7 +110,7 @@ namespace ob.Domain.Tests
         public void Dueno_SetValidValue_Success()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
             Dueno newDueno = new Dueno("Jane", "Doe", "jane.doe@example.com");
 
             // Act
@@ -115,7 +124,7 @@ namespace ob.Domain.Tests
         public void CantidadCuartos_SetValidValue_Success()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act
             depto.CantidadCuartos = 4;
@@ -128,7 +137,7 @@ namespace ob.Domain.Tests
         public void CantidadCuartos_SetInvalidValue_ThrowsException()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(() => depto.CantidadCuartos = 0);
@@ -138,7 +147,7 @@ namespace ob.Domain.Tests
         public void CantidadBanos_SetValidValue_Success()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act
             depto.CantidadBanos = 3;
@@ -151,7 +160,7 @@ namespace ob.Domain.Tests
         public void CantidadBanos_SetInvalidValue_ThrowsException()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act & Assert
             Assert.ThrowsException<ArgumentException>(() => depto.CantidadBanos = 0);
@@ -161,7 +170,7 @@ namespace ob.Domain.Tests
         public void ConTerraza_SetValidValue_Success()
         {
             // Arrange
-            Depto depto = new Depto(5, 101, null, 3, 2, true);
+            Depto depto = new Depto(SharedEdificio, 5, 101, null, 3, 2, true);
 
             // Act
             depto.ConTerraza = false;

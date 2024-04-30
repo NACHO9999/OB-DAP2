@@ -10,9 +10,7 @@ namespace ob.DataAccess
     {
         public AppContext() { }
         public AppContext(DbContextOptions options) : base(options) { }
-
         public virtual DbSet<Usuario>? Usuarios { get; set; }
-
         public virtual DbSet<Categoria>? Categorias { get; set; }
         public virtual DbSet<Depto>? Deptos { get; set; }
         public virtual DbSet<Dueno>? Duenos { get; set; }

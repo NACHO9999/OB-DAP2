@@ -3,6 +3,7 @@ using ob.IBusinessLogic;
 using Enums;
 namespace ob.BusinessLogic;
 
+using ob.Exceptions.BusinessLogicExceptions;
 using ob.IDataAccess;
 
 public class EncargadoService : IEncargadoService
@@ -23,7 +24,7 @@ public class EncargadoService : IEncargadoService
     {
         if (_repository.EmailExists(encargado.Email))
         {
-            throw new Exception("El email ya existe");
+            throw new AlreadyExistsException("El email ya existe");
         }
         _repository.Insert(encargado);
         _repository.Save();
@@ -38,7 +39,7 @@ public class EncargadoService : IEncargadoService
         }
         else
         {
-            throw new Exception("No Encargado found with the specified email.");
+            throw new ResourceNotFoundException("No Encargado found with the specified email.");
         }
     }
     public IEnumerable<Encargado> GetAllEncargados()
@@ -69,7 +70,7 @@ public class EncargadoService : IEncargadoService
         var edificio = encargado.Edificios.FirstOrDefault(e => e.Nombre.ToLower() == nombre.ToLower());
         if (edificio == null)
         {
-            throw new Exception("No Edificio found with the specified name.");
+            throw new ResourceNotFoundException("No Edificio found with the specified name.");
         }
         return edificio;
     }

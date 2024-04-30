@@ -4,7 +4,7 @@ namespace ob.Domain
 {
     public class Solicitud
     {
-        
+        public Guid Id { get; set; }
         public Mantenimiento? PerMan;
         
         private string _descripcion;
@@ -51,9 +51,11 @@ namespace ob.Domain
 
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaFin { get; set; }
+        protected Solicitud() { }
 
         public Solicitud(string descripcion, Depto depto, Categoria categoria, EstadoSolicitud estado, DateTime fechaInicio)
         {
+            Id = Guid.NewGuid();
             _descripcion = descripcion;
             _depto = depto;
             _categoria = categoria;
@@ -65,6 +67,7 @@ namespace ob.Domain
 
         public Solicitud(Mantenimiento perMan, string descripcion, Depto depto, Categoria categoria, EstadoSolicitud estado, DateTime fechaInicio)
         {
+            Id = Guid.NewGuid();
             PerMan = perMan;
             _descripcion = descripcion;
             _depto = depto;
@@ -75,6 +78,7 @@ namespace ob.Domain
         }
         public Solicitud(string descripcion, Depto depto, Categoria categoria,  DateTime fechaInicio)
         {
+            Id = Guid.NewGuid();
             _descripcion = descripcion;
             _depto = depto;
             _categoria = categoria;

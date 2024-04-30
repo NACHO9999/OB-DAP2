@@ -18,15 +18,19 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ob-backend\Exceptions\ob.Exceptions.csproj" />
+    <ProjectReference Include="..\..\ob-backend\ob.BusinessLogic\ob.BusinessLogic.csproj" />
+    <ProjectReference Include="..\..\ob-backend\ob.Domain\ob.Domain.csproj" />
+    <ProjectReference Include="..\..\ob-backend\ob.IBusinessLogic\ob.IBusinessLogic.csproj" />
+    <ProjectReference Include="..\..\ob-backend\ob.IDataAccess\ob.IDataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\ob-backend\ob.Domain\ob.Domain.csproj" />
   </ItemGroup>
 
 </Project>

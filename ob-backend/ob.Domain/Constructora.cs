@@ -2,6 +2,7 @@ namespace ob.Domain
 {
     public class Constructora
     {
+
         private string _nombre;
         public string Nombre {
             get { return _nombre; }
@@ -11,6 +12,7 @@ namespace ob.Domain
                 _nombre = value;
             }
         }
+
 
         public Constructora(string nombre)
         {

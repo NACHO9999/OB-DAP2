@@ -1,6 +1,8 @@
 using ob.Domain;
+using ob.Exceptions.BusinessLogicExceptions;
 using ob.IBusinessLogic;
 using ob.IDataAccess;
+
 
 namespace ob.BusinessLogic;
 
@@ -14,13 +16,20 @@ public class CategoriaService : ICategoriaService
     }
     public Categoria GetCategoriaByNombre(string nombre)
     {
-        return _repository.Get(c => c.Nombre == nombre);
+        if (CategoriaExists(nombre))
+        {
+            return _repository.Get(c => c.Nombre.ToLower() == nombre.ToLower());
+        }
+        else
+        {
+            throw new ResourceNotFoundException("No se encontró la categoria.");
+        }
     }
     public void CrearCategoria(Categoria categoria)
     {
         if (CategoriaExists(categoria.Nombre))
         {
-            throw new Exception("La categoria ya existe");
+            throw new AlreadyExistsException("La categoria ya existe");
         }
         _repository.Insert(categoria);
         _repository.Save();

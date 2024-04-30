@@ -2,6 +2,7 @@ namespace ob.Domain
 {
     public class Dueno
     {
+
         private string _nombre;
         public string Nombre
         {
@@ -33,6 +34,7 @@ namespace ob.Domain
                 _email = value;
             }
         }
+
 
         public Dueno(string nombre, string apellido, string email)
         {

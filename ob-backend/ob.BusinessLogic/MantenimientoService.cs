@@ -2,6 +2,7 @@ using ob.Domain;
 using Enums;
 using ob.IDataAccess;
 using ob.IBusinessLogic;
+using ob.Exceptions.BusinessLogicExceptions;
 namespace ob.BusinessLogic;
 
 public class MantenimientoService : IMantenimientoService
@@ -18,7 +19,7 @@ public class MantenimientoService : IMantenimientoService
     {
         if (_repository.EmailExists(mantenimiento.Email))
         {
-            throw new Exception("El mantenimiento ya existe");
+            throw new AlreadyExistsException("El mantenimiento ya existe");
         }
         _repository.Insert(mantenimiento);
         _repository.Save();
@@ -32,7 +33,7 @@ public class MantenimientoService : IMantenimientoService
         }
         else
         {
-            throw new Exception("No Mantenimiento found with the specified email.");
+            throw new ResourceNotFoundException("No Mantenimiento found with the specified email.");
         }
     }
     public void AtenderSolicitud(Solicitud solicitud)

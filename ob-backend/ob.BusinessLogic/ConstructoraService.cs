@@ -21,14 +21,10 @@ public class ConstructoraService: IConstructoraService
     }
     public Constructora GetConstructoraByNombre(string nombre)
     {
-        if (ConstructoraExists(nombre))
-        {
-            return _repository.Get(c => c.Nombre == nombre);
-        }
-        else
-        {
-            throw new KeyNotFoundException("No se encontró la constructora.");
-        }
+       
+        return _repository.Get(c => c.Nombre == nombre);
+        
+       
     }
     public IEnumerable<Constructora> GetAllConstructoras()
     {

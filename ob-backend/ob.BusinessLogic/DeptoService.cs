@@ -32,9 +32,11 @@ public class DeptoService : IDeptoService
                 depto.Dueno = _duenoService.GetDuenoByEmail(depto.Dueno.Email);
             }
         }
+        var edificio = _edificioRepository.Get(e => e.Nombre.ToLower() == depto.EdificioNombre.ToLower() && e.Direccion.ToLower() == depto.EdificioDireccion.ToLower(), new List<string> { "EmpresaConstructora" });
+        depto.Edificio = edificio;
         _repository.Insert(depto);
-        var edificio = _edificioRepository.Get(e => e.Nombre.ToLower() == depto.Edificio.Nombre.ToLower() && e.Direccion.ToLower() == depto.Edificio.Direccion.ToLower());
-        if(!edificio.Deptos.Contains(depto))
+       
+        if(!depto.Edificio.Deptos.Contains(depto))
         {
             edificio.Deptos.Add(depto);
             _edificioRepository.Update(edificio);

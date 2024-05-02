@@ -26,6 +26,7 @@ namespace ob.WebApi.DTOs
             this.EdificioNombre = depto.Edificio.Nombre;
             this.EdificioDireccion = depto.Edificio.Direccion;
         }
+        public DeptoDTO() { }
 
         public Depto ToEntity()
         {

@@ -26,14 +26,10 @@ public class DuenoService: IDuenoService
     }
     public Dueno GetDuenoByEmail(string email)
     {
-        if (DuenoExists(email))
-        {
+        
             return _repository.Get(d => d.Email.ToLower() == email.ToLower());
-        }
-        else
-        {
-            throw new KeyNotFoundException("No se encontró el dueño.");
-        }
+        
+       
     }
     public bool DuenoExists(string email)
     {

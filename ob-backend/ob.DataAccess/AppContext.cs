@@ -51,7 +51,7 @@ namespace ob.DataAccess
 
                 
                 modelBuilder.Entity<Depto>()
-                .HasKey(d => new { d.Numero, d.EdificioNombre,d.EdificioDireccion });
+                .HasKey(d => new { d.Numero, d.EdificioNombre, d.EdificioDireccion});
                 
                 modelBuilder.Entity<Edificio>()
                 .HasKey(e => new { e.Nombre, e.Direccion }); // Set Nombre and Direccion as primary key

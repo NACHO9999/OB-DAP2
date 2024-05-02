@@ -17,6 +17,14 @@ public class EdificioService : IEdificioService
 
     public void CrearEdificio(Edificio edificio)
     {
+        if(_constructoraService.GetConstructoraByNombre(edificio.EmpresaConstructora.Nombre) == null)
+        {
+            _constructoraService.CrearConstructora(edificio.EmpresaConstructora);
+        }
+        else
+        {
+            edificio.EmpresaConstructora = _constructoraService.GetConstructoraByNombre(edificio.EmpresaConstructora.Nombre);
+        }
         if (EdificioExists(edificio.Nombre, edificio.Direccion))
         {
             throw new Exception("El edificio ya existe");

@@ -7,10 +7,13 @@ public class DeptoService : IDeptoService
 {
     private readonly IGenericRepository<Depto> _repository;
     private readonly IDuenoService _duenoService;
-    public DeptoService(IGenericRepository<Depto> deptoRepository, IDuenoService duenoService)
+    private readonly IGenericRepository<Edificio> _edificioRepository;
+
+    public DeptoService(IGenericRepository<Depto> deptoRepository, IDuenoService duenoService, IGenericRepository<Edificio> edificioRepository)
     {
         _repository = deptoRepository;
         _duenoService = duenoService;
+        _edificioRepository = edificioRepository;
     }
     public void CrearDepto(Depto depto)
     {
@@ -18,15 +21,24 @@ public class DeptoService : IDeptoService
         {
             throw new AlreadyExistsException("El departamento ya existe");
         }
-        _repository.Insert(depto);
         if (depto.Dueno != null)
         {
             if (!_duenoService.DuenoExists(depto.Dueno.Email))
             {
                 _duenoService.CrearDueno(depto.Dueno);
             }
+            else
+            {
+                depto.Dueno = _duenoService.GetDuenoByEmail(depto.Dueno.Email);
+            }
         }
-
+        _repository.Insert(depto);
+        var edificio = _edificioRepository.Get(e => e.Nombre.ToLower() == depto.Edificio.Nombre.ToLower() && e.Direccion.ToLower() == depto.Edificio.Direccion.ToLower());
+        if(!edificio.Deptos.Contains(depto))
+        {
+            edificio.Deptos.Add(depto);
+            _edificioRepository.Update(edificio);
+        }
         _repository.Save();
     }
     public bool ExisteDepto(Depto depto)

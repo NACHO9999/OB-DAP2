@@ -11,6 +11,9 @@ namespace ob.WebApi.DTOs
         public Decimal GastosComunes { get; set; }
         public List<DeptoDTO> Deptos { get; set; }
 
+        public EdificioDTO()
+        {
+        }
         public EdificioDTO(Edificio edificio)
         {
             this.Nombre = edificio.Nombre;

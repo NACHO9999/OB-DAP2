@@ -8,6 +8,8 @@ namespace ob.WebApi.DTOs
         public string Email { get; set; }
         public string Apellido { get; set; }
 
+        public DuenoDTO() { }
+
         public DuenoDTO(Dueno dueno)
         {
             this.Nombre = dueno.Nombre;

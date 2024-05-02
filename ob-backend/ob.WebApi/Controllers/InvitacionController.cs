@@ -22,31 +22,6 @@ public class InvitacionController : ControllerBase
     }
 
 
-    [HttpGet("{email}")]
-    public IActionResult GetInvitacionByEmail([FromRoute] string email)
-    {
-        InvitacionDTO invitacion = new InvitacionDTO(_invitacionService.GetInvitacionByEmail(email));
-        return Ok(invitacion);
-    }
-
-    [HttpDelete("{email}")]
-    [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Administrador) })]
-    public IActionResult DeleteInvitacionByEmail([FromRoute] string email)
-    {
-        _invitacionService.EliminarInvitacion(email);
-        return Ok();
-    }
-
-
-    [HttpPost]
-    [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Administrador) })]
-    public IActionResult InsertInvitacion([FromBody] InvitacionDTO newInvitacion)
-    {
-        _invitacionService.CrearInvitacion(new Invitacion(newInvitacion.Email, newInvitacion.Nombre, newInvitacion.FechaExpiracion));
-        return Ok();
-    }
 
     [HttpPost("{email}/{contrasena}")]
     

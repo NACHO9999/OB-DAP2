@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 public class DeptoServiceTests
 {
     private Mock<IGenericRepository<Depto>> _mockRepository;
+    private Mock<IGenericRepository<Edificio>> _edificioRepository;
     private Mock<IDuenoService> _mockDuenoService;
     private IDeptoService _deptoService;
 
@@ -19,8 +20,9 @@ public class DeptoServiceTests
     public void Initialize()
     {
         _mockRepository = new Mock<IGenericRepository<Depto>>();
+        _edificioRepository = new Mock<IGenericRepository<Edificio>>();
         _mockDuenoService = new Mock<IDuenoService>();
-        _deptoService = new DeptoService(_mockRepository.Object, _mockDuenoService.Object);
+        _deptoService = new DeptoService(_mockRepository.Object, _mockDuenoService.Object,_edificioRepository.Object);
     }
 
     [TestMethod]

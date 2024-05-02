@@ -24,7 +24,7 @@ public class ConstructoraController : ControllerBase
     [HttpGet]
     [ServiceFilter(typeof(AuthenticationFilter))]
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
-    public IActionResult GeConstructoras()
+    public IActionResult GetConstructoras()
     {
         return Ok(_constructoraService.GetAllConstructoras().Select(c => new ConstructoraDTO(c)).ToList());
     }

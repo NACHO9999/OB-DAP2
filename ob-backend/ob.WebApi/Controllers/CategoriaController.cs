@@ -23,7 +23,7 @@ public class CategoriaController : ControllerBase
 
     [HttpGet]
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
-    public IActionResult GetCatgorias()
+    public IActionResult GetCategorias()
     {
         return Ok(_categoriaService.GetAllCategorias().Select(c => new CategoriaDTO(c)).ToList());
     }
@@ -37,12 +37,5 @@ public class CategoriaController : ControllerBase
     }
 
 
-    [HttpPost]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Administrador) })]
-    public IActionResult InsertCategoria([FromBody] CategoriaDTO newCategoria)
-    {
-        _categoriaService.CrearCategoria(new Categoria(newCategoria.Nombre));
-        return Ok();
-    }
 
 }

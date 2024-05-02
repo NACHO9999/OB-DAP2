@@ -7,10 +7,12 @@ namespace ob.BusinessLogic;
 public class InvitacionService : IInvitacionService
 {
     private IGenericRepository<Invitacion> _repository;
+    private IEncargadoService _encargadoService;
 
-    public InvitacionService(IGenericRepository<Invitacion> invitacionRepository)
+    public InvitacionService(IGenericRepository<Invitacion> invitacionRepository,IEncargadoService encargadoService)
     {
         _repository = invitacionRepository;
+        _encargadoService = encargadoService;
     }
     public void CrearInvitacion(Invitacion invitacion)
     {
@@ -35,19 +37,20 @@ public class InvitacionService : IInvitacionService
         _repository.Delete(invitacion);
         _repository.Save();
     }
-    public Encargado InvitacionAceptada(Invitacion invitacion, string contrasena){
+    public void InvitacionAceptada(Invitacion invitacion, string contrasena){
         if(invitacion.FechaExpiracion < DateTime.Now)
         {
             throw new InvalidOperationException("La invitacion ha expirado.");
         }
         var encargado = new Encargado(invitacion.Nombre, invitacion.Email, contrasena);
         EliminarInvitacion(invitacion.Email);
-        return encargado;
+        _encargadoService.CrearEncargado(encargado);
     }
     public bool InvitacionExiste(string email)
     {
-        return GetInvitacionByEmail != null;
+        var invitacion = GetInvitacionByEmail(email);
+        return invitacion != null;
     }
 
-    
+
 }

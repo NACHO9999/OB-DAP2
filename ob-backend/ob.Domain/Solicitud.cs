@@ -85,7 +85,7 @@ namespace ob.Domain
             _estado = EstadoSolicitud.Abierto;
             FechaInicio = fechaInicio;
         }
-
+        
 
     }
 }

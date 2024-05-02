@@ -22,7 +22,7 @@ public class CategoriaService : ICategoriaService
         }
         else
         {
-            throw new ResourceNotFoundException("No se encontró la categoria.");
+            throw new KeyNotFoundException("No se encontró la categoria.");
         }
     }
     public void CrearCategoria(Categoria categoria)

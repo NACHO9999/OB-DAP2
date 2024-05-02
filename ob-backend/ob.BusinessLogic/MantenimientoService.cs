@@ -33,11 +33,12 @@ public class MantenimientoService : IMantenimientoService
         }
         else
         {
-            throw new ResourceNotFoundException("No Mantenimiento found with the specified email.");
+            throw new KeyNotFoundException("No Mantenimiento found with the specified email.");
         }
     }
-    public void AtenderSolicitud(Solicitud solicitud)
+    public void AtenderSolicitud(Guid solicitudId)
     {
+        var solicitud = _solicitudService.GetSolicitudById(solicitudId);
         if (solicitud.Estado == EstadoSolicitud.Abierto)
         {
             solicitud.Estado = EstadoSolicitud.Atendiendo;
@@ -46,12 +47,13 @@ public class MantenimientoService : IMantenimientoService
         }
         else
         {
-            throw new Exception("La solicitud ya fue atendida");
+            throw new InvalidOperationException("La solicitud ya fue atendida");
         }
         
     }
-    public void CompletarSolicitud(Solicitud solicitud)
+    public void CompletarSolicitud(Guid solicitudId)
     {
+        var solicitud = _solicitudService.GetSolicitudById(solicitudId);
         if (solicitud.Estado == EstadoSolicitud.Atendiendo)
         {
             solicitud.Estado = EstadoSolicitud.Cerrado;
@@ -61,7 +63,7 @@ public class MantenimientoService : IMantenimientoService
         }
         else
         {
-            throw new Exception("La solicitud no esta en estado de atendiendo");
+            throw new InvalidOperationException("La solicitud no esta en estado de atendiendo");
         }
     }
 }

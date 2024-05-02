@@ -71,14 +71,26 @@ public class EdificioService : IEdificioService
 
     public Edificio GetEdificioByNombre(string nombre)
     {
-        return _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower(), new List<string> { "Deptos" });
+        var retorno = _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower(), new List<string> { "Deptos" });
+        if (retorno == null)
+        {
+            throw new KeyNotFoundException("No se encontró el edificio.");
+        }
+        return retorno;
     }
     public Edificio GetEdificioByNombreYDireccion(string nombre, string direccion)
     {
-        return _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower(), new List<string> { "Deptos" });
+        if (EdificioExists(nombre, direccion))
+        {
+            return _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower(), new List<string> { "Deptos" });
+        }
+        else
+        {
+            throw new KeyNotFoundException("No se encontró el edificio.");
+        }
     }
     public bool EdificioExists(string nombre, string direccion)
     {
-        return GetEdificioByNombreYDireccion(nombre, direccion) != null;
+        return _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower()) != null;
     }
 }

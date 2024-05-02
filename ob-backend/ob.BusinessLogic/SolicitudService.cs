@@ -30,7 +30,7 @@ public class SolicitudService : ISolicitudService
         }
         else
         {
-            throw new ResourceNotFoundException("No se encontró la solicitud.");
+            throw new KeyNotFoundException("No se encontró la solicitud.");
         }
     }
     private bool SolicitudExists(Guid id)

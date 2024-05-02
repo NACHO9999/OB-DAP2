@@ -39,7 +39,7 @@ public class EncargadoService : IEncargadoService
         }
         else
         {
-            throw new ResourceNotFoundException("No Encargado found with the specified email.");
+            throw new KeyNotFoundException("No Encargado found with the specified email.");
         }
     }
     public IEnumerable<Encargado> GetAllEncargados()
@@ -70,7 +70,7 @@ public class EncargadoService : IEncargadoService
         var edificio = encargado.Edificios.FirstOrDefault(e => e.Nombre.ToLower() == nombre.ToLower());
         if (edificio == null)
         {
-            throw new ResourceNotFoundException("No Edificio found with the specified name.");
+            throw new KeyNotFoundException("No Edificio found with the specified name.");
         }
         return edificio;
     }
@@ -82,14 +82,20 @@ public class EncargadoService : IEncargadoService
     {
         _solicitudService.CrearSolicitud(solicitud);
     }
-    public void AsignarSolicitud(Solicitud solicitud, Mantenimiento mantenimiento)
+    public void AsignarSolicitud(Guid solicitudId, string email)
     {
-        solicitud.PerMan = mantenimiento;
-        _solicitudService.EditarSolicitud(solicitud);
+        Solicitud solicitud = _solicitudService.GetSolicitudById(solicitudId);
+        Mantenimiento perMan = _mantenimientoService.GetMantenimientoByEmail(email);
+        if (solicitud == null || perMan == null)
+        {
+            throw new KeyNotFoundException("Solicitud or Mantenimiento not found.");
+        }
+        solicitud.PerMan = perMan;
     }
 
-    public int[] GetSolicitudByEdificio(Edificio edificio)
+    public int[] GetSolicitudByEdificio(string nombre, string direccion)
     {
+        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
         int[] array = new int[3];
         var lista = _solicitudService.GetSolicitudesByEdificio(edificio);
         foreach (var solicitud in lista)
@@ -109,8 +115,9 @@ public class EncargadoService : IEncargadoService
         }
         return array;
     }
-    public int[] GetSolicitudByMantenimiento(Mantenimiento mantenimiento)
+    public int[] GetSolicitudByMantenimiento(string  email)
     {
+        Mantenimiento mantenimiento = _mantenimientoService.GetMantenimientoByEmail(email);
         int[] retorno = new int[3];
         var lista = _solicitudService.GetSolicitudesByMantenimiento(mantenimiento);
         foreach (var solicitud in lista)
@@ -131,8 +138,9 @@ public class EncargadoService : IEncargadoService
         }
         return retorno;
     }
-    public TimeSpan? TiempoPromedioAtencion(Mantenimiento mantenimiento)
+    public TimeSpan? TiempoPromedioAtencion(string email)
     {
+        Mantenimiento mantenimiento = _mantenimientoService.GetMantenimientoByEmail(email);
         var lista = _solicitudService.GetSolicitudesByMantenimiento(mantenimiento);
         TimeSpan? tiempoTotal = null;
         int cantidad = 0;

@@ -23,7 +23,7 @@ public class SessionService : ISessionService
         if (authToken == null)
             throw new ArgumentException("Cant retrieve user without auth token");
 
-        var session = _sessionRepository.Get(s => s.AuthToken == authToken, new List<string>(){"User"});
+        var session = _sessionRepository.Get(s => s.AuthToken == authToken, new List<string>(){"Usuario"});
 
         if (session != null)
             _currentUser = session.Usuario;
@@ -44,5 +44,13 @@ public class SessionService : ISessionService
 
         return session.AuthToken;
     }
-    
+    public void Logout(Guid authToken)
+    {
+        var session = _sessionRepository.Get(s => s.AuthToken == authToken);
+        if (session != null)
+        {
+            _sessionRepository.Delete(session);
+            _sessionRepository.Save();
+        }
+    }
 }

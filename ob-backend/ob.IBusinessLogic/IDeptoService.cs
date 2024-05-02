@@ -6,5 +6,6 @@ public interface IDeptoService
     bool ExisteDepto(Depto depto);
     void BorrarDepto(Depto depto);
     void EditarDepto(Depto depto);
+    Depto GetDepto(int numero, string edificioNombre, string edificioDireccion);
 
 }

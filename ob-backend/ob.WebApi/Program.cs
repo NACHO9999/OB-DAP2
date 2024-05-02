@@ -1,3 +1,9 @@
+using ob.WebApi.Filters;
+using ob.ServicesFactory;
+using ob.IBusinessLogic;
+using ob.BusinessLogic;
+using ob.Domain;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +13,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllers(options => options.Filters.Add(typeof(ExceptionFilter)));
+builder.Services.AddScoped<AuthenticationFilter>();
+
+var servicesFactory = new ServicesFactory();
+servicesFactory.RegistrateServices(builder.Services);
+
+
 var app = builder.Build();
+app.UseCors();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -16,10 +31,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+

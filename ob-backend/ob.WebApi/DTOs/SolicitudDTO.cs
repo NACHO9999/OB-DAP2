@@ -13,6 +13,7 @@ namespace ob.WebApi.DTOs
         public DateTime FechaInicio { get; set; }
         public DateTime? FechaFin { get; set; }
 
+        public SolicitudDTO() { }
         public SolicitudDTO(Solicitud solicitud)
         {
             this.Id = solicitud.Id;

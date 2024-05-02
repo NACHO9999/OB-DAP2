@@ -10,9 +10,18 @@ public class AuthorizationFilter : Attribute, IAuthorizationFilter
 {
     public Type [] RoleNeeded { get; set; }
 
+    public bool OwnUserAction { get; set; } = false;
+    public string Email { get; set; } = string.Empty;
+
     public void OnAuthorization(AuthorizationFilterContext context)
     {
         var authorizationHeader = context.HttpContext.Request.Headers["Authorization"].ToString();
+        var email = context.RouteData.Values["email"] as string;
+        if (email != null)
+        {
+            Email = email;
+        }
+        
         Guid token = Guid.Empty;
 
         if (string.IsNullOrEmpty(authorizationHeader) || !Guid.TryParse(authorizationHeader, out token))
@@ -35,15 +44,9 @@ public class AuthorizationFilter : Attribute, IAuthorizationFilter
                 StatusCode = 401
             };
         }
-        bool hasPermissions = false;
+        Type currentUserRole = currentUser.GetType();
 
-        foreach (Type rol in RoleNeeded)
-        {
-            if (rol == currentUser.GetType())
-            {
-                hasPermissions = true;
-            }
-        }
+        bool hasPermissions = RoleNeeded.Any(role => role == currentUserRole);
 
         if (!hasPermissions)
         {
@@ -53,6 +56,19 @@ public class AuthorizationFilter : Attribute, IAuthorizationFilter
                 Content = "You are not authorized to use this functionality."
             };
         }
+        if(OwnUserAction)
+        {
+            
+            if (currentUser.Email != Email)
+            {
+                context.Result = new ContentResult()
+                {
+                    StatusCode = 403,
+                    Content = "You are not authorized to use this functionality."
+                };
+            }
+        }
+
     }
 
     protected ISessionService GetSessionService(AuthorizationFilterContext context)

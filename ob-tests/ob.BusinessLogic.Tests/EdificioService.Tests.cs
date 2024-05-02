@@ -42,7 +42,7 @@ public class EdificioServiceTests
         _edificioService.CrearEdificio(newEdificio);
 
         // Assert
-        _mockRepository.Verify(repo => repo.Add(It.IsAny<Edificio>()), Times.Once);
+        _mockRepository.Verify(repo => repo.Insert(It.IsAny<Edificio>()), Times.Once);
     }
 
     [TestMethod]

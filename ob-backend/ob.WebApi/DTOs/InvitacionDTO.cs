@@ -7,6 +7,8 @@ namespace ob.WebApi.DTOs
         public string Email { get; set; }
         public string Nombre { get; set; }
         public DateTime FechaExpiracion { get; set; }
+        
+        public InvitacionDTO() { }
 
         public InvitacionDTO(Invitacion invitacion)
         {

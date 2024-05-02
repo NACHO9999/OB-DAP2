@@ -31,15 +31,6 @@ public class DuenoController : ControllerBase
         return Ok(dueno);
     }
 
-    [HttpDelete("{email}")]
-    [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
-    public IActionResult DeleteDuenoByEmail([FromRoute] string email)
-    {
-        _duenoService.BorrarDueno(_duenoService.GetDuenoByEmail(email));
-        return Ok();
-    }
-
 
     [HttpPost]
     [ServiceFilter(typeof(AuthenticationFilter))]

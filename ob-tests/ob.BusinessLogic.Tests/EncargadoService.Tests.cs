@@ -92,7 +92,7 @@ public class EncargadoServiceTests
         _mockEdificioService.Setup(s => s.CrearEdificio(edificio)).Verifiable();
 
         // Act
-        _encargadoService.CrearEdificio(encargado, edificio);
+        _encargadoService.CrearEdificio(encargado.Email, edificio);
 
         // Assert
         _mockEdificioService.Verify(s => s.CrearEdificio(edificio), Times.Once);
@@ -100,60 +100,6 @@ public class EncargadoServiceTests
         _mockRepository.Verify(repo => repo.Save(), Times.Once);
     }
 
-    [TestMethod]
-    public void EditarEdificio_ValidEdificio_EditsEdificio()
-    {
-        // Arrange
-        var edificio = new Edificio("Edificio Central", "123 Main St", "Centro", new Constructora("Construcciones S.A."), 20000, new List<Depto>());
-        _mockEdificioService.Setup(s => s.EditarEdificio(edificio)).Verifiable();
-
-        // Act
-        _encargadoService.EditarEdificio(edificio);
-
-        // Assert
-        _mockEdificioService.Verify(s => s.EditarEdificio(edificio), Times.Once);
-        _mockRepository.Verify(repo => repo.Save(), Times.Once);
-    }
-
-    [TestMethod]
-    public void BorrarEdificio_ValidEdificio_DeletesEdificio()
-    {
-        // Arrange
-        var edificio = new Edificio("Edificio Existente", "123 Main St", "Centro", new Constructora("Construcciones S.A."), 20000, new List<Depto>());
-        _mockEdificioService.Setup(s => s.GetEdificioByNombre(edificio.Nombre)).Returns(edificio);
-        _mockEdificioService.Setup(s => s.BorrarEdificio(edificio)).Verifiable();
-
-        // Act
-        _encargadoService.BorrarEdificio(edificio.Nombre);
-
-        // Assert
-        _mockEdificioService.Verify(s => s.BorrarEdificio(edificio), Times.Once);
-        _mockRepository.Verify(repo => repo.Save(), Times.Once);
-    }
-
-    [TestMethod]
-    public void GetEdificioByNombre_ValidNombre_ReturnsEdificio()
-    {
-        // Arrange
-        var encargado = new Encargado("test@example.com", "Test User", "Password123");
-        var edificio = new Edificio("Edificio Central", "123 Main St", "Centro", new Constructora("Construcciones S.A."), 20000, new List<Depto>());
-        encargado.Edificios.Add(edificio);
-
-        // Act
-        var result = _encargadoService.GetEdificioByNombre(encargado, edificio.Nombre);
-
-        // Assert
-        Assert.AreEqual(edificio, result);
-    }
-
-    [TestMethod]
-    public void GetEdificioByNombre_NonExistingEdificio_ThrowsResourceNotFoundException()
-    {
-        // Arrange
-        var encargado = new Encargado("test@example.com", "Test User", "Password123");
-        encargado.Edificios = new List<Edificio>();
-
-        // Act & Assert
-        Assert.ThrowsException<ResourceNotFoundException>(() => _encargadoService.GetEdificioByNombre(encargado, "NonExisting"));
-    }
+   
+   
 }

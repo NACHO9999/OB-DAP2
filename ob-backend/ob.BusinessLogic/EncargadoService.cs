@@ -46,49 +46,47 @@ public class EncargadoService : IEncargadoService
     {
         return _repository.GetAll<Encargado>(encargado => true, new List<string> { "Edificios.Deptos" });
     }
-    public void CrearEdificio(Encargado encargado, Edificio edificio)
+    public void CrearEdificio(string email, Edificio edificio)
     {
 
         _edificioService.CrearEdificio(edificio);
+        var encargado = GetEncargadoByEmail(email);
         encargado.Edificios.Add(edificio);
+        _repository.Update(encargado);
         _repository.Save();
     }
-    public void EditarEdificio(Edificio edificio)
+    public void AsignarEdificio(string email, string nombre,string direccion)
     {
-        _edificioService.EditarEdificio(edificio);
+        GetEncargadoByEmail(email).Edificios.Add(_edificioService.GetEdificioByNombreYDireccion(nombre, direccion));
+        _repository.Update(GetEncargadoByEmail(email));
         _repository.Save();
-    }
-    public void BorrarEdificio(string nombre)
-    {
-        var edificio = _edificioService.GetEdificioByNombre(nombre);
-        _edificioService.BorrarEdificio(edificio);
-        _repository.Save();
-    }
-    public Edificio GetEdificioByNombre(Encargado encargado, string nombre)
-    {
-
-        var edificio = encargado.Edificios.FirstOrDefault(e => e.Nombre.ToLower() == nombre.ToLower());
-        if (edificio == null)
-        {
-            throw new KeyNotFoundException("No Edificio found with the specified name.");
-        }
-        return edificio;
     }
     public void CrearMantenimiento(Mantenimiento mantenimiento)
     {
         _mantenimientoService.CrearMantenimiento(mantenimiento);
     }
-    public void CrearSolicitud(Solicitud solicitud)
+    public void CrearSolicitud(Solicitud solicitud,string email)
     {
+        var encargado = GetEncargadoByEmail(email);
+        if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
+        {
+            throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
+        }
         _solicitudService.CrearSolicitud(solicitud);
     }
-    public void AsignarSolicitud(Guid solicitudId, string email)
+    public void AsignarSolicitud(Guid solicitudId, string email, string emailEncargado)
     {
+        Encargado encargado = GetEncargadoByEmail(emailEncargado);
         Solicitud solicitud = _solicitudService.GetSolicitudById(solicitudId);
         Mantenimiento perMan = _mantenimientoService.GetMantenimientoByEmail(email);
-        if (solicitud == null || perMan == null)
+       
+        if (solicitud == null || perMan == null||encargado==null)
         {
             throw new KeyNotFoundException("Solicitud or Mantenimiento not found.");
+        }
+        if(!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
+        {
+            throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
         }
         solicitud.PerMan = perMan;
     }
@@ -115,24 +113,28 @@ public class EncargadoService : IEncargadoService
         }
         return array;
     }
-    public int[] GetSolicitudByMantenimiento(string  email)
+    public int[] GetSolicitudByMantenimiento(string  email, string emailEncargado)
     {
         Mantenimiento mantenimiento = _mantenimientoService.GetMantenimientoByEmail(email);
+        Encargado encargado = GetEncargadoByEmail(emailEncargado);
         int[] retorno = new int[3];
         var lista = _solicitudService.GetSolicitudesByMantenimiento(mantenimiento);
         foreach (var solicitud in lista)
         {
-            if (solicitud.Estado == EstadoSolicitud.Abierto)
+            if (encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
             {
-                retorno[0]++;
-            }
-            else if (solicitud.Estado == EstadoSolicitud.Atendiendo)
-            {
-                retorno[1]++;
-            }
-            else if (solicitud.Estado == EstadoSolicitud.Cerrado)
-            {
-                retorno[2]++;
+                if (solicitud.Estado == EstadoSolicitud.Abierto)
+                {
+                    retorno[0]++;
+                }
+                else if (solicitud.Estado == EstadoSolicitud.Atendiendo)
+                {
+                    retorno[1]++;
+                }
+                else if (solicitud.Estado == EstadoSolicitud.Cerrado)
+                {
+                    retorno[2]++;
+                }
             }
 
         }
@@ -162,5 +164,26 @@ public class EncargadoService : IEncargadoService
         }
 
         return TimeSpan.FromTicks(tiempoTotal.Value.Ticks / cantidad); // Calculate average time
+    }
+    public void BorrarEdificio(string nombre, string direccion, string email)
+    {
+        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
+        Encargado encargado = GetEncargadoByEmail(email);
+        if (!encargado.Edificios.Contains(edificio))
+        {
+            throw new InvalidOperationException("The Encargado is not in charge of the building.");
+        }
+        _edificioService.BorrarEdificio(edificio);
+        encargado.Edificios.Remove(edificio);
+        _repository.Update(encargado);
+    }
+    public void EditarEdificio(string email, Edificio edificio)
+    {
+        Encargado encargado = GetEncargadoByEmail(email);
+        if (!encargado.Edificios.Contains(edificio))
+        {
+            throw new InvalidOperationException("The Encargado is not in charge of the building.");
+        }
+        _edificioService.EditarEdificio(edificio);
     }
 }

@@ -17,6 +17,7 @@ public class EdificioService : IEdificioService
 
     public void CrearEdificio(Edificio edificio)
     {
+     
         if(_constructoraService.GetConstructoraByNombre(edificio.EmpresaConstructora.Nombre) == null)
         {
             _constructoraService.CrearConstructora(edificio.EmpresaConstructora);
@@ -34,9 +35,16 @@ public class EdificioService : IEdificioService
         
         foreach (var depto in edificio.Deptos)
         {
-            if (!_deptoService.ExisteDepto(depto))
+            var existingDepto = _deptoService.GetDepto(depto.Numero, edificio.Nombre, edificio.Direccion);
+            if (existingDepto == null)
             {
                 _deptoService.CrearDepto(depto);
+            }
+            else
+            {
+                existingDepto.EdificioDireccion = edificio.Direccion;
+                existingDepto.EdificioNombre = edificio.Nombre;
+                _deptoService.EditarDepto(existingDepto);
             }
         }
         
@@ -61,13 +69,18 @@ public class EdificioService : IEdificioService
         _repository.Update(edificio);
         foreach (var depto in edificio.Deptos)
         {
-            if (!_deptoService.ExisteDepto(depto))
+            var existingDepto = _deptoService.GetDepto(depto.Numero, edificio.Nombre, edificio.Direccion);
+            if (existingDepto == null)
             {
                 _deptoService.CrearDepto(depto);
             }
-            depto.EdificioDireccion = edificio.Direccion;
-            depto.EdificioNombre = edificio.Nombre;
-            _deptoService.EditarDepto(depto);
+            else
+            {
+                existingDepto.EdificioDireccion = edificio.Direccion;
+                existingDepto.EdificioNombre = edificio.Nombre;
+                _deptoService.EditarDepto(existingDepto);
+            }
+        
         }
         _repository.Save();
     }

@@ -6,7 +6,7 @@ namespace ob.Domain
         public Edificio Edificio
         {
             get { return _edificio; }
-            set { Validator.IsNotNull(value); _edificio = value; }
+            set {  Validator.IsNotNull(value); _edificio = value; }
         }
         private int _piso;
         public int Piso

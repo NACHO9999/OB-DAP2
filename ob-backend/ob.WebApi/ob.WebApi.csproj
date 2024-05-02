@@ -7,7 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ob.ServicesFactory\ob.ServicesFactory.csproj" />
+    <ProjectReference Include="..\Exceptions\ob.Exceptions.csproj" />
+    <ProjectReference Include="..\ob.Domain\ob.Domain.csproj" />
+    <ProjectReference Include="..\ob.IBusinessLogic\ob.IBusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

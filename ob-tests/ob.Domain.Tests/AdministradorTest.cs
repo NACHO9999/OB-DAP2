@@ -1,39 +1,79 @@
+
 namespace ob.Domain.Tests;
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 [TestClass]
-public class AdministradorTest
+public class AdministradorTests
 {
     [TestMethod]
-    public void NuevoAdministrador()
+    public void Nombre_SetValidValue_Success()
     {
-        //Arrange & Act
-        Administrador nuevoAdministrador = new("Juan", "Sosa", "jsosa@gmail.com", "Contra12345");
+        // Arrange
+        Administrador usuario = new Administrador("John", "Doe", "john.doe@example.com", "password");
 
-        //Assert
-        Assert.AreEqual("Juan", nuevoAdministrador.Nombre);
-        Assert.AreEqual("Sosa", nuevoAdministrador.Apellido);
-        Assert.AreEqual("jsosa@gmail.com", nuevoAdministrador.Email);
-        Assert.AreEqual("Contra12345", nuevoAdministrador.Contrasena);
+        // Act
+        usuario.Nombre = "Jane";
+
+        // Assert
+        Assert.AreEqual("Jane", usuario.Nombre);
     }
 
     [TestMethod]
-    public void AltaAdministrador()
+    public void Nombre_SetInvalidValue_ThrowsException()
     {
-        //Arrange
-        Administrador nuevoAdministrador = new();
+        // Arrange
+        Administrador usuario = new Administrador("John", "Doe", "john.doe@example.com", "password");
 
-        //Act
-        Administrador administrador = nuevoAdministrador.AltaAdministrador(
-            "Juan",
-            "Sosa",
-            "jsosa@gmail.com",
-            "Contra12345"
-        );
-
-        //Assert
-        Assert.AreEqual("Juan", administrador.Nombre);
-        Assert.AreEqual("Sosa", administrador.Apellido);
-        Assert.AreEqual("jsosa@gmail.com", administrador.Email);
-        Assert.AreEqual("Contra12345", administrador.Contrasena);
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => usuario.Nombre = "");
     }
+
+    [TestMethod]
+    public void Apellido_SetValidValue_Success()
+    {
+        // Arrange
+        Administrador usuario = new Administrador("John", "Doe", "john.doe@example.com", "password");
+
+        // Act
+        usuario.Apellido = "Smith";
+
+        // Assert
+        Assert.AreEqual("Smith", usuario.Apellido);
+    }
+
+    [TestMethod]
+    public void Apellido_SetInvalidValue_ThrowsException()
+    {
+        // Arrange
+        Administrador usuario = new Administrador("John", "Doe", "john.doe@example.com", "password");
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => usuario.Apellido = "");
+    }
+
+    [TestMethod]
+    public void Email_SetValidValue_Success()
+    {
+        // Arrange
+        Administrador usuario = new Administrador("John", "Doe", "john.doe@example.com", "password");
+
+        // Act
+        usuario.Email = "jane.smith@example.com";
+
+        // Assert
+        Assert.AreEqual("jane.smith@example.com", usuario.Email);
+    }
+
+    [TestMethod]
+    public void Email_SetInvalidValue_ThrowsException()
+    {
+        // Arrange
+        Administrador usuario = new Administrador("John", "Doe", "john.doe@example.com", "password");
+
+        // Act & Assert
+        Assert.ThrowsException<ArgumentException>(() => usuario.Email = "invalid-email");
+    }
+    
+
 }

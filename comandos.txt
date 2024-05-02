@@ -4,3 +4,6 @@ Crear Archivo Test
     //dotnet sln add ob-tests/ob.Domain.Tests
     //dotnet add ob-tests/ob.Domain.Tests reference ob-backend/ob.Domain
 
+Crear Archivo
+    //dotnet new classlib -o ob.BusinessLogic
+    //dotnet sln add ob-backend/ob.BusinessLogic/

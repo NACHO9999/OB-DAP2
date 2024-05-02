@@ -1,28 +1,46 @@
-namespace ob.Domain.Tests;
 
-[TestClass]
-public class CategoriaTest
+
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+namespace ob.Domain.Tests
 {
-    [TestMethod]
-    public void NuevaCategoria()
+    [TestClass]
+    public class CategoriaTests
     {
-        //Arrange & Act
-        Categoria nuevaCategoria = new("Limpieza");
+        [TestMethod]
+        public void Constructor_ValidNombre_SetNombre()
+        {
+            // Arrange
+            string nombre = "TestCategory";
 
-        //Assert
-        Assert.AreEqual("Limpieza", nuevaCategoria.Nombre);
-    }
+            // Act
+            Categoria categoria = new Categoria(nombre);
 
-    [TestMethod]
-    public void CambiarNombreCategoria()
-    {
-        //Arrange
-        Categoria nuevaCategoria = new("Limpieza");
+            // Assert
+            Assert.AreEqual(nombre, categoria.Nombre);
+        }
 
-        //Act
-        nuevaCategoria.CambiarNombre("Seguridad");
+        [TestMethod]
+        public void Nombre_SetValidValue_Success()
+        {
+            // Arrange
+            Categoria categoria = new Categoria("TestCategory");
 
-        //Assert
-        Assert.AreEqual("Seguridad", nuevaCategoria.Nombre);
+            // Act
+            categoria.Nombre = "UpdatedName";
+
+            // Assert
+            Assert.AreEqual("UpdatedName", categoria.Nombre);
+        }
+
+        [TestMethod]
+        public void Nombre_SetInvalidValue_ThrowsException()
+        {
+            // Arrange
+            Categoria categoria = new Categoria("TestCategory");
+
+            // Act & Assert
+            Assert.ThrowsException<ArgumentException>(() => categoria.Nombre = "");
+        }
     }
 }

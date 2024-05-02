@@ -92,10 +92,11 @@ namespace ob.DataAccess
                     .WithMany() // A Constructora can have many Edificios
                     .IsRequired(); // Ensure a relationship
 
-                modelBuilder.Entity<Depto>()
-                    .HasOne(d => d.Edificio) // A Depto belongs to one Edificio
-                    .WithMany(e => e.Deptos) // An Edificio can have many Deptos
-                    .IsRequired(); // Ensure a relationship
+                modelBuilder.Entity<Edificio>()
+                    
+                    .HasMany(e => e.Deptos) 
+                    .WithOne()
+                    .IsRequired(false); // Ensure a relationship
 
                 modelBuilder.Entity<Depto>()
                     .HasOne(d => d.Dueno) // A Depto belongs to one Dueno

@@ -2,12 +2,7 @@ namespace ob.Domain
 {
     public class Depto
     {
-        private Edificio _edificio;
-        public Edificio Edificio
-        {
-            get { return _edificio; }
-            set {  Validator.IsNotNull(value); _edificio = value; }
-        }
+        
         private int _piso;
         public int Piso
         {
@@ -44,17 +39,17 @@ namespace ob.Domain
 
         protected Depto() { }
 
-        public Depto(Edificio edificio, int piso, int numero, Dueno? dueno, int cantidadCuartos, int cantidadBanos, bool conTerraza)
+        public Depto( int piso, int numero, Dueno? dueno, int cantidadCuartos, int cantidadBanos, bool conTerraza, string edNombre, string edDireccion)
         {
-            _edificio = edificio;
+            
             _piso = piso;
             _numero = numero;
             Dueno = dueno;
             _cantidadCuartos = cantidadCuartos;
             _cantidadBanos = cantidadBanos;
             _conTerraza = conTerraza;
-            EdificioNombre = edificio.Nombre;
-            EdificioDireccion = edificio.Direccion;
+            EdificioNombre = edNombre;
+            EdificioDireccion = edDireccion;
         }
     }
 }

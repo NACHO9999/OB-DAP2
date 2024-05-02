@@ -12,8 +12,8 @@ using ob.DataAccess;
 namespace ob.DataAccess.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20240429200239_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20240502224134_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -268,15 +268,11 @@ namespace ob.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("DuenoEmail");
 
-                    b.HasOne("ob.Domain.Edificio", "Edificio")
+                    b.HasOne("ob.Domain.Edificio", null)
                         .WithMany("Deptos")
-                        .HasForeignKey("EdificioNombre", "EdificioDireccion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EdificioNombre", "EdificioDireccion");
 
                     b.Navigation("Dueno");
-
-                    b.Navigation("Edificio");
                 });
 
             modelBuilder.Entity("ob.Domain.Edificio", b =>

@@ -265,15 +265,11 @@ namespace ob.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("DuenoEmail");
 
-                    b.HasOne("ob.Domain.Edificio", "Edificio")
+                    b.HasOne("ob.Domain.Edificio", null)
                         .WithMany("Deptos")
-                        .HasForeignKey("EdificioNombre", "EdificioDireccion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EdificioNombre", "EdificioDireccion");
 
                     b.Navigation("Dueno");
-
-                    b.Navigation("Edificio");
                 });
 
             modelBuilder.Entity("ob.Domain.Edificio", b =>

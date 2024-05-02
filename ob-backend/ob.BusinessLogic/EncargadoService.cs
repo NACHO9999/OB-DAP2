@@ -12,12 +12,14 @@ public class EncargadoService : IEncargadoService
     private readonly IEdificioService _edificioService;
     private readonly IMantenimientoService _mantenimientoService;
     private readonly ISolicitudService _solicitudService;
-    public EncargadoService(IUsuarioRepository repository, IEdificioService edificioService, IMantenimientoService mantenimientoService, ISolicitudService solicitudService)
+    private readonly IDeptoService _deptoService;
+    public EncargadoService(IUsuarioRepository repository, IEdificioService edificioService, IMantenimientoService mantenimientoService, ISolicitudService solicitudService, IDeptoService deptoService)
     {
         _repository = repository;
         _edificioService = edificioService;
         _mantenimientoService = mantenimientoService;
         _solicitudService = solicitudService;
+        _deptoService = deptoService;
     }
 
     public void CrearEncargado(Encargado encargado)
@@ -28,6 +30,26 @@ public class EncargadoService : IEncargadoService
         }
         _repository.Insert(encargado);
         _repository.Save();
+    }
+
+    public void CrearDepto (string email, Depto depto)
+    {
+        var encargado = GetEncargadoByEmail(email);
+
+        var edificio = _edificioService.GetEdificioByNombreYDireccion(depto.EdificioNombre, depto.EdificioDireccion);
+        if(!encargado.Edificios.Contains(edificio))
+        {
+            throw new InvalidOperationException("The Encargado is not in charge of the building.");
+        }
+        if(edificio.Deptos.Any(d => d.Numero == depto.Numero))
+        {
+            throw new AlreadyExistsException("El departamento ya existe");
+        }
+        
+        _deptoService.CrearDepto(depto);
+        edificio.Deptos.Add(depto);
+        _repository.Update(encargado);
+        _edificioService.EditarEdificio(edificio);
     }
 
     public Encargado GetEncargadoByEmail(string email)

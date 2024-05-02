@@ -135,7 +135,16 @@ public class EncargadoController : ControllerBase
         
     }
 
+    [HttpPost("Crear-Depto/{email}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) }, OwnUserAction = true)]
+    public IActionResult CrearDepto([FromBody] DeptoDTO edificioDTO, [FromRoute] string email)
+    {
 
+        _encargadoService.CrearDepto(email, edificioDTO.ToEntity());
+        return Ok("Edificio creado exitosamente.");
+
+    }
 
 
 

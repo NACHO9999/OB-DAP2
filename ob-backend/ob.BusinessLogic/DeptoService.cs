@@ -32,20 +32,16 @@ public class DeptoService : IDeptoService
                 depto.Dueno = _duenoService.GetDuenoByEmail(depto.Dueno.Email);
             }
         }
-        var edificio = _edificioRepository.Get(e => e.Nombre.ToLower() == depto.EdificioNombre.ToLower() && e.Direccion.ToLower() == depto.EdificioDireccion.ToLower(), new List<string> { "EmpresaConstructora" });
-        depto.Edificio = edificio;
+        
+        
         _repository.Insert(depto);
        
-        if(!depto.Edificio.Deptos.Contains(depto))
-        {
-            edificio.Deptos.Add(depto);
-            _edificioRepository.Update(edificio);
-        }
+       
         _repository.Save();
     }
     public bool ExisteDepto(Depto depto)
     {
-        return _repository.Get(d => d.Numero == depto.Numero && d.Edificio.Nombre == depto.Edificio.Nombre && d.Edificio.Direccion == depto.Edificio.Direccion) != null;
+        return _repository.Get(d => d.Numero == depto.Numero && d.EdificioNombre == depto.EdificioNombre && d.EdificioDireccion == depto.EdificioDireccion) != null;
     }
     public void EditarDepto(Depto depto)
     {
@@ -66,6 +62,6 @@ public class DeptoService : IDeptoService
     }
     public Depto GetDepto(int numero, string edificioNombre, string edificioDireccion)
     {
-        return _repository.Get(d => d.Numero == numero && d.Edificio.Nombre == edificioNombre && d.Edificio.Direccion == edificioDireccion, new List<string> { "Dueno", "Edificio"});
+        return _repository.Get(d => d.Numero == numero && d.EdificioNombre == edificioNombre && d.EdificioDireccion == edificioDireccion, new List<string> { "Dueno"});
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ob.BusinessLogic;
+using ob.IBusinessLogic;
 using ob.Domain;
 using ob.Exceptions.BusinessLogicExceptions;
 using ob.IDataAccess;

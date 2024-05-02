@@ -57,7 +57,7 @@ public class ConstructoraServiceTests
         _mockRepository.Setup(repo => repo.Get(c => c.Nombre == nonExistingNombre, null)).Returns((Constructora)null);
 
         // Act & Assert
-        Assert.ThrowsException<ResourceNotFoundException>(() => _constructoraService.GetConstructoraByNombre(nonExistingNombre));
+        Assert.ThrowsException<KeyNotFoundException>(() => _constructoraService.GetConstructoraByNombre(nonExistingNombre));
     }
 
 }

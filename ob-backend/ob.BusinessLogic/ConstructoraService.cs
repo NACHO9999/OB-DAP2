@@ -27,8 +27,12 @@ public class ConstructoraService: IConstructoraService
         }
         else
         {
-            throw new ResourceNotFoundException("No se encontró la constructora.");
+            throw new KeyNotFoundException("No se encontró la constructora.");
         }
+    }
+    public IEnumerable<Constructora> GetAllConstructoras()
+    {
+        return _repository.GetAll<Constructora>();
     }
     public bool ConstructoraExists(string nombre)
     {

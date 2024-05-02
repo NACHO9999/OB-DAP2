@@ -19,7 +19,12 @@ public class AdminService : IAdminService
         _invitacionService = invitacionService;
     }
 
-    
+    public IEnumerable<Administrador> GetAllAdmins()
+    {
+        return _repository.GetAll<Usuario>()
+                         .OfType<Administrador>();
+    }
+
     public void CrearAdmin(Administrador admin)
     {
         if (_repository.EmailExists(admin.Email))
@@ -38,7 +43,7 @@ public class AdminService : IAdminService
         }
         else
         {
-            throw new ResourceNotFoundException("No se encontró el administrador.");
+            throw new KeyNotFoundException("No se encontró el administrador.");
         }
     }
     public void InvitarEncargado(string email, string nombre, DateTime fecha)

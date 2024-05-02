@@ -13,8 +13,8 @@ public interface IEncargadoService
     Edificio GetEdificioByNombre(Encargado encargado, string nombre);
     void CrearMantenimiento(Mantenimiento mantenimiento);
     void CrearSolicitud(Solicitud solicitud);
-    void AsignarSolicitud(Solicitud solicitud, Mantenimiento mantenimiento);
-    int [] GetSolicitudByEdificio(Edificio edificio);
-    int [] GetSolicitudByMantenimiento(Mantenimiento mantenimiento);
-    TimeSpan? TiempoPromedioAtencion(Mantenimiento mantenimiento);
+    void AsignarSolicitud(Guid solicitudId, string email);
+    int [] GetSolicitudByEdificio(string nombre, string direccion);
+    int [] GetSolicitudByMantenimiento(string email);
+    TimeSpan? TiempoPromedioAtencion(string  email);
 }

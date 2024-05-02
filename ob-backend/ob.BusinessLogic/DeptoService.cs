@@ -50,4 +50,8 @@ public class DeptoService : IDeptoService
         _repository.Delete(depto);
         _repository.Save();
     }
+    public Depto GetDepto(int numero, string edificioNombre, string edificioDireccion)
+    {
+        return _repository.Get(d => d.Numero == numero && d.Edificio.Nombre == edificioNombre && d.Edificio.Direccion == edificioDireccion, new List<string> { "Dueno", "Edificio"});
+    }
 }

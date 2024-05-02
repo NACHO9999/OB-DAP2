@@ -57,7 +57,7 @@ public class CategoriaServiceTests
         _mockRepository.Setup(repo => repo.Get(c => c.Nombre == nonExistingNombre, null)).Returns((Categoria)null);
 
         // Act & Assert
-        Assert.ThrowsException<ResourceNotFoundException>(() => _categoriaService.GetCategoriaByNombre(nonExistingNombre));
+        Assert.ThrowsException<KeyNotFoundException>(() => _categoriaService.GetCategoriaByNombre(nonExistingNombre));
     }
 
    

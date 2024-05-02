@@ -4,5 +4,6 @@ public interface IConstructoraService
 {
     void CrearConstructora(Constructora constructora);
     Constructora GetConstructoraByNombre(string nombre);
+    IEnumerable<Constructora> GetAllConstructoras();
 
 }

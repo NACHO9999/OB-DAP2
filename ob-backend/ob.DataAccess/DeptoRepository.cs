@@ -3,9 +3,9 @@ using ob.Domain;
 using System.Linq.Expressions;
 namespace ob.DataAccess
 {
-    public class DeptosRepository : GenericRepository<Depto>
+    public class DeptoRepository : GenericRepository<Depto>
     {
-        public DeptosRepository(DbContext context)
+        public DeptoRepository(DbContext context)
         {
             Context = context;
         }

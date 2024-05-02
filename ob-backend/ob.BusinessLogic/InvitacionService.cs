@@ -29,14 +29,18 @@ public class InvitacionService : IInvitacionService
     {
         if (!InvitacionExiste(email))
         {
-            throw new ResourceNotFoundException("No se encontró la invitacion.");
+            throw new KeyNotFoundException("No se encontró la invitacion.");
         }
         var invitacion = _repository.Get(i => i.Email.ToLower() == email.ToLower());
         _repository.Delete(invitacion);
         _repository.Save();
     }
     public Encargado InvitacionAceptada(Invitacion invitacion, string contrasena){
-        var encargado = new Encargado(invitacion.Nombre,  invitacion.Email, contrasena);        
+        if(invitacion.FechaExpiracion < DateTime.Now)
+        {
+            throw new InvalidOperationException("La invitacion ha expirado.");
+        }
+        var encargado = new Encargado(invitacion.Nombre, invitacion.Email, contrasena);
         EliminarInvitacion(invitacion.Email);
         return encargado;
     }

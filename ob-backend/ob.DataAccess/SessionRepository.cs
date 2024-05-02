@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using ob.Domain;
 using System.Linq.Expressions;
 namespace ob.DataAccess;
-public class SessionManagment : GenericRepository<Session>
+public class SessionRepository : GenericRepository<Session>
 {
-    public SessionManagment(DbContext context)
+    public SessionRepository(DbContext context)
     {
         Context = context;
     }

@@ -27,7 +27,9 @@ namespace ob.WebApi.DTOs
         }
         public Solicitud ToEntity()
         {
-            return new Solicitud(this.Mantenimento.MantenimientoToEntity(), this.Descripcion, this.Depto.ToEntity(), new Categoria(this.Categoria.Nombre), this.Estado, this.FechaInicio) { FechaFin = this.FechaFin};
+            var solicitud = new Solicitud(this.Mantenimento.MantenimientoToEntity(), this.Descripcion, this.Depto.ToEntity(), new Categoria(this.Categoria.Nombre), this.Estado, this.FechaInicio) { FechaFin = this.FechaFin};
+            solicitud.Id = this.Id;
+            return solicitud;
         }
     }
 }

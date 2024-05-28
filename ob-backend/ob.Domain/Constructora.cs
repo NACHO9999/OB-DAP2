@@ -2,7 +2,7 @@ namespace ob.Domain
 {
     public class Constructora
     {
-
+        public Guid Id { get; set; }
         private string _nombre;
         public string Nombre {
             get { return _nombre; }
@@ -16,6 +16,7 @@ namespace ob.Domain
 
         public Constructora(string nombre)
         {
+            Id = Guid.NewGuid();
             _nombre = nombre;
         }
     }

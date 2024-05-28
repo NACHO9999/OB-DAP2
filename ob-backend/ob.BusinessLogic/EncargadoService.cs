@@ -39,7 +39,7 @@ public class EncargadoService : IEncargadoService
         var edificio = _edificioService.GetEdificioByNombreYDireccion(depto.EdificioNombre, depto.EdificioDireccion);
         if(!encargado.Edificios.Contains(edificio))
         {
-            throw new InvalidOperationException("The Encargado is not in charge of the building.");
+            throw new InvalidOperationException("El encargado no es responsable de este edificio.");
         }
         if(edificio.Deptos.Any(d => d.Numero == depto.Numero))
         {
@@ -50,6 +50,7 @@ public class EncargadoService : IEncargadoService
         edificio.Deptos.Add(depto);
         _repository.Update(encargado);
         _edificioService.EditarEdificio(edificio);
+        _repository.Save();
     }
 
     public Encargado GetEncargadoByEmail(string email)
@@ -77,12 +78,7 @@ public class EncargadoService : IEncargadoService
         _repository.Update(encargado);
         _repository.Save();
     }
-    public void AsignarEdificio(string email, string nombre,string direccion)
-    {
-        GetEncargadoByEmail(email).Edificios.Add(_edificioService.GetEdificioByNombreYDireccion(nombre, direccion));
-        _repository.Update(GetEncargadoByEmail(email));
-        _repository.Save();
-    }
+   
     public void CrearMantenimiento(Mantenimiento mantenimiento)
     {
         _mantenimientoService.CrearMantenimiento(mantenimiento);
@@ -111,6 +107,29 @@ public class EncargadoService : IEncargadoService
             throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
         }
         solicitud.PerMan = perMan;
+    }
+
+    public Edificio GetEdificioByNombreYDireccion(string nombre, string direccion, string email)
+    {
+        Encargado encargado = GetEncargadoByEmail(email);
+        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
+        if (!encargado.Edificios.Contains(edificio))
+        {
+            throw new InvalidOperationException("The Encargado is not in charge of the building.");
+        }
+        return edificio;
+    }
+
+    public Depto GetDepto(int numero, string nombre, string direccion, string email)
+    {
+        Encargado encargado = GetEncargadoByEmail(email);
+        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
+        Depto depto = _deptoService.GetDepto(numero, nombre, direccion);
+        if (!encargado.Edificios.Contains(edificio))
+        {
+            throw new InvalidOperationException("Este encargado no maneja este departamento.");
+        }
+        return depto;
     }
 
     public int[] GetSolicitudByEdificio(string nombre, string direccion)
@@ -207,5 +226,14 @@ public class EncargadoService : IEncargadoService
             throw new InvalidOperationException("The Encargado is not in charge of the building.");
         }
         _edificioService.EditarEdificio(edificio);
+    }
+    public void EditarDepto(string email, Depto depto)
+    {
+        Encargado encargado = GetEncargadoByEmail(email);
+        if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(depto)))
+        {
+            throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
+        }
+        _deptoService.EditarDepto(depto);
     }
 }

@@ -47,7 +47,7 @@ namespace ob.DataAccess
                 .HasKey(c => c.Nombre); // Set Nombre as primary key
                 
                 modelBuilder.Entity<Constructora>()
-                .HasKey(c => c.Nombre); // Set Rut as primary key
+                .HasKey(c => c.Id); // Set Rut as primary key
 
                 
                 modelBuilder.Entity<Depto>()
@@ -74,7 +74,15 @@ namespace ob.DataAccess
 
                 modelBuilder.Entity<Administrador>()
                 .HasBaseType<Usuario>(); // Inherit properties from Usuario
-                
+
+                modelBuilder.Entity<AdminConstructora>()
+                .HasBaseType<Usuario>(); // Inherit properties from Usuario
+
+                modelBuilder.Entity<AdminConstructora>()
+                .HasOne(a => a.Constructora) // An Admin is related to one Constructora
+                .WithMany(); // A Constructora can have many Admins
+
+
                 modelBuilder.Entity<Encargado>()
                 .HasBaseType<Usuario>(); // Inherit properties from Usuario
 
@@ -96,7 +104,7 @@ namespace ob.DataAccess
                     
                     .HasMany(e => e.Deptos) 
                     .WithOne()
-                    .IsRequired(false); // Ensure a relationship
+                    .IsRequired(false); 
 
                 modelBuilder.Entity<Depto>()
                     .HasOne(d => d.Dueno) // A Depto belongs to one Dueno

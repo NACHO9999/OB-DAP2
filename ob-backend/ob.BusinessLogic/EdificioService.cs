@@ -15,6 +15,11 @@ public class EdificioService : IEdificioService
     }
 
 
+    public List<Edificio> GetEdificios()
+    {
+        return _repository.GetAll<Edificio>(e => true, new List<string> { "Deptos" }).ToList();
+    }   
+
     public void CrearEdificio(Edificio edificio)
     {
      
@@ -55,9 +60,8 @@ public class EdificioService : IEdificioService
 
         if (empresaConstructora == null)
         {
-            
-            empresaConstructora = new Constructora(constructora);
-            _constructoraService.CrearConstructora(empresaConstructora);
+
+            throw new KeyNotFoundException("No se encontró la empresa constructora.");
         }
 
         // Crear el edificio y asociarlo con la empresa constructora
@@ -66,22 +70,16 @@ public class EdificioService : IEdificioService
     }
     public void EditarEdificio(Edificio edificio)
     {
-        _repository.Update(edificio);
-        foreach (var depto in edificio.Deptos)
+        var edificioExistente = _repository.Get(e => e.Nombre.ToLower() == edificio.Nombre.ToLower() && e.Direccion.ToLower() == edificio.Direccion.ToLower(), new List<string> { "Deptos" });
+        if (edificioExistente == null)
         {
-            var existingDepto = _deptoService.GetDepto(depto.Numero, edificio.Nombre, edificio.Direccion);
-            if (existingDepto == null)
-            {
-                _deptoService.CrearDepto(depto);
-            }
-            else
-            {
-                existingDepto.EdificioDireccion = edificio.Direccion;
-                existingDepto.EdificioNombre = edificio.Nombre;
-                _deptoService.EditarDepto(existingDepto);
-            }
-        
+            throw new KeyNotFoundException("No se encontró el edificio.");
         }
+        if(edificio.Deptos.Count == 0 && edificioExistente.Deptos.Count != 0)
+        {
+            edificio.Deptos = edificioExistente.Deptos;
+        }
+        _repository.Update(edificio);
         _repository.Save();
     }
     public void BorrarEdificio(Edificio edificio)
@@ -103,15 +101,32 @@ public class EdificioService : IEdificioService
     {
         if (EdificioExists(nombre, direccion))
         {
-            return _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower(), new List<string> { "Deptos" });
+            var edificio = _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower(), new List<string> { "Deptos" });
+            return edificio;
         }
         else
         {
             throw new KeyNotFoundException("No se encontró el edificio.");
         }
+        
     }
     public bool EdificioExists(string nombre, string direccion)
     {
-        return _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower()) != null;
+        var edificio = _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower(), new List<string> { "Deptos" });
+        
+        return edificio!=null;
+    }
+
+    public void AgregarDepto(Edificio edificio, Depto depto)
+    {
+        if (edificio.Deptos == null)
+        {
+            edificio.Deptos = new List<Depto>();
+        }
+        edificio.Deptos.Add(depto);
+        depto.EdificioNombre = edificio.Nombre;
+        depto.EdificioDireccion = edificio.Direccion;
+        _deptoService.CrearDepto(depto);
+        EditarEdificio(edificio);
     }
 }

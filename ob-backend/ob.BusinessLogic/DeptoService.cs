@@ -7,13 +7,12 @@ public class DeptoService : IDeptoService
 {
     private readonly IGenericRepository<Depto> _repository;
     private readonly IDuenoService _duenoService;
-    private readonly IGenericRepository<Edificio> _edificioRepository;
 
-    public DeptoService(IGenericRepository<Depto> deptoRepository, IDuenoService duenoService, IGenericRepository<Edificio> edificioRepository)
+
+    public DeptoService(IGenericRepository<Depto> deptoRepository, IDuenoService duenoService)
     {
         _repository = deptoRepository;
         _duenoService = duenoService;
-        _edificioRepository = edificioRepository;
     }
     public void CrearDepto(Depto depto)
     {
@@ -33,7 +32,6 @@ public class DeptoService : IDeptoService
             }
         }
         
-        
         _repository.Insert(depto);
        
        
@@ -45,7 +43,10 @@ public class DeptoService : IDeptoService
     }
     public void EditarDepto(Depto depto)
     {
-        _repository.Update(depto);
+        if (!ExisteDepto(depto))
+        {
+            throw new KeyNotFoundException("Departamento no encontrado");
+        }
         if (depto.Dueno != null)
         {
             if (!_duenoService.DuenoExists(depto.Dueno.Email))
@@ -53,6 +54,7 @@ public class DeptoService : IDeptoService
                 _duenoService.CrearDueno(depto.Dueno);
             }
         }
+        _repository.Update(depto);
         _repository.Save();
     }
     public void BorrarDepto(Depto depto)
@@ -62,6 +64,11 @@ public class DeptoService : IDeptoService
     }
     public Depto GetDepto(int numero, string edificioNombre, string edificioDireccion)
     {
-        return _repository.Get(d => d.Numero == numero && d.EdificioNombre == edificioNombre && d.EdificioDireccion == edificioDireccion, new List<string> { "Dueno"});
+        Depto depto = _repository.Get(d => d.Numero == numero && d.EdificioNombre == edificioNombre && d.EdificioDireccion == edificioDireccion, new List<string> { "Dueno"});
+        if (depto == null)
+        {
+            throw new KeyNotFoundException("Departamento no encontrado");
+        }
+        return depto;
     }
 }

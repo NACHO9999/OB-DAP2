@@ -45,7 +45,7 @@ public class ConstructoraController : ControllerBase
     public IActionResult InsertConstructora([FromBody] ConstructoraDTO newConstructora)
     {
         _constructoraService.CrearConstructora(new Constructora(newConstructora.Nombre));
-        return Ok();
+        return Ok("Empresa constructora agregada con exito");
     }
 
 }

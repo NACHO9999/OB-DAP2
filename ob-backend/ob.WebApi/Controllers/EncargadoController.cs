@@ -102,6 +102,28 @@ public class EncargadoController : ControllerBase
             return Ok("Edificio borrado exitosamente.");
         
     }
+    [HttpGet("get-edificio/{nombre}/{ Direccion}/{email}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) }, OwnUserAction = true)]
+    public IActionResult GetEdificio([FromRoute] string email, string nombre, string direccion)
+    {
+
+        EdificioDTO edificio = new EdificioDTO(_encargadoService.GetEdificioByNombreYDireccion(nombre, direccion, email));
+        return Ok(edificio);
+
+    }
+
+    [HttpGet("get-edificiosbyencargado/{email}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) }, OwnUserAction = true)]
+    public IActionResult GetEdificiosByEncargado([FromRoute] string email)
+    {
+
+        var lista = _encargadoService.GetEncargadoByEmail(email).Edificios;
+        var retorno = lista.Select(e => new EdificioDTO(e)).ToList();
+        return Ok(retorno);
+
+    }
 
     [HttpPut("editar-edificio/{email}")]
     [ServiceFilter(typeof(AuthenticationFilter))]
@@ -112,16 +134,6 @@ public class EncargadoController : ControllerBase
         return Ok("Edificio editado exitosamente.");
     }
 
-    [HttpPut("Asignar/{email}/{nombre}/{Direccion}")]
-    [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) }, OwnUserAction = true)]
-    public IActionResult AsignarEdificio([FromRoute] string email, string nombre, string direccion)
-    {
-        
-            _encargadoService.AsignarEdificio(email,nombre,direccion);
-        return Ok("Edificio asignado exitosamente.");
-
-    }
 
     [HttpPost("Crear-edificio/{email}")]
     [ServiceFilter(typeof(AuthenticationFilter))]
@@ -135,8 +147,35 @@ public class EncargadoController : ControllerBase
         
     }
 
+    [HttpPost("Crear-Depto/{email}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) }, OwnUserAction = true)]
+    public IActionResult CrearDepto([FromBody] DeptoDTO deptoDTO, [FromRoute] string email)
+    {
 
+        _encargadoService.CrearDepto(email, deptoDTO.ToEntity());
+        return Ok("Depto creado exitosamente.");
 
+    }
 
+    [HttpGet("get-depto/{numero}/{nombre}/{direccion}/{email}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) }, OwnUserAction = true)]
+    public IActionResult GetDepto([FromRoute] string email, string nombre, string direccion, int numero)
+    {
+
+        DeptoDTO depto = new DeptoDTO(_encargadoService.GetDepto(numero, nombre, direccion, email));
+        return Ok(depto);
+
+    }
+
+    [HttpPut("editar-depto/{email}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) }, OwnUserAction = true)]
+    public IActionResult EditarDepto([FromBody] DeptoDTO request, [FromRoute] string email)
+    {
+        _encargadoService.EditarDepto(email, request.ToEntity());
+        return Ok("Depto editado exitosamente.");
+    }
 
 }

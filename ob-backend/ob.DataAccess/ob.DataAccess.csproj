@@ -30,4 +30,8 @@
     <ProjectReference Include="..\ob.IDataAccess\ob.IDataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

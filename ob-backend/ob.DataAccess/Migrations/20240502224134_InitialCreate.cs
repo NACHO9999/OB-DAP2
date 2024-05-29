@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ob.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -145,8 +145,7 @@ namespace ob.DataAccess.Migrations
                         name: "FK_Deptos_Edificios_EdificioNombre_EdificioDireccion",
                         columns: x => new { x.EdificioNombre, x.EdificioDireccion },
                         principalTable: "Edificios",
-                        principalColumns: new[] { "Nombre", "Direccion" },
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumns: new[] { "Nombre", "Direccion" });
                 });
 
             migrationBuilder.CreateTable(

@@ -16,5 +16,9 @@ public interface IEncargadoService
     int [] GetSolicitudByEdificio(string nombre, string direccion);
     int [] GetSolicitudByMantenimiento(string email, string emailEncargado);
     TimeSpan? TiempoPromedioAtencion(string  email);
-    void AsignarEdificio(string email, string nombre, string direccion);
+    Edificio GetEdificioByNombreYDireccion(string nombre, string direccion, string email);
+    void CrearDepto(string email, Depto depto);
+    Depto GetDepto(int numero, string nombre, string direccion, string email);
+    void EditarDepto(string email, Depto depto);
+
 }

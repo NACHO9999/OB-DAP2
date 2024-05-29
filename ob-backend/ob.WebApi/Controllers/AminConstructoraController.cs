@@ -95,7 +95,7 @@ public class AdminConstructoraController : BaseController
     public IActionResult GetDepto([FromRoute] string nombre, [FromRoute] string direccion,[FromRoute] int numero)
     {
         var email = GetCurrentUser().Email;
-        DeptoDTO depto = new DeptoDTO(_adminConstructoraService.GetDepto(numero, nombre, direccion, email));
+        DeptoDTO depto = new DeptoDTO(_adminConstructoraService.GetDepto(numero, nombre, direccion, GetCurrentUser().Email));
         return Ok(depto);
 
     }

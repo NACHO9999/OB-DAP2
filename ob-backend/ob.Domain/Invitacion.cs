@@ -1,3 +1,4 @@
+using Enums;
 namespace ob.Domain
 {
     public class Invitacion
@@ -35,11 +36,13 @@ namespace ob.Domain
             }
 
         }
-        public Invitacion(string email, string nombre, DateTime fechaExpiracion)
+        public RolInvitaciion Rol { get; set; }
+        public Invitacion(string email, string nombre, DateTime fechaExpiracion, RolInvitaciion rol)
         {
             _email = email;
             _nombre = nombre;
             _fechaExpiracion = fechaExpiracion;
+            Rol = rol;
         }
 
     }

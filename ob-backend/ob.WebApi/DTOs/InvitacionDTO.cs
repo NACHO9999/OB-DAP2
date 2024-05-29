@@ -1,4 +1,5 @@
-﻿using ob.Domain;
+﻿using Enums;
+using ob.Domain;
 
 namespace ob.WebApi.DTOs
 {
@@ -7,7 +8,8 @@ namespace ob.WebApi.DTOs
         public string Email { get; set; }
         public string Nombre { get; set; }
         public DateTime FechaExpiracion { get; set; }
-        
+        public RolInvitaciion Rol { get; set; }
+
         public InvitacionDTO() { }
 
         public InvitacionDTO(Invitacion invitacion)
@@ -15,6 +17,7 @@ namespace ob.WebApi.DTOs
             this.Email = invitacion.Email;
             this.Nombre = invitacion.Nombre;
             this.FechaExpiracion = invitacion.FechaExpiracion;
+            this.Rol = invitacion.Rol;
         }
     }
     

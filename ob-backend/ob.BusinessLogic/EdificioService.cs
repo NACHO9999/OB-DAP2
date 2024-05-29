@@ -15,7 +15,7 @@ public class EdificioService : IEdificioService
     }
 
 
-    public List<Edificio> GetEdificios()
+    public List<Edificio> GetAllEdificios()
     {
         return _repository.GetAll<Edificio>(e => true, new List<string> { "Deptos" }).ToList();
     }   

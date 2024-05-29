@@ -24,7 +24,11 @@ namespace ob.WebApi.DTOs
             {
                 return new Mantenimiento(this.Nombre, this.Apellido, this.Email, this.Contrasena);
             }
+            public AdminConstructora AdminConstructoraToEntity()
+            {
+                return new AdminConstructora(this.Nombre, this.Email, this.Contrasena);
+            }
 
-        }
+    }
     
 }

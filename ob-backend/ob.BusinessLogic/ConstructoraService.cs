@@ -34,4 +34,9 @@ public class ConstructoraService: IConstructoraService
     {
         return _repository.Get(c => c.Nombre.ToLower() == nombre.ToLower()) != null;
     }
+    public void EditarConstructora(Constructora constructora)
+    {
+        _repository.Update(constructora);
+        _repository.Save();
+    }
 }

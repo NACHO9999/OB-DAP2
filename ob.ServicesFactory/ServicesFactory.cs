@@ -44,6 +44,7 @@ namespace ob.ServicesFactory
             serviceCollection.AddScoped<IAdminService, AdminService>();
             serviceCollection.AddScoped<IEncargadoService, EncargadoService>();
             serviceCollection.AddScoped<IMantenimientoService, MantenimientoService>();
+            serviceCollection.AddScoped<IAdminConstructoraService, AdminConstructoraService>();
 
 
 

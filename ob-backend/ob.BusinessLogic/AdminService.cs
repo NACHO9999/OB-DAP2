@@ -2,6 +2,7 @@ using ob.Domain;
 using ob.IBusinessLogic;
 using ob.IDataAccess;
 using ob.Exceptions.BusinessLogicExceptions;
+using Enums;
 
 
 namespace ob.BusinessLogic;
@@ -46,9 +47,9 @@ public class AdminService : IAdminService
             throw new KeyNotFoundException("No se encontró el administrador.");
         }
     }
-    public void InvitarEncargado(string email, string nombre, DateTime fecha)
+    public void Invitar(string email, string nombre, DateTime fecha, RolInvitaciion rol)
     {
-        var invitacion = new Invitacion(email, nombre, fecha);
+        var invitacion = new Invitacion(email, nombre, fecha, rol);
         _invitacionService.CrearInvitacion(invitacion);
         _repository.Save();
     }

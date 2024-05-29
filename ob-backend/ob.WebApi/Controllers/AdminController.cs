@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using ob.IBusinessLogic;
 using ob.Domain;
+using Enums;
 
 namespace ob.WebApi.Controllers;
 
@@ -47,9 +48,9 @@ public class AdministradorController : ControllerBase
     [HttpPost("invitar")]
     [ServiceFilter(typeof(AuthenticationFilter))]
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Administrador) })]
-    public IActionResult InvitarEncargado([FromBody] InvitacionDTO invitacion)
+    public IActionResult Invitar([FromBody] InvitacionDTO invitacion)
     {
-        _adminService.InvitarEncargado(invitacion.Email, invitacion.Nombre, invitacion.FechaExpiracion);
+        _adminService.Invitar(invitacion.Email, invitacion.Nombre, invitacion.FechaExpiracion, invitacion.Rol);
         return Ok();
     }
 

@@ -6,7 +6,7 @@ using System.Net;
 
 namespace ob.BusinessLogic
 {
-    
+
 
     public class AdminConstructoraService : IAdminConstructoraService
     {
@@ -29,22 +29,29 @@ namespace ob.BusinessLogic
             {
                 throw new AlreadyExistsException("El administrador de constructora ya existe.");
             }
+            if (adminConstructora.Constructora != null)
+            {
+                if (_constructoraService.GetConstructoraByNombre(adminConstructora.Constructora.Nombre) == null)
+                {
+                    throw new KeyNotFoundException("No se encontró la constructora.");
+                }
+            }
             _repository.Insert(adminConstructora);
             _repository.Save();
         }
         public AdminConstructora GetAdminConstructoraByEmail(string email)
         {
-            var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower());
+            var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower(), new List<string> { "Constructora" });
             if (usuario is AdminConstructora adminConstructora)
             {
                 return adminConstructora;
             }
             throw new KeyNotFoundException("El administrador de constructora no existe.");
-        }   
+        }
         public void CrearConstructora(Constructora constructora, string email)
         {
             var usuario = GetAdminConstructoraByEmail(email);
-            if (usuario.Constructora!=null)
+            if (usuario.Constructora != null)
             {
                 throw new AlreadyExistsException("El usuario ya tiene constructora.");
             }
@@ -65,12 +72,12 @@ namespace ob.BusinessLogic
         {
             Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
             AdminConstructora admin = GetAdminConstructoraByEmail(email);
-            if(edificio.EmpresaConstructora != admin.Constructora)
+            if (edificio.EmpresaConstructora != admin.Constructora)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
             }
             _edificioService.BorrarEdificio(edificio);
-            
+
         }
         public void EditarEdificio(Edificio edificio, string email)
         {
@@ -90,7 +97,7 @@ namespace ob.BusinessLogic
         {
             var usuario = GetAdminConstructoraByEmail(email);
             var edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
-            if(usuario.Constructora != edificio.EmpresaConstructora)
+            if (usuario.Constructora != edificio.EmpresaConstructora)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
             }
@@ -102,7 +109,7 @@ namespace ob.BusinessLogic
             var admin = GetAdminConstructoraByEmail(email);
 
             var edificio = _edificioService.GetEdificioByNombreYDireccion(depto.EdificioNombre, depto.EdificioDireccion);
-            if (admin.Constructora!=edificio.EmpresaConstructora)
+            if (admin.Constructora != edificio.EmpresaConstructora)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
             }
@@ -161,7 +168,7 @@ namespace ob.BusinessLogic
             {
                 throw new KeyNotFoundException("No se encontró la constructora.");
             }
-            if(usuario.Constructora != null)
+            if (usuario.Constructora != null)
             {
                 throw new AlreadyExistsException("El usuario ya tiene constructora.");
             }
@@ -169,7 +176,25 @@ namespace ob.BusinessLogic
             _repository.Update(usuario);
             _repository.Save();
         }
-
+        public void DesasignarEncargado(string email, string edNombre, string edDireccion)
+        {
+            var admin = GetAdminConstructoraByEmail(email);
+            var edificio = _edificioService.GetEdificioByNombreYDireccion(edNombre, edDireccion);
+            if (edificio.EmpresaConstructora != admin.Constructora)
+            {
+                throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
+            }
+            var listaEncargados = _encargadoService.GetAllEncargados();
+            foreach (var encargado in listaEncargados)
+            {
+                if (encargado.Edificios.Contains(edificio))
+                {
+                    encargado.Edificios.Remove(edificio);
+                    _repository.Update(encargado);
+                    _repository.Save();
+                }
+            }
+        }
         public void AsignarEncargado(string email, string emailEncargado, string nombreEdificio, string direccionEdificio)
         {
             var usuario = GetAdminConstructoraByEmail(email);
@@ -182,7 +207,7 @@ namespace ob.BusinessLogic
             var listaEncargados = _encargadoService.GetAllEncargados();
             foreach (var enc in listaEncargados)
             {
-                if (enc.Edificios.Contains(edificio)&&enc!=encargado)
+                if (enc.Edificios.Contains(edificio) && enc != encargado)
                 {
                     enc.Edificios.Remove(edificio);
                 }
@@ -201,9 +226,9 @@ namespace ob.BusinessLogic
             {
                 throw new KeyNotFoundException("El usuario no tiene constructora.");
             }
-            return _edificioService.GetAllEdificios().Where(e => e.EmpresaConstructora==usuario.Constructora).ToList();
+            return _edificioService.GetAllEdificios().Where(e => e.EmpresaConstructora == usuario.Constructora).ToList();
         }
-        public List<Edificio> ListarEdificiosSinEncargado(string email)
+        public List<Edificio> GetEdificiosSinEncargado(string email)
         {
             var usuario = GetAdminConstructoraByEmail(email);
             if (usuario.Constructora == null)
@@ -224,7 +249,7 @@ namespace ob.BusinessLogic
             }
             return listaEdificios;
         }
-        public List<Edificio> ListarEdificiosConEncargado(string email)
+        public List<Edificio> GetEdificiosConEncargado(string email)
         {
             var usuario = GetAdminConstructoraByEmail(email);
             if (usuario.Constructora == null)
@@ -246,17 +271,25 @@ namespace ob.BusinessLogic
             }
             return listaEdificiosConEncargado;
         }
-        public List<Edificio> FiltrarPorNmobreDeEdificio(List<Edificio> edificios, string nombre)
+        public List<Edificio> FiltrarPorNombreDeEdificio(List<Edificio> edificios, string nombre)
         {
-            return edificios.Where(e => e.Nombre == nombre).ToList();
+            if (edificios == null)
+            {
+                throw new InvalidOperationException("La lista no puede ser nula.");
+            }
+            return edificios.Where(e => e.Nombre.ToLower() == nombre.ToLower()).ToList();
         }
         public List<Edificio> FiltrarPorNombreDeEncargado(List<Edificio> edificios, string nombreEncargado)
         {
+            if (edificios == null)
+            {
+                throw new InvalidOperationException("La lista no puede ser nula.");
+            }
             var listaEncargados = _encargadoService.GetAllEncargados();
             var encargados = listaEncargados.Where(e => e.Nombre == nombreEncargado);
             var retorno = new List<Edificio>();
 
-            if (encargados.Count()==0)
+            if (encargados.Count() == 0)
             {
                 throw new KeyNotFoundException("No se encontró el encargado.");
             }

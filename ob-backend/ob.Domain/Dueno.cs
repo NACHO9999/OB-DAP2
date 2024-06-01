@@ -15,7 +15,8 @@ namespace ob.Domain
             }
         }
         private string _apellido;
-        public string Apellido {
+        public string Apellido
+        {
             get { return _apellido; }
             set
             {
@@ -25,7 +26,8 @@ namespace ob.Domain
             }
         }
         private string _email;
-        public string Email {
+        public string Email
+        {
             get { return _email; }
             set
             {

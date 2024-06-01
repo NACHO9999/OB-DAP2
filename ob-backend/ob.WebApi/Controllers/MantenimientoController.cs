@@ -25,10 +25,10 @@ public class MantenimientoController : BaseController
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Mantenimiento) })]
     public IActionResult AtenderSolicitud([FromRoute] Guid solicitudId)
     {
-       
-            _mantenimientoService.AtenderSolicitud(solicitudId, GetCurrentUser().Email);
-            return Ok();
-        
+
+        _mantenimientoService.AtenderSolicitud(solicitudId, GetCurrentUser().Email);
+        return Ok();
+
     }
 
     [HttpPost("completar/{solicitudId}")]
@@ -36,9 +36,9 @@ public class MantenimientoController : BaseController
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Mantenimiento) })]
     public IActionResult CompletarSolicitud([FromRoute] Guid solicitudId)
     {
-        
-            _mantenimientoService.CompletarSolicitud(solicitudId, GetCurrentUser().Email);
-            return Ok();
-       
+
+        _mantenimientoService.CompletarSolicitud(solicitudId, GetCurrentUser().Email);
+        return Ok();
+
     }
 }

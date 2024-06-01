@@ -11,7 +11,7 @@ public class InvitacionService : IInvitacionService
     private IEncargadoService _encargadoService;
     private IAdminConstructoraService _adminConstructoraService;
 
-    public InvitacionService(IGenericRepository<Invitacion> invitacionRepository,IEncargadoService encargadoService, IAdminConstructoraService adminConstructoraService)
+    public InvitacionService(IGenericRepository<Invitacion> invitacionRepository, IEncargadoService encargadoService, IAdminConstructoraService adminConstructoraService)
     {
         _repository = invitacionRepository;
         _encargadoService = encargadoService;
@@ -23,12 +23,17 @@ public class InvitacionService : IInvitacionService
         {
             throw new AlreadyExistsException("La invitacion ya existe");
         }
-        _repository.Insert(invitacion); 
+        _repository.Insert(invitacion);
         _repository.Save();
     }
     public Invitacion GetInvitacionByEmail(string email)
     {
-        return _repository.Get(i => i.Email.ToLower() == email.ToLower());
+        var invitacion = _repository.Get(i => i.Email.ToLower() == email.ToLower());
+        if (invitacion == null)
+        {
+            throw new KeyNotFoundException("No se encontró la invitacion.");
+        }
+        return invitacion;
     }
     public void EliminarInvitacion(string email)
     {
@@ -40,8 +45,10 @@ public class InvitacionService : IInvitacionService
         _repository.Delete(invitacion);
         _repository.Save();
     }
-    public void InvitacionAceptada(Invitacion invitacion, string contrasena){
-        if(invitacion.FechaExpiracion < DateTime.Now)
+    public void InvitacionAceptada(string email, string contrasena)
+    {
+        var invitacion = GetInvitacionByEmail(email);
+        if (invitacion.FechaExpiracion < DateTime.Now)
         {
             throw new InvalidOperationException("La invitacion ha expirado.");
         }
@@ -59,8 +66,7 @@ public class InvitacionService : IInvitacionService
     }
     public bool InvitacionExiste(string email)
     {
-        var invitacion = GetInvitacionByEmail(email);
-        return invitacion != null;
+        return _repository.Get(i => i.Email.ToLower() == email.ToLower()) != null;
     }
 
 

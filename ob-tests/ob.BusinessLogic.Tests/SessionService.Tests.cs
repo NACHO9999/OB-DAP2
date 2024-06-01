@@ -7,6 +7,7 @@ using ob.Exceptions.BusinessLogicExceptions;
 using ob.IDataAccess;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 [TestClass]
 public class SessionServiceTests
@@ -29,11 +30,16 @@ public class SessionServiceTests
         // Arrange
         var email = "test@example.com";
         var password = "correctpassword";
-        var user = new Usuario { Email = email, Contrasena = password };
-        var session = new Session { Usuario = user, AuthToken = Guid.NewGuid() };
+        var user = new Encargado("nom", "a@a.com", "Contra1233");
+        var session = new Session { Usuario = user };
 
-        _mockUsuarioRepository.Setup(repo => repo.Get(It.IsAny<Func<Usuario, bool>>())).Returns(user);
-        _mockSessionRepository.Setup(repo => repo.Insert(session)).Verifiable();
+        _mockUsuarioRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Usuario, bool>>>(), null)).Returns(user);
+
+        // Capture the session object inserted in the repository
+        _mockSessionRepository.Setup(repo => repo.Insert(It.IsAny<Session>()))
+            .Callback<Session>(s => session = s)
+            .Verifiable();
+
         _mockSessionRepository.Setup(repo => repo.Save()).Verifiable();
 
         // Act
@@ -52,7 +58,7 @@ public class SessionServiceTests
         var email = "wrong@example.com";
         var password = "wrongpassword";
 
-        _mockUsuarioRepository.Setup(repo => repo.Get(It.IsAny<Func<Usuario, bool>>())).Returns((Usuario)null);
+        _mockUsuarioRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Usuario, bool>>>(), null)).Returns((Usuario)null);
 
         // Act & Assert
         Assert.ThrowsException<InvalidCredentialException>(() => _sessionService.Authenticate(email, password));
@@ -63,10 +69,19 @@ public class SessionServiceTests
     {
         // Arrange
         var authToken = Guid.NewGuid();
-        var user = new Usuario { Email = "user@example.com" };
+        var user = new Encargado("nom", "a@a.com", "Contra1233");
         var session = new Session { Usuario = user, AuthToken = authToken };
 
-        _mockSessionRepository.Setup(repo => repo.Get(It.IsAny<Func<Session, bool>>(), It.IsAny<List<string>>())).Returns(session);
+        _mockSessionRepository
+            .Setup(repo => repo.Get(It.IsAny<Expression<Func<Session, bool>>>(), It.IsAny<List<string>>()))
+            .Returns((Expression<Func<Session, bool>> predicate, List<string> includes) =>
+            {
+                if (predicate.Compile().Invoke(session))
+                {
+                    return session;
+                }
+                return null;
+            });
 
         // Act
         var result = _sessionService.GetCurrentUser(authToken);
@@ -88,7 +103,7 @@ public class SessionServiceTests
         // Arrange
         var authToken = Guid.NewGuid();
 
-        _mockSessionRepository.Setup(repo => repo.Get(It.IsAny<Func<Session, bool>>(), It.IsAny<List<string>>())).Returns((Session)null);
+        _mockSessionRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Session, bool>>>(), null)).Returns((Session)null);
 
         // Act
         var result = _sessionService.GetCurrentUser(authToken);

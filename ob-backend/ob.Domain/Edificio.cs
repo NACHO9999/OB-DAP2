@@ -2,53 +2,65 @@ namespace ob.Domain
 {
     public class Edificio
     {
-            private string _nombre;
-        public string Nombre {
+        private string _nombre;
+        public string Nombre
+        {
             get { return _nombre; }
-            set {
+            set
+            {
                 Validator.ValidateStringMaxLength(value, 100);
                 Validator.ValidateString(value);
                 _nombre = value;
             }
         }
         private string _dirección;
-        public string Direccion {
+        public string Direccion
+        {
             get { return _dirección; }
-            set {
+            set
+            {
                 Validator.ValidateStringMaxLength(value, 200);
                 Validator.ValidateString(value);
                 _dirección = value;
             }
         }
         private string _ubicación;
-        public string Ubicación {
+        public string Ubicación
+        {
             get { return _ubicación; }
-            set {
+            set
+            {
                 Validator.ValidateStringMaxLength(value, 100);
                 Validator.ValidateString(value);
                 _ubicación = value;
             }
-         }
-         private Constructora _empresaConstructora;
-        public Constructora EmpresaConstructora { 
+        }
+        private Constructora _empresaConstructora;
+        public Constructora EmpresaConstructora
+        {
             get { return _empresaConstructora; }
-            set {
+            set
+            {
                 Validator.IsNotNull(value);
                 _empresaConstructora = value;
             }
-         }
+        }
         private decimal _gastosComunes;
-        public decimal GastosComunes { 
+        public decimal GastosComunes
+        {
             get { return _gastosComunes; }
-            set {
-                Validator.ValidateDecimal(value,0,100000000);
+            set
+            {
+                Validator.ValidateDecimal(value, 0, 100000000);
                 _gastosComunes = value;
             }
-         }
-         private List<Depto> _deptos;
-        public List<Depto> Deptos { 
+        }
+        private List<Depto> _deptos;
+        public List<Depto> Deptos
+        {
             get { return _deptos; }
-            set {
+            set
+            {
                 Validator.IsNotNull(value);
                 _deptos = value;
             }

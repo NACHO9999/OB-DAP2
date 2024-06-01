@@ -29,7 +29,7 @@ public class EncargadoController : BaseController
     public IActionResult GetEncargadoByEmail([FromRoute] string email)
     {
         var encargado = _encargadoService.GetEncargadoByEmail(email);
-        UsuarioCreateModel encargadoDTO = new UsuarioCreateModel() {Email = encargado.Email, Apellido = encargado.Apellido, Nombre = encargado.Nombre, Contrasena = encargado.Contrasena };
+        EncargadoDTO encargadoDTO = new EncargadoDTO(encargado);
         return Ok(encargadoDTO);
     }
 
@@ -38,9 +38,9 @@ public class EncargadoController : BaseController
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
     public IActionResult CrearMantenimiento([FromBody] UsuarioCreateModel mantenimiento)
     {
-        
+
         _encargadoService.CrearMantenimiento(new Mantenimiento(mantenimiento.Nombre, mantenimiento.Apellido, mantenimiento.Email, mantenimiento.Contrasena));
-            return Ok("Mantenimiento creado exitosamente.");
+        return Ok("Mantenimiento creado exitosamente.");
 
 
     }
@@ -51,18 +51,18 @@ public class EncargadoController : BaseController
     public IActionResult CrearSolicitud([FromBody] SolicitudDTO solicitud)
     {
         var usuario = GetCurrentUser();
-        _encargadoService.CrearSolicitud(solicitud.ToEntity(),usuario.Email);
+        _encargadoService.CrearSolicitud(solicitud.ToEntity(), usuario.Email);
         return Ok("Solicitud creada exitosamente.");
-        
+
     }
 
     [HttpPut("asignar/{solicitud}/{emailMantenimiento}")]
     [ServiceFilter(typeof(AuthenticationFilter))]
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
-    public IActionResult AsignarSolicitud([FromRoute] Guid solicitudId, [FromRoute]string emailMantenimiento)
+    public IActionResult AsignarSolicitud([FromRoute] Guid solicitudId, [FromRoute] string emailMantenimiento)
     {
         var usuario = GetCurrentUser();
-        _encargadoService.AsignarSolicitud(solicitudId, emailMantenimiento,usuario.Email);
+        _encargadoService.AsignarSolicitud(solicitudId, emailMantenimiento, usuario.Email);
 
         return Ok("Solicitud asignada exitosamente.");
     }
@@ -92,5 +92,24 @@ public class EncargadoController : BaseController
     {
         TimeSpan? result = _encargadoService.TiempoPromedioAtencion(email);
         return result != null ? Ok(result) : Ok("No completo ninguna solicitud");
-    } 
+    }
+
+    [HttpGet("Dueno/{email}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
+    public IActionResult GetDueno([FromRoute] string email)
+    {
+        Dueno dueno = _encargadoService.GetDueno(email);
+        var result = new DuenoDTO(dueno);
+        return Ok(result);
+    }
+    [HttpPut("asignar-dueno/{numero}/{edNombre}/{edDireccion}/{emailDueno}/{email}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
+    public IActionResult AsignarDueno([FromRoute] int numero, [FromRoute] string edNombre, [FromRoute] string edDireccion, [FromRoute] string emailDueno)
+    {
+        _encargadoService.AsignarDueno(numero, edNombre, edDireccion, emailDueno, GetCurrentUser().Email);
+        return Ok("Dueno asignado exitosamente.");
+    }
+
 }

@@ -28,9 +28,9 @@ public class AdministradorController : ControllerBase
     {
         var admin = new Administrador(adminDTO.Nombre, adminDTO.Apellido, adminDTO.Email, adminDTO.Contrasena);
         _adminService.CrearAdmin(admin);
-            return Ok();
-        
-        
+        return Ok();
+
+
     }
 
     [HttpGet("{email}")]
@@ -38,11 +38,11 @@ public class AdministradorController : ControllerBase
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Administrador) })]
     public IActionResult GetAdminByEmail([FromRoute] string email)
     {
-        
-            var admin = _adminService.GetAdminByEmail(email);
-            return Ok(admin);
-        
-       
+
+        var admin = _adminService.GetAdminByEmail(email);
+        return Ok(admin);
+
+
     }
 
     [HttpPost("invitar")]

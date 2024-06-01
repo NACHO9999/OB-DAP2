@@ -16,10 +16,11 @@ public interface IAdminConstructoraService
     Depto GetDepto(int numero, string nombre, string direccion, string email);
     void EditarConstructora(Constructora constructora, string email);
     void AsignarConstructora(string email, string nombreConstructora);
+    public void DesasignarEncargado(string email, string edNombre, string edDireccion);
     void AsignarEncargado(string email, string emailEncargado, string nombreEdificio, string direccionEdificio);
     List<Edificio> GetEdificiosPorAdmin(string email);
-    List<Edificio> ListarEdificiosSinEncargado(string email);
-    List<Edificio> ListarEdificiosConEncargado(string email);
-    List<Edificio> FiltrarPorNmobreDeEdificio(List<Edificio> edificios, string nombre);
+    List<Edificio> GetEdificiosSinEncargado(string email);
+    List<Edificio> GetEdificiosConEncargado(string email);
+    List<Edificio> FiltrarPorNombreDeEdificio(List<Edificio> edificios, string nombre);
     List<Edificio> FiltrarPorNombreDeEncargado(List<Edificio> edificios, string nombreEncargado);
 }

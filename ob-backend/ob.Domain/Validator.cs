@@ -2,7 +2,7 @@ using System;
 
 namespace ob.Domain
 {
-    public  class Validator
+    public class Validator
     {
         public static void ValidateInt(int number, int minValue, int maxValue)
         {
@@ -11,7 +11,7 @@ namespace ob.Domain
                 throw new ArgumentException($"El numero tiene que ser entre {minValue} y {maxValue}.");
             }
         }
-        
+
         public static void ValidateString(string text)
         {
             if (string.IsNullOrEmpty(text))
@@ -23,10 +23,10 @@ namespace ob.Domain
         {
             if (number <= minValue || number >= maxValue)
             {
-            throw new ArgumentException($"El número tiene que ser entre {minValue} y {maxValue}.");
+                throw new ArgumentException($"El número tiene que ser entre {minValue} y {maxValue}.");
             }
         }
-            
+
         public static void ValidateEmail(string email)
         {
             if (!email.Contains("@") || !email.Contains("."))
@@ -34,8 +34,8 @@ namespace ob.Domain
                 throw new ArgumentException("El email debe contener un '@' y un '.'.");
             }
         }
-        
-        
+
+
         public static void ValidateFutureDate(DateTime date)
         {
             if (date < DateTime.Now)
@@ -64,6 +64,6 @@ namespace ob.Domain
                 throw new ArgumentNullException("El objeto no puede ser nulo.");
             }
         }
-        
+
     }
 }

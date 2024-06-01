@@ -3,7 +3,7 @@ using ob.IDataAccess;
 using ob.IBusinessLogic;
 using ob.Exceptions.BusinessLogicExceptions;
 namespace ob.BusinessLogic;
-public class DuenoService: IDuenoService
+public class DuenoService : IDuenoService
 {
     private readonly IGenericRepository<Dueno> _repository;
     public DuenoService(IGenericRepository<Dueno> duenoRepository)
@@ -26,10 +26,14 @@ public class DuenoService: IDuenoService
     }
     public Dueno GetDuenoByEmail(string email)
     {
-        
-            return _repository.Get(d => d.Email.ToLower() == email.ToLower());
-        
-       
+
+        if (!DuenoExists(email))
+        {
+            throw new KeyNotFoundException("No se encontró el dueño.");
+        }
+        return _repository.Get(d => d.Email.ToLower() == email.ToLower());
+
+
     }
     public bool DuenoExists(string email)
     {

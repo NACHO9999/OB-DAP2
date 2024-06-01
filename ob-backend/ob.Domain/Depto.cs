@@ -2,7 +2,7 @@ namespace ob.Domain
 {
     public class Depto
     {
-        
+
         private int _piso;
         public int Piso
         {
@@ -10,27 +10,31 @@ namespace ob.Domain
             set { Validator.ValidateInt(value, 0, 136); _piso = value; }
         }
         private int _numero;
-        public int Numero {
+        public int Numero
+        {
             get { return _numero; }
             set { Validator.ValidateInt(value, 0, 13700); _numero = value; }
         }
         public Dueno? Dueno { get; set; }
 
         private int _cantidadCuartos;
-        public int CantidadCuartos {
+        public int CantidadCuartos
+        {
             get { return _cantidadCuartos; }
             set { Validator.ValidateInt(value, 1, 40); _cantidadCuartos = value; }
         }
         private int _cantidadBanos;
-        public int CantidadBanos {
+        public int CantidadBanos
+        {
             get { return _cantidadBanos; }
             set { Validator.ValidateInt(value, 1, 40); _cantidadBanos = value; }
         }
         private bool _conTerraza;
-        
-        public bool ConTerraza {
+
+        public bool ConTerraza
+        {
             get { return _conTerraza; }
-            set { Validator.IsNotNull(value); _conTerraza = value; }   
+            set { Validator.IsNotNull(value); _conTerraza = value; }
 
         }
         public String EdificioNombre { get; set; }
@@ -39,9 +43,9 @@ namespace ob.Domain
 
         protected Depto() { }
 
-        public Depto( int piso, int numero, Dueno? dueno, int cantidadCuartos, int cantidadBanos, bool conTerraza, string edNombre, string edDireccion)
+        public Depto(int piso, int numero, Dueno? dueno, int cantidadCuartos, int cantidadBanos, bool conTerraza, string edNombre, string edDireccion)
         {
-            
+
             _piso = piso;
             _numero = numero;
             Dueno = dueno;

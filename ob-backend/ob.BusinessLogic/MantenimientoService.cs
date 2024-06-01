@@ -14,7 +14,7 @@ public class MantenimientoService : IMantenimientoService
         _repository = repository;
         _solicitudService = solicitudService;
     }
-    
+
     public void CrearMantenimiento(Mantenimiento mantenimiento)
     {
         if (_repository.EmailExists(mantenimiento.Email))
@@ -40,7 +40,7 @@ public class MantenimientoService : IMantenimientoService
     {
         var mantenimiento = GetMantenimientoByEmail(email);
         var solicitud = _solicitudService.GetSolicitudById(solicitudId);
-        if(solicitud.PerMan!= mantenimiento)
+        if (solicitud.PerMan != mantenimiento)
         {
             throw new InvalidOperationException("El mantenimiento no puede atender la solicitud");
         }
@@ -54,7 +54,7 @@ public class MantenimientoService : IMantenimientoService
         {
             throw new InvalidOperationException("La solicitud ya fue atendida");
         }
-        
+
     }
     public void CompletarSolicitud(Guid solicitudId, string email)
     {

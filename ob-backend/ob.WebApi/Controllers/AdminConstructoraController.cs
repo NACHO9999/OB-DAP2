@@ -92,7 +92,7 @@ public class AdminConstructoraController : BaseController
     [HttpGet("get-depto/{numero}/{nombre}/{direccion}")]
     [ServiceFilter(typeof(AuthenticationFilter))]
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
-    public IActionResult GetDepto([FromRoute] string nombre, [FromRoute] string direccion,[FromRoute] int numero)
+    public IActionResult GetDepto([FromRoute] string nombre, [FromRoute] string direccion, [FromRoute] int numero)
     {
         var email = GetCurrentUser().Email;
         DeptoDTO depto = new DeptoDTO(_adminConstructoraService.GetDepto(numero, nombre, direccion, GetCurrentUser().Email));
@@ -108,6 +108,59 @@ public class AdminConstructoraController : BaseController
         _adminConstructoraService.EditarDepto(GetCurrentUser().Email, request.ToEntity());
         return Ok("Depto editado exitosamente.");
     }
-
+    [HttpGet("get-edificios-con-encargados")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+    public IActionResult GetEdificiosConEncargados()
+    {
+        var lista = _adminConstructoraService.GetEdificiosConEncargado(GetCurrentUser().Email);
+        var retorno = lista.Select(e => new EdificioDTO(e)).ToList();
+        return Ok(retorno);
+    }
+    [HttpGet("get-edificios-sin-encargados")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+    public IActionResult GetEdificiosSinEncargados()
+    {
+        var lista = _adminConstructoraService.GetEdificiosSinEncargado(GetCurrentUser().Email);
+        var retorno = lista.Select(e => new EdificioDTO(e)).ToList();
+        return Ok(retorno);
+    }
+    [HttpGet("filtrar-por-nombre-edificio/{nombre}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+    public IActionResult FiltrarEdificiosPorNombreEdificio([FromBody] List<EdificioDTO> lista, [FromRoute] string nombre)
+    {
+        var listaToEntity = lista.Select(e => e.ToEntity()).ToList();
+        var filtro = _adminConstructoraService.FiltrarPorNombreDeEdificio(listaToEntity, nombre);
+        var retorno = filtro.Select(e => new EdificioDTO(e)).ToList();
+        return Ok(retorno);
+    }
+    [HttpGet("filtrar-por-nombre-encargado/{nombre}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+    public IActionResult FiltrarEdificiosPorNombreEncargado([FromBody] List<EdificioDTO> lista, [FromRoute] string nombre)
+    {
+        var listaToEntity = lista.Select(e => e.ToEntity()).ToList();
+        var filtro = _adminConstructoraService.FiltrarPorNombreDeEncargado(listaToEntity, nombre);
+        var retorno = filtro.Select(e => new EdificioDTO(e)).ToList();
+        return Ok(retorno);
+    }
+    [HttpPut("asignar-encargado/{emailEncargado}/{edNombre}/{edDirecccion}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+    public IActionResult AsignarEncargado([FromRoute] string emailEncargado, [FromRoute] string edNombre, [FromRoute] string edDirecccion)
+    {
+        _adminConstructoraService.AsignarEncargado(GetCurrentUser().Email, emailEncargado, edNombre, edDirecccion);
+        return Ok("Encargado asignado exitosamente.");
+    }
+    [HttpPut("desasignar-encargado/{edNombre}/{edDirecccion}")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+    public IActionResult DesasignarEncargado([FromRoute] string edNombre, [FromRoute] string edDirecccion)
+    {
+        _adminConstructoraService.DesasignarEncargado(GetCurrentUser().Email, edNombre, edDirecccion);
+        return Ok("Encargado desasignado exitosamente.");
+    }
 }
 

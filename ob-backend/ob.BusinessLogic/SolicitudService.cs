@@ -36,12 +36,12 @@ public class SolicitudService : ISolicitudService
     private bool SolicitudExists(Guid id)
     {
         return _repository.Get(s => s.Id == id) != null;
-    }   
+    }
     public List<Solicitud> GetSolicitudesByEdificio(Edificio edificio)
     {
         List<Solicitud> solicitudesInEdificio = new List<Solicitud>();
 
-        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud=> true, new List<string> { "Depto" })) 
+        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud => true, new List<string> { "Depto" }))
         {
             if (edificio.Deptos.Contains(solicitud.Depto))
             {
@@ -52,15 +52,15 @@ public class SolicitudService : ISolicitudService
 
         return solicitudesInEdificio;
     }
-    public IEnumerable<Solicitud> GetSolicitudes ()
+    public IEnumerable<Solicitud> GetSolicitudes()
     {
-        return _repository.GetAll<Solicitud>(solicitud=> true, new List<string> { "Categoria", "PerMan", "Depto" });
+        return _repository.GetAll<Solicitud>(solicitud => true, new List<string> { "Categoria", "PerMan", "Depto" });
     }
     public List<Solicitud> GetSolicitudesByCategoria(Categoria categoria)
     {
         List<Solicitud> solicitudesByCategoria = new List<Solicitud>();
 
-        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud=> true, new List<string> { "Categoria" })) 
+        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud => true, new List<string> { "Categoria" }))
         {
             if (solicitud.Categoria == categoria)
             {
@@ -73,7 +73,7 @@ public class SolicitudService : ISolicitudService
     {
         List<Solicitud> solicitudesByMantenimiento = new List<Solicitud>();
 
-        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud=> true, new List<string> { "PerMan" })) 
+        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud => true, new List<string> { "PerMan" }))
         {
             if (solicitud.PerMan == mant)
             {

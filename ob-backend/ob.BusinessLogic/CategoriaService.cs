@@ -16,10 +16,14 @@ public class CategoriaService : ICategoriaService
     }
     public Categoria GetCategoriaByNombre(string nombre)
     {
-        
-            return _repository.Get(c => c.Nombre.ToLower() == nombre.ToLower());
-        
-        
+
+        var categoria = _repository.Get(c => c.Nombre.ToLower() == nombre.ToLower());
+        if (categoria == null)
+        {
+            throw new KeyNotFoundException("No hay categoria con este nombre");
+        }
+        return categoria;
+
     }
     public void CrearCategoria(Categoria categoria)
     {

@@ -4,9 +4,11 @@ namespace ob.Domain
     {
         public Guid Id { get; set; }
         private string _nombre;
-        public string Nombre {
+        public string Nombre
+        {
             get { return _nombre; }
-            set {
+            set
+            {
                 Validator.ValidateStringMaxLength(value, 100);
                 Validator.ValidateString(value);
                 _nombre = value;

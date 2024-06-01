@@ -12,12 +12,16 @@ public class EncargadoService : IEncargadoService
     private readonly IMantenimientoService _mantenimientoService;
     private readonly ISolicitudService _solicitudService;
     private readonly IEdificioService _edificioService;
-    public EncargadoService(IUsuarioRepository repository, IMantenimientoService mantenimientoService, ISolicitudService solicitudService, IEdificioService edificioService)
+    private readonly IDeptoService _deptoService;
+    private readonly IDuenoService _duenoService;
+    public EncargadoService(IUsuarioRepository repository, IMantenimientoService mantenimientoService, ISolicitudService solicitudService, IEdificioService edificioService, IDeptoService deptoService, IDuenoService duenoService)
     {
         _repository = repository;
         _mantenimientoService = mantenimientoService;
         _solicitudService = solicitudService;
         _edificioService = edificioService;
+        _deptoService = deptoService;
+        _duenoService = duenoService;
     }
 
     public void CrearEncargado(Encargado encargado)
@@ -30,7 +34,7 @@ public class EncargadoService : IEncargadoService
         _repository.Save();
     }
 
-    
+
 
     public Encargado GetEncargadoByEmail(string email)
     {
@@ -48,13 +52,13 @@ public class EncargadoService : IEncargadoService
     {
         return _repository.GetAll<Encargado>(encargado => true, new List<string> { "Edificios.Deptos" });
     }
-  
-   
+
+
     public void CrearMantenimiento(Mantenimiento mantenimiento)
     {
         _mantenimientoService.CrearMantenimiento(mantenimiento);
     }
-    public void CrearSolicitud(Solicitud solicitud,string email)
+    public void CrearSolicitud(Solicitud solicitud, string email)
     {
         var encargado = GetEncargadoByEmail(email);
         if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
@@ -65,16 +69,16 @@ public class EncargadoService : IEncargadoService
     }
     public void AsignarSolicitud(Guid solicitudId, string email, string emailEncargado)
     {
-        
+
         Encargado encargado = GetEncargadoByEmail(emailEncargado);
         Solicitud solicitud = _solicitudService.GetSolicitudById(solicitudId);
         Mantenimiento perMan = _mantenimientoService.GetMantenimientoByEmail(email);
-       
-        if (solicitud == null || perMan == null||encargado==null)
+
+        if (solicitud == null || perMan == null || encargado == null)
         {
             throw new KeyNotFoundException("Solicitud or Mantenimiento not found.");
         }
-        if(!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
+        if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
         {
             throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
         }
@@ -82,7 +86,7 @@ public class EncargadoService : IEncargadoService
     }
 
 
- 
+
 
     public int[] GetSolicitudByEdificio(string nombre, string direccion, string email)
     {
@@ -111,7 +115,7 @@ public class EncargadoService : IEncargadoService
         }
         return array;
     }
-    public int[] GetSolicitudByMantenimiento(string  email, string emailEncargado)
+    public int[] GetSolicitudByMantenimiento(string email, string emailEncargado)
     {
         Mantenimiento mantenimiento = _mantenimientoService.GetMantenimientoByEmail(email);
         Encargado encargado = GetEncargadoByEmail(emailEncargado);
@@ -163,7 +167,23 @@ public class EncargadoService : IEncargadoService
 
         return TimeSpan.FromTicks(tiempoTotal.Value.Ticks / cantidad); // Calculate average time
     }
-    
-    
+
+    public void AsignarDueno(int numero, string edNombre, string edDireccion, string emailDueno, string email)
+    {
+        var depto = _deptoService.GetDepto(numero, edNombre, edDireccion);
+        var dueno = _duenoService.GetDuenoByEmail(emailDueno);
+        var encargado = GetEncargadoByEmail(email);
+        if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(depto)))
+        {
+            throw new InvalidOperationException("El encargado no esta a cargo del edificio");
+        }
+        depto.Dueno = dueno;
+        _deptoService.EditarDepto(depto);
+    }
+    public Dueno GetDueno(string email)
+    {
+        return _duenoService.GetDuenoByEmail(email);
+    }
+
 
 }

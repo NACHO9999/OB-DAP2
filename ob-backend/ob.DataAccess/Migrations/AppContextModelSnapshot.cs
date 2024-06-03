@@ -142,6 +142,9 @@ namespace ob.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Rol")
+                        .HasColumnType("int");
+
                     b.HasKey("Email");
 
                     b.ToTable("Invitaciones");
@@ -232,8 +235,8 @@ namespace ob.DataAccess.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -246,6 +249,18 @@ namespace ob.DataAccess.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Usuario");
 
                     b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("ob.Domain.AdminConstructora", b =>
+                {
+                    b.HasBaseType("ob.Domain.Usuario");
+
+                    b.Property<Guid?>("ConstructoraId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("ConstructoraId");
+
+                    b.HasDiscriminator().HasValue("AdminConstructora");
                 });
 
             modelBuilder.Entity("ob.Domain.Administrador", b =>
@@ -331,6 +346,15 @@ namespace ob.DataAccess.Migrations
                     b.Navigation("Depto");
 
                     b.Navigation("PerMan");
+                });
+
+            modelBuilder.Entity("ob.Domain.AdminConstructora", b =>
+                {
+                    b.HasOne("ob.Domain.Constructora", "Constructora")
+                        .WithMany()
+                        .HasForeignKey("ConstructoraId");
+
+                    b.Navigation("Constructora");
                 });
 
             modelBuilder.Entity("ob.Domain.Edificio", b =>

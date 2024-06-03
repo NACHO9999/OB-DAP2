@@ -24,15 +24,10 @@ public class InvitacionController : ControllerBase
 
 
     [HttpPost("{email}/{contrasena}")]
-    
-    public IActionResult InvitacionAccepted([FromRoute]string email, [FromRoute] string contrasena )
+
+    public IActionResult InvitacionAccepted([FromRoute] string email, [FromRoute] string contrasena)
     {
-        
-        Invitacion invitacion = _invitacionService.GetInvitacionByEmail(email);
-
-        _invitacionService.InvitacionAceptada(invitacion, contrasena);
-
-
+        _invitacionService.InvitacionAceptada(email, contrasena);
         return Ok();
     }
 

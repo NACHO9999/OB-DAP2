@@ -8,7 +8,7 @@ public interface ISolicitudService
     List<Solicitud> GetSolicitudesByEdificio(Edificio edificio);
     List<Solicitud> GetSolicitudesByMantenimiento(Mantenimiento mant);
     List<Solicitud> GetSolicitudesByCategoria(Categoria categoria);
-    IEnumerable<Solicitud> GetSolicitudes ();
+    IEnumerable<Solicitud> GetSolicitudes();
     Solicitud GetSolicitudById(Guid id);
 
 

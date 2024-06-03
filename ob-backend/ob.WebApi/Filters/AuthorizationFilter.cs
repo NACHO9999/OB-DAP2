@@ -8,9 +8,8 @@ namespace ob.WebApi.Filters;
 
 public class AuthorizationFilter : Attribute, IAuthorizationFilter
 {
-    public Type [] RoleNeeded { get; set; }
+    public Type[] RoleNeeded { get; set; }
 
-    public bool OwnUserAction { get; set; } = false;
     public string Email { get; set; } = string.Empty;
 
     public void OnAuthorization(AuthorizationFilterContext context)
@@ -21,7 +20,7 @@ public class AuthorizationFilter : Attribute, IAuthorizationFilter
         {
             Email = email;
         }
-        
+
         Guid token = Guid.Empty;
 
         if (string.IsNullOrEmpty(authorizationHeader) || !Guid.TryParse(authorizationHeader, out token))
@@ -56,18 +55,7 @@ public class AuthorizationFilter : Attribute, IAuthorizationFilter
                 Content = "You are not authorized to use this functionality."
             };
         }
-        if(OwnUserAction)
-        {
-            
-            if (currentUser.Email != Email)
-            {
-                context.Result = new ContentResult()
-                {
-                    StatusCode = 403,
-                    Content = "You are not authorized to use this functionality."
-                };
-            }
-        }
+
 
     }
 

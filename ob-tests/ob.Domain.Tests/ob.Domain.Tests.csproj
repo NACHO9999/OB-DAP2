@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ob-backend\Exceptions\ob.Exceptions.csproj" />
     <ProjectReference Include="..\..\ob-backend\ob.Domain\ob.Domain.csproj" />
   </ItemGroup>
 

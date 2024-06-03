@@ -6,7 +6,7 @@ using ob.WebApi.DTOs;
 using ob.IBusinessLogic;
 using ob.WebApi.Filters;
 
-namespace starwars.WebApi.Controllers
+namespace ob.WebApi.Controllers
 {
     [Route("api/sessions")]
     [ApiController]
@@ -38,14 +38,6 @@ namespace starwars.WebApi.Controllers
             return Ok("Logged out successfully.");
         }
 
-        [ActionFilter]
-        [ResultFilter]
-        [ResourceFilter]
-        [HttpGet]
-        public IActionResult Get()
-        {
-            Console.WriteLine("Ejecuto método");
-            return Ok("ejecuto metodo");
-        }
+
     }
 }

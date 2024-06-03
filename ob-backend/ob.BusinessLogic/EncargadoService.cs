@@ -9,17 +9,19 @@ using ob.IDataAccess;
 public class EncargadoService : IEncargadoService
 {
     private readonly IUsuarioRepository _repository;
-    private readonly IEdificioService _edificioService;
     private readonly IMantenimientoService _mantenimientoService;
     private readonly ISolicitudService _solicitudService;
+    private readonly IEdificioService _edificioService;
     private readonly IDeptoService _deptoService;
-    public EncargadoService(IUsuarioRepository repository, IEdificioService edificioService, IMantenimientoService mantenimientoService, ISolicitudService solicitudService, IDeptoService deptoService)
+    private readonly IDuenoService _duenoService;
+    public EncargadoService(IUsuarioRepository repository, IMantenimientoService mantenimientoService, ISolicitudService solicitudService, IEdificioService edificioService, IDeptoService deptoService, IDuenoService duenoService)
     {
         _repository = repository;
-        _edificioService = edificioService;
         _mantenimientoService = mantenimientoService;
         _solicitudService = solicitudService;
+        _edificioService = edificioService;
         _deptoService = deptoService;
+        _duenoService = duenoService;
     }
 
     public void CrearEncargado(Encargado encargado)
@@ -32,26 +34,7 @@ public class EncargadoService : IEncargadoService
         _repository.Save();
     }
 
-    public void CrearDepto (string email, Depto depto)
-    {
-        var encargado = GetEncargadoByEmail(email);
 
-        var edificio = _edificioService.GetEdificioByNombreYDireccion(depto.EdificioNombre, depto.EdificioDireccion);
-        if(!encargado.Edificios.Contains(edificio))
-        {
-            throw new InvalidOperationException("El encargado no es responsable de este edificio.");
-        }
-        if(edificio.Deptos.Any(d => d.Numero == depto.Numero))
-        {
-            throw new AlreadyExistsException("El departamento ya existe");
-        }
-        
-        _deptoService.CrearDepto(depto);
-        edificio.Deptos.Add(depto);
-        _repository.Update(encargado);
-        _edificioService.EditarEdificio(edificio);
-        _repository.Save();
-    }
 
     public Encargado GetEncargadoByEmail(string email)
     {
@@ -69,21 +52,13 @@ public class EncargadoService : IEncargadoService
     {
         return _repository.GetAll<Encargado>(encargado => true, new List<string> { "Edificios.Deptos" });
     }
-    public void CrearEdificio(string email, Edificio edificio)
-    {
 
-        _edificioService.CrearEdificio(edificio);
-        var encargado = GetEncargadoByEmail(email);
-        encargado.Edificios.Add(edificio);
-        _repository.Update(encargado);
-        _repository.Save();
-    }
-   
+
     public void CrearMantenimiento(Mantenimiento mantenimiento)
     {
         _mantenimientoService.CrearMantenimiento(mantenimiento);
     }
-    public void CrearSolicitud(Solicitud solicitud,string email)
+    public void CrearSolicitud(Solicitud solicitud, string email)
     {
         var encargado = GetEncargadoByEmail(email);
         if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
@@ -94,22 +69,26 @@ public class EncargadoService : IEncargadoService
     }
     public void AsignarSolicitud(Guid solicitudId, string email, string emailEncargado)
     {
+
         Encargado encargado = GetEncargadoByEmail(emailEncargado);
         Solicitud solicitud = _solicitudService.GetSolicitudById(solicitudId);
         Mantenimiento perMan = _mantenimientoService.GetMantenimientoByEmail(email);
-       
-        if (solicitud == null || perMan == null||encargado==null)
+
+        if (solicitud == null || perMan == null || encargado == null)
         {
             throw new KeyNotFoundException("Solicitud or Mantenimiento not found.");
         }
-        if(!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
+        if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
         {
             throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
         }
         solicitud.PerMan = perMan;
     }
 
-    public Edificio GetEdificioByNombreYDireccion(string nombre, string direccion, string email)
+
+
+
+    public int[] GetSolicitudByEdificio(string nombre, string direccion, string email)
     {
         Encargado encargado = GetEncargadoByEmail(email);
         Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
@@ -117,24 +96,6 @@ public class EncargadoService : IEncargadoService
         {
             throw new InvalidOperationException("The Encargado is not in charge of the building.");
         }
-        return edificio;
-    }
-
-    public Depto GetDepto(int numero, string nombre, string direccion, string email)
-    {
-        Encargado encargado = GetEncargadoByEmail(email);
-        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
-        Depto depto = _deptoService.GetDepto(numero, nombre, direccion);
-        if (!encargado.Edificios.Contains(edificio))
-        {
-            throw new InvalidOperationException("Este encargado no maneja este departamento.");
-        }
-        return depto;
-    }
-
-    public int[] GetSolicitudByEdificio(string nombre, string direccion)
-    {
-        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
         int[] array = new int[3];
         var lista = _solicitudService.GetSolicitudesByEdificio(edificio);
         foreach (var solicitud in lista)
@@ -154,7 +115,7 @@ public class EncargadoService : IEncargadoService
         }
         return array;
     }
-    public int[] GetSolicitudByMantenimiento(string  email, string emailEncargado)
+    public int[] GetSolicitudByMantenimiento(string email, string emailEncargado)
     {
         Mantenimiento mantenimiento = _mantenimientoService.GetMantenimientoByEmail(email);
         Encargado encargado = GetEncargadoByEmail(emailEncargado);
@@ -206,34 +167,23 @@ public class EncargadoService : IEncargadoService
 
         return TimeSpan.FromTicks(tiempoTotal.Value.Ticks / cantidad); // Calculate average time
     }
-    public void BorrarEdificio(string nombre, string direccion, string email)
+
+    public void AsignarDueno(int numero, string edNombre, string edDireccion, string emailDueno, string email)
     {
-        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
-        Encargado encargado = GetEncargadoByEmail(email);
-        if (!encargado.Edificios.Contains(edificio))
-        {
-            throw new InvalidOperationException("The Encargado is not in charge of the building.");
-        }
-        _edificioService.BorrarEdificio(edificio);
-        encargado.Edificios.Remove(edificio);
-        _repository.Update(encargado);
-    }
-    public void EditarEdificio(string email, Edificio edificio)
-    {
-        Encargado encargado = GetEncargadoByEmail(email);
-        if (!encargado.Edificios.Contains(edificio))
-        {
-            throw new InvalidOperationException("The Encargado is not in charge of the building.");
-        }
-        _edificioService.EditarEdificio(edificio);
-    }
-    public void EditarDepto(string email, Depto depto)
-    {
-        Encargado encargado = GetEncargadoByEmail(email);
+        var depto = _deptoService.GetDepto(numero, edNombre, edDireccion);
+        var dueno = _duenoService.GetDuenoByEmail(emailDueno);
+        var encargado = GetEncargadoByEmail(email);
         if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(depto)))
         {
-            throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
+            throw new InvalidOperationException("El encargado no esta a cargo del edificio");
         }
+        depto.Dueno = dueno;
         _deptoService.EditarDepto(depto);
     }
+    public Dueno GetDueno(string email)
+    {
+        return _duenoService.GetDuenoByEmail(email);
+    }
+
+
 }

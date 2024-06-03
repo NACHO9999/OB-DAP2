@@ -8,12 +8,10 @@ namespace ob.Domain.Tests;
 public class SolicitudTests
 {
     protected static Categoria? SharedCategoria;
-    protected static Edificio? SharedEdificio;  
 
     [TestInitialize]
     public void TestInitialize()
     {
-        SharedEdificio = new Edificio("Edificio", "Direccion", "ubicacion", new Constructora("Constructora"), 1000, new List<Depto>());
         SharedCategoria = new Categoria("Categoria");
 
     }
@@ -23,7 +21,7 @@ public class SolicitudTests
     {
         // Arrange
         Mantenimiento mantenimiento = new Mantenimiento("John", "Doe", "john.doe@example.com", "password");
-        Solicitud solicitud = new Solicitud(mantenimiento, "Test Description", new Depto(SharedEdificio, 1, 101, null, 2, 2, false), SharedCategoria , EstadoSolicitud.Atendiendo, DateTime.Now);
+        Solicitud solicitud = new Solicitud(mantenimiento, "Test Description", new Depto(1, 101, null, 2, 2, false, "nom", "dir"), SharedCategoria , EstadoSolicitud.Atendiendo, DateTime.Now);
 
         // Act
         Mantenimiento newMantenimiento = new Mantenimiento("Jane", "Smith", "jane.smith@example.com", "password");
@@ -37,7 +35,7 @@ public class SolicitudTests
     public void Descripcion_SetValidValue_Success()
     {
         // Arrange
-        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(SharedEdificio, 1, 101, null, 2, 2, false), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
+        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(1, 101, null, 2, 2, false,"nom","dir"), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
 
         // Act
         solicitud.Descripcion = "Updated Description";
@@ -50,11 +48,11 @@ public class SolicitudTests
     public void Depto_SetValidValue_Success()
     {
         // Arrange
-        Depto depto = new Depto(SharedEdificio, 1, 101, null, 2, 2, false);
+        Depto depto = new Depto(1, 101, null, 2, 2, false, "nom", "dir");
         Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"),"Despripcion", depto, SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
 
         // Act
-        solicitud.Depto = new Depto(SharedEdificio, 2, 102, null, 3, 3, true);
+        solicitud.Depto = new Depto(2, 102, null, 3, 3, true, "nom", "dir");
 
         // Assert
         Assert.IsNotNull(solicitud.Depto);
@@ -64,7 +62,7 @@ public class SolicitudTests
     public void Estado_SetValidValue_Success()
     {
         // Arrange
-        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(SharedEdificio, 1, 101, null, 2, 2, false), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
+        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(1, 101, null, 2, 2, false, "nom", "dir"), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
 
         // Act
         solicitud.Estado = EstadoSolicitud.Abierto;
@@ -78,7 +76,7 @@ public class SolicitudTests
     {
         // Arrange
         DateTime validDate = DateTime.Now.AddDays(-1);
-        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(SharedEdificio, 1, 101, null, 2, 2, false), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
+        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(1, 101, null, 2, 2, false, "nom", "dir"), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
 
         // Act
         solicitud.FechaInicio = validDate;
@@ -92,7 +90,7 @@ public class SolicitudTests
     public void Descripcion_SetInvalidValue_ThrowsArgumentException()
     {
         // Arrange
-        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(SharedEdificio, 1, 101, null, 2, 2, false), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
+        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(1, 101, null, 2, 2, false, "nom", "dir"), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
 
         // Act & Assert
         Assert.ThrowsException<ArgumentException>(() => solicitud.Descripcion = "");
@@ -102,14 +100,14 @@ public class SolicitudTests
     public void Depto_SetInvalidValue_ThrowsArgumentException()
     {
         // Arrange
-        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(SharedEdificio, 1, 101, null, 2, 2, false), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
+        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(1, 101, null, 2, 2, false, "nom", "dir"), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
 
         // Act & Assert
         Assert.ThrowsException<ArgumentNullException>(() => solicitud.Depto = null);
     }    public void Categoria_SetInvalidValue_ThrowsArgumentException()
     {
         // Arrange
-        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(SharedEdificio, 1, 101, null, 2, 2, false), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
+        Solicitud solicitud = new Solicitud(new Mantenimiento("John", "Doe", "john.doe@example.com", "password"), "Test Description", new Depto(1, 101, null, 2, 2, false, "nom", "dir"), SharedCategoria, EstadoSolicitud.Atendiendo, DateTime.Now);
 
         // Act & Assert
         Assert.ThrowsException<ArgumentNullException>(() => solicitud.Categoria = null);

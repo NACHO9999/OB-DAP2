@@ -5,8 +5,8 @@ namespace ob.IBusinessLogic
     {
         void CrearMantenimiento(Mantenimiento mantenimiento);
         Mantenimiento GetMantenimientoByEmail(string email);
-        void AtenderSolicitud(Guid solicitudId); 
-        void CompletarSolicitud(Guid solicitudId);
+        void AtenderSolicitud(Guid solicitudId, string email); 
+        void CompletarSolicitud(Guid solicitudId, string email);
     }
     
 }

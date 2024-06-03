@@ -1,5 +1,6 @@
 namespace ob.Domain.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Enums;
 
 
 [TestClass]
@@ -9,7 +10,7 @@ public class InvitacionTests
     public void Email_SetValidValue_Success()
     {
         // Arrange
-        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7),RolInvitaciion.Encargado);
 
         // Act
         invitacion.Email = "another@example.com";
@@ -22,7 +23,7 @@ public class InvitacionTests
     public void Email_SetInvalidValue_ThrowsArgumentException()
     {
         // Arrange
-        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7), RolInvitaciion.Encargado);
 
         // Act & Assert
         Assert.ThrowsException<ArgumentException>(() => invitacion.Email = "invalid-email");
@@ -32,7 +33,7 @@ public class InvitacionTests
     public void Nombre_SetValidValue_Success()
     {
         // Arrange
-        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7), RolInvitaciion.Encargado);
 
         // Act
         invitacion.Nombre = "Jane Smith";
@@ -45,7 +46,7 @@ public class InvitacionTests
     public void Nombre_SetInvalidValue_ThrowsArgumentException()
     {
         // Arrange
-        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7), RolInvitaciion.Encargado);
 
         // Act & Assert
         Assert.ThrowsException<ArgumentException>(() => invitacion.Nombre = "");
@@ -56,7 +57,7 @@ public class InvitacionTests
     {
         // Arrange
         DateTime validDate = DateTime.Now.AddDays(7);
-        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", validDate);
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", validDate, RolInvitaciion.Encargado);
 
         // Act
         invitacion.FechaExpiracion = validDate.AddDays(1);
@@ -70,7 +71,7 @@ public class InvitacionTests
     {
         // Arrange
         DateTime pastDate = DateTime.Now.AddDays(-1);
-        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7));
+        Invitacion invitacion = new Invitacion("test@example.com", "John Doe", DateTime.Now.AddDays(7), RolInvitaciion.Encargado);
 
         // Act & Assert
         Assert.ThrowsException<ArgumentException>(() => invitacion.FechaExpiracion = pastDate);

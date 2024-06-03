@@ -3,7 +3,7 @@ using ob.Exceptions.BusinessLogicExceptions;
 using ob.IBusinessLogic;
 using ob.IDataAccess;
 namespace ob.BusinessLogic;
-public class ConstructoraService: IConstructoraService
+public class ConstructoraService : IConstructoraService
 {
     private readonly IGenericRepository<Constructora> _repository;
     public ConstructoraService(IGenericRepository<Constructora> constructoraRepository)
@@ -21,10 +21,13 @@ public class ConstructoraService: IConstructoraService
     }
     public Constructora GetConstructoraByNombre(string nombre)
     {
-       
-        return _repository.Get(c => c.Nombre == nombre);
-        
-       
+
+        var constructora = _repository.Get(c => c.Nombre == nombre);
+        if (constructora == null)
+        {
+            throw new KeyNotFoundException("No hay constructora con este nombre");
+        }
+        return constructora;
     }
     public IEnumerable<Constructora> GetAllConstructoras()
     {
@@ -33,5 +36,10 @@ public class ConstructoraService: IConstructoraService
     public bool ConstructoraExists(string nombre)
     {
         return _repository.Get(c => c.Nombre.ToLower() == nombre.ToLower()) != null;
+    }
+    public void EditarConstructora(Constructora constructora)
+    {
+        _repository.Update(constructora);
+        _repository.Save();
     }
 }

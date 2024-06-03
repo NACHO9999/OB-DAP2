@@ -5,7 +5,7 @@ namespace ob.WebApi.DTOs
     public class SolicitudDTO
     {
         public Guid Id { get; set; }
-        public UsuarioCreateModel Mantenimento { get; set; }
+        public UsuarioCreateModel? PerMan { get; set; }
         public string Descripcion { get; set; }
         public DeptoDTO Depto { get; set; }
         public CategoriaDTO Categoria { get; set; }
@@ -17,7 +17,14 @@ namespace ob.WebApi.DTOs
         public SolicitudDTO(Solicitud solicitud)
         {
             this.Id = solicitud.Id;
-            this.Mantenimento = new UsuarioCreateModel() { Nombre = solicitud.PerMan.Nombre, Email = solicitud.PerMan.Email, Apellido = solicitud.PerMan.Apellido, Contrasena=solicitud.PerMan.Contrasena };
+            if (solicitud.PerMan != null)
+            {
+                this.PerMan = new UsuarioCreateModel { Nombre = solicitud.PerMan.Nombre, Apellido = solicitud.PerMan.Apellido, Email = solicitud.PerMan.Email, Contrasena = solicitud.PerMan.Contrasena };
+            }
+            else
+            {
+                this.PerMan = null;
+            }
             this.Descripcion = solicitud.Descripcion;
             this.Depto = new DeptoDTO(solicitud.Depto);
             this.Categoria = new CategoriaDTO(solicitud.Categoria);
@@ -25,9 +32,17 @@ namespace ob.WebApi.DTOs
             this.FechaInicio = solicitud.FechaInicio;
             this.FechaFin = solicitud.FechaFin;
         }
+        private Mantenimiento? MantenimientoNullCheck(UsuarioCreateModel? mantenimiento)
+        {
+            if (mantenimiento == null)
+            {
+                return null;
+            }
+            return new Mantenimiento(mantenimiento.Nombre, mantenimiento.Apellido, mantenimiento.Email, mantenimiento.Contrasena);
+        }
         public Solicitud ToEntity()
         {
-            var solicitud = new Solicitud(this.Mantenimento.MantenimientoToEntity(), this.Descripcion, this.Depto.ToEntity(), new Categoria(this.Categoria.Nombre), this.Estado, this.FechaInicio) { FechaFin = this.FechaFin};
+            var solicitud = new Solicitud(MantenimientoNullCheck(this.PerMan), this.Descripcion, this.Depto.ToEntity(), new Categoria(this.Categoria.Nombre), this.Estado, this.FechaInicio) { FechaFin = this.FechaFin };
             solicitud.Id = this.Id;
             return solicitud;
         }

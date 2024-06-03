@@ -7,7 +7,7 @@ namespace ob.BusinessLogic;
 
 public class SessionService : ISessionService
 {
-    private  IUsuarioRepository _usuarioRepository;
+    private IUsuarioRepository _usuarioRepository;
     private IGenericRepository<Session> _sessionRepository;
     private Usuario? _currentUser;
     public SessionService(IUsuarioRepository usuarioRepository, IGenericRepository<Session> sessionRepository)
@@ -23,9 +23,9 @@ public class SessionService : ISessionService
         if (authToken == null)
             throw new ArgumentException("Cant retrieve user without auth token");
 
-        var session = _sessionRepository.Get(s => s.AuthToken == authToken, new List<string>(){"Usuario"});
-        Console.WriteLine(session==null);
- 
+        var session = _sessionRepository.Get(s => s.AuthToken == authToken, new List<string>() { "Usuario" });
+        Console.WriteLine(session == null);
+
 
         if (session != null)
             _currentUser = session.Usuario;

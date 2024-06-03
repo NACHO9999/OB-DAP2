@@ -34,11 +34,10 @@ public class DuenoController : ControllerBase
 
     [HttpPost]
     [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado), typeof(Administrador) })]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
     public IActionResult InsertDueno([FromBody] DuenoDTO newDueno)
     {
-        _duenoService.CrearDueno(new Dueno(newDueno.Nombre,newDueno.Apellido, newDueno.Email));
-        return Ok();
+        _duenoService.CrearDueno(new Dueno(newDueno.Nombre, newDueno.Apellido, newDueno.Email));
+        return Ok("Dueno creado exitosamente."); // Return an OkObjectResult with a message
     }
-
 }

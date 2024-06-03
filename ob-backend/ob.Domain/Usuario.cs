@@ -3,27 +3,33 @@
 public abstract class Usuario
 {
     private string _nombre;
-    public string Nombre {
+    public string Nombre
+    {
         get { return _nombre; }
-        set {
+        set
+        {
             Validator.ValidateStringMaxLength(value, 100);
             Validator.ValidateString(value);
             _nombre = value;
         }
     }
     private string _apellido;
-    public string Apellido {
+    public string Apellido
+    {
         get { return _apellido; }
-        set {
+        set
+        {
             Validator.ValidateStringMaxLength(value, 100);
             Validator.ValidateString(value);
             _apellido = value;
         }
     }
     private string _email;
-    public string Email {
+    public string Email
+    {
         get { return _email; }
-        set {
+        set
+        {
             Validator.ValidateEmail(value);
             Validator.ValidateStringMaxLength(value, 320);
             _email = value;

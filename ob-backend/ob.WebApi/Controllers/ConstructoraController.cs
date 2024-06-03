@@ -23,7 +23,7 @@ public class ConstructoraController : ControllerBase
 
     [HttpGet]
     [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
     public IActionResult GetConstructoras()
     {
         return Ok(_constructoraService.GetAllConstructoras().Select(c => new ConstructoraDTO(c)).ToList());
@@ -31,7 +31,7 @@ public class ConstructoraController : ControllerBase
 
     [HttpGet("{nombre}")]
     [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
     public IActionResult GetConstructoraByNombre([FromRoute] string nombre)
     {
         ConstructoraDTO constructora = new ConstructoraDTO(_constructoraService.GetConstructoraByNombre(nombre));
@@ -41,7 +41,7 @@ public class ConstructoraController : ControllerBase
 
     [HttpPost]
     [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) , typeof(Administrador)})]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
     public IActionResult InsertConstructora([FromBody] ConstructoraDTO newConstructora)
     {
         _constructoraService.CrearConstructora(new Constructora(newConstructora.Nombre));

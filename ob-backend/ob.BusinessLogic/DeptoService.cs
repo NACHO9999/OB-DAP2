@@ -31,10 +31,10 @@ public class DeptoService : IDeptoService
                 depto.Dueno = _duenoService.GetDuenoByEmail(depto.Dueno.Email);
             }
         }
-        
+
         _repository.Insert(depto);
-       
-       
+
+
         _repository.Save();
     }
     public bool ExisteDepto(Depto depto)
@@ -64,7 +64,7 @@ public class DeptoService : IDeptoService
     }
     public Depto GetDepto(int numero, string edificioNombre, string edificioDireccion)
     {
-        Depto depto = _repository.Get(d => d.Numero == numero && d.EdificioNombre == edificioNombre && d.EdificioDireccion == edificioDireccion, new List<string> { "Dueno"});
+        Depto depto = _repository.Get(d => d.Numero == numero && d.EdificioNombre == edificioNombre && d.EdificioDireccion == edificioDireccion, new List<string> { "Dueno" });
         if (depto == null)
         {
             throw new KeyNotFoundException("Departamento no encontrado");

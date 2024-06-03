@@ -4,9 +4,10 @@ namespace ob.Domain
     {
 
         private string _nombre;
-        public string Nombre {
+        public string Nombre
+        {
             get { return _nombre; }
-            set {Validator.ValidateString(value); _nombre = value;}
+            set { Validator.ValidateString(value); _nombre = value; }
         }
 
         public Categoria(string nombre)
@@ -14,5 +15,5 @@ namespace ob.Domain
             _nombre = nombre;
         }
     }
-    
+
 }

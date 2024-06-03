@@ -13,8 +13,5 @@ namespace ob.DataAccess
         {
             return Get(u => u.Email == email) != null;
         }
-
-
-        
     }
 }

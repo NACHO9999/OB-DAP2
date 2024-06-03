@@ -45,17 +45,17 @@ namespace ob.DataAccess
             {
                 modelBuilder.Entity<Categoria>()
                 .HasKey(c => c.Nombre); // Set Nombre as primary key
-                
+
                 modelBuilder.Entity<Constructora>()
                 .HasKey(c => c.Id); // Set Rut as primary key
 
-                
+
                 modelBuilder.Entity<Depto>()
-                .HasKey(d => new { d.Numero, d.EdificioNombre, d.EdificioDireccion});
-                
+                .HasKey(d => new { d.Numero, d.EdificioNombre, d.EdificioDireccion });
+
                 modelBuilder.Entity<Edificio>()
                 .HasKey(e => new { e.Nombre, e.Direccion }); // Set Nombre and Direccion as primary key
-                
+
                 modelBuilder.Entity<Edificio>()
                 .Property(e => e.GastosComunes)
                 .HasColumnType("decimal(18,2)");
@@ -80,7 +80,8 @@ namespace ob.DataAccess
 
                 modelBuilder.Entity<AdminConstructora>()
                 .HasOne(a => a.Constructora) // An Admin is related to one Constructora
-                .WithMany(); // A Constructora can have many Admins
+                .WithMany()
+                .IsRequired(false); // A Constructora can have many Admins
 
 
                 modelBuilder.Entity<Encargado>()
@@ -101,10 +102,10 @@ namespace ob.DataAccess
                     .IsRequired(); // Ensure a relationship
 
                 modelBuilder.Entity<Edificio>()
-                    
-                    .HasMany(e => e.Deptos) 
+
+                    .HasMany(e => e.Deptos)
                     .WithOne()
-                    .IsRequired(false); 
+                    .IsRequired(false);
 
                 modelBuilder.Entity<Depto>()
                     .HasOne(d => d.Dueno) // A Depto belongs to one Dueno

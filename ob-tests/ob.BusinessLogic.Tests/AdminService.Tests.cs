@@ -8,6 +8,7 @@ using ob.BusinessLogic;
 using ob.IBusinessLogic;
 using ob.IDataAccess;
 using System.Linq.Expressions;
+using Enums;
 
 [TestClass]
 public class AdminServiceTests
@@ -81,7 +82,7 @@ public class AdminServiceTests
         _mockInvitacionService.Setup(repo => repo.CrearInvitacion(It.IsAny<Invitacion>()));
 
         // Act
-        _adminService.InvitarEncargado(email, nombre, fecha);
+        _adminService.Invitar(email, nombre, fecha,RolInvitaciion.Encargado);
 
         // Assert
         _mockInvitacionService.Verify(repo => repo.CrearInvitacion(It.IsAny<Invitacion>()), Times.Once);

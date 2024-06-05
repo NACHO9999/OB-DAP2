@@ -24,6 +24,17 @@ public class MantenimientoService : IMantenimientoService
         _repository.Insert(mantenimiento);
         _repository.Save();
     }
+
+    public List<Solicitud> GetSolicitudesParaAtender()
+    {
+        return _solicitudService.GetSolicitudes().Where(s => s.Estado == EstadoSolicitud.Abierto).ToList();
+    }
+    public List<Solicitud> GetSolicitudesAtendiendo(string email)
+    {
+        var mantenimiento = GetMantenimientoByEmail(email);
+        return _solicitudService.GetSolicitudes().Where(s => s.Estado == EstadoSolicitud.Atendiendo && s.PerMan == mantenimiento).ToList();
+    }
+    
     public Mantenimiento GetMantenimientoByEmail(string email)
     {
         var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower());

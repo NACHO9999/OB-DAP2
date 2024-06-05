@@ -35,7 +35,7 @@ public class SessionService : ISessionService
 
     public Guid Authenticate(string email, string password)
     {
-        var user = _usuarioRepository.Get(u => u.Email == email && u.Contrasena == password);
+        var user = _usuarioRepository.Get(u => u.Email.ToLower() == email.ToLower() && u.Contrasena == password);
 
         if (user == null)
             throw new InvalidCredentialException("Invalid credentials");
@@ -45,6 +45,23 @@ public class SessionService : ISessionService
         _sessionRepository.Save();
 
         return session.AuthToken;
+    }
+
+    public string GetUserRole(string email, string password)
+    {
+        var user = _usuarioRepository.Get(u => u.Email.ToLower() == email.ToLower() && u.Contrasena == password);
+
+        if (user == null)
+            throw new InvalidCredentialException("Invalid credentials");
+
+        if(user is Administrador)
+            return "admin";
+        else if(user is AdminConstructora)
+            return "admin_constructora";
+        else if(user is Encargado)
+            return "encargado";
+        else 
+            return "mantenimiento";   
     }
     public void Logout(Guid authToken)
     {

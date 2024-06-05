@@ -18,6 +18,7 @@ public class AdminService : IAdminService
         _repository = repository;
         _categoriaService = categoriaService;
         _invitacionService = invitacionService;
+        BaseAdmin();
     }
 
     public IEnumerable<Administrador> GetAllAdmins()
@@ -26,11 +27,20 @@ public class AdminService : IAdminService
                          .OfType<Administrador>();
     }
 
+    public void BaseAdmin()
+    {
+        if (GetAllAdmins().Any() == false)
+        {
+            var admin = new Administrador("admin", "base", "abc@abc.com", "Hola1234");
+            CrearAdmin(admin);
+        }
+    }
+
     public void CrearAdmin(Administrador admin)
     {
         if (_repository.EmailExists(admin.Email))
         {
-            throw new AlreadyExistsException("El email ya está en uso.");
+            throw new AlreadyExistsException("El email ya estï¿½ en uso.");
         }
         _repository.Insert(admin);
         _repository.Save();
@@ -44,7 +54,7 @@ public class AdminService : IAdminService
         }
         else
         {
-            throw new KeyNotFoundException("No se encontró el administrador.");
+            throw new KeyNotFoundException("No se encontrï¿½ el administrador.");
         }
     }
     public void Invitar(string email, string nombre, DateTime fecha, RolInvitaciion rol)

@@ -7,6 +7,8 @@ namespace ob.IBusinessLogic
         Mantenimiento GetMantenimientoByEmail(string email);
         void AtenderSolicitud(Guid solicitudId, string email); 
         void CompletarSolicitud(Guid solicitudId, string email);
+        List<Solicitud> GetSolicitudesAtendiendo(string email);
+        List<Solicitud> GetSolicitudesParaAtender();
     }
     
 }

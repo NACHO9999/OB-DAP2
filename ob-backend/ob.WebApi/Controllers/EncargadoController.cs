@@ -22,6 +22,15 @@ public class EncargadoController : BaseController
         _encargadoService = encargadosService;
     }
 
+    [HttpGet()]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+    public IActionResult GetEncargados()
+    {
+        var encargados = _encargadoService.GetAllEncargados();
+        var retorno = encargados.Select(e => new EncargadoDTO(e)).ToList();
+        return Ok(retorno);
+    }
 
     [HttpGet("{email}")]
     [ServiceFilter(typeof(AuthenticationFilter))]

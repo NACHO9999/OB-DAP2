@@ -20,7 +20,7 @@ public class MantenimientoController : BaseController
     {
         _mantenimientoService = mantenimientosService;
     }
-    [HttpPost("atender/{solicitudId}")]
+    [HttpPut("atender/{solicitudId}")]
     [ServiceFilter(typeof(AuthenticationFilter))]
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Mantenimiento) })]
     public IActionResult AtenderSolicitud([FromRoute] Guid solicitudId)
@@ -31,7 +31,7 @@ public class MantenimientoController : BaseController
 
     }
 
-    [HttpPost("completar/{solicitudId}")]
+    [HttpPut("completar/{solicitudId}")]
     [ServiceFilter(typeof(AuthenticationFilter))]
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Mantenimiento) })]
     public IActionResult CompletarSolicitud([FromRoute] Guid solicitudId)
@@ -40,5 +40,25 @@ public class MantenimientoController : BaseController
         _mantenimientoService.CompletarSolicitud(solicitudId, GetCurrentUser().Email);
         return Ok();
 
+    }
+
+    [HttpGet("solicitudes")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Mantenimiento) })]
+    public IActionResult GetSolicitudesParaAtender()
+    {
+        var solicitudes = _mantenimientoService.GetSolicitudesParaAtender();
+        var retorno = solicitudes.Select(s => new SolicitudDTO(s)).ToList();
+        return Ok(retorno);
+    }
+
+    [HttpGet("solicitudes/atendiendo")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Mantenimiento) })]
+    public IActionResult GetSolicitudesParaAtendiendo()
+    {
+        var solicitudes = _mantenimientoService.GetSolicitudesAtendiendo(GetCurrentUser().Email);
+        var retorno = solicitudes.Select(s => new SolicitudDTO(s)).ToList();
+        return Ok(retorno);
     }
 }

@@ -24,13 +24,14 @@ namespace ob.WebApi.Controllers
         public IActionResult Login([FromBody] UserLoginModel userLoginModel)
         {
             var token = _sessionService.Authenticate(userLoginModel.Email, userLoginModel.Contrasena);
-            return Ok(new { token = token });
+            var role = _sessionService.GetUserRole(userLoginModel.Email, userLoginModel.Contrasena);
+            return Ok(new { token = token, role = role});
         }
 
 
 
-
         [HttpDelete("logout")]
+        [ServiceFilter(typeof(AuthenticationFilter))]
         public IActionResult Logout()
         {
             var authToken = Guid.Parse(Request.Headers["Authorization"]);

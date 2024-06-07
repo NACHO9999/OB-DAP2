@@ -15,6 +15,16 @@ builder.Services.AddScoped<AuthenticationFilter>();
 var servicesFactory = new ServicesFactory();
 servicesFactory.RegistrateServices(builder.Services);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "MyPolicy",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 app.UseCors();
@@ -32,6 +42,19 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ob.DataAccess.AppContext>();
+        await context.InitializeAsync(); // Inicializa el administrador base
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred during migration: {ex.Message}");
+    }
+}
 
 app.Run();
 

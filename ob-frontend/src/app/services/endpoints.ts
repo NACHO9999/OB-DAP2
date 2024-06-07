@@ -21,11 +21,11 @@ export enum AdminConstructoraEndpoints {
   }
 
   export enum AdminEndpoints {
-    CREAR_ADMIN = 'admin',
-    GET_ADMIN_BY_EMAIL = 'admin',
-    INVITAR = 'admin/invitar',
-    ELIMINAR_INVITACION = 'admin/invitar',
-    ALTA_CATEGORIA = 'admin/categoria',
+    CREAR_ADMIN = 'administrador',
+    GET_ADMIN_BY_EMAIL = 'administrador',
+    INVITAR = 'administrador/invitar',
+    ELIMINAR_INVITACION = 'administrador/invitar',
+    ALTA_CATEGORIA = 'admininistrador/categoria',
   }
 
   export enum CategoriaEndpoints {

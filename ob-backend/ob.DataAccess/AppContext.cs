@@ -22,6 +22,7 @@ namespace ob.DataAccess
 
         public IConfiguration? Config { get; set; }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Config ??= new ConfigurationBuilder()
@@ -130,8 +131,20 @@ namespace ob.DataAccess
                     .WithMany() // A Categoria can have many Solicituds
                     .IsRequired(); // Ensure a relationship
             }
+
         }
 
-
+        public async Task InitializeAsync()
+        {
+            if (Usuarios != null)
+            {
+                if (!Usuarios.Any())
+                {
+                    var admin = new Administrador("admin", "base", "abc@abc.com", "Hola1234");
+                    Usuarios.Add(admin);
+                    await SaveChangesAsync();
+                }
+            }
+        }
     }
 }

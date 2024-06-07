@@ -18,7 +18,7 @@ public class AdminService : IAdminService
         _repository = repository;
         _categoriaService = categoriaService;
         _invitacionService = invitacionService;
-        BaseAdmin();
+
     }
 
     public IEnumerable<Administrador> GetAllAdmins()
@@ -27,14 +27,7 @@ public class AdminService : IAdminService
                          .OfType<Administrador>();
     }
 
-    public void BaseAdmin()
-    {
-        if (GetAllAdmins().Any() == false)
-        {
-            var admin = new Administrador("admin", "base", "abc@abc.com", "Hola1234");
-            CrearAdmin(admin);
-        }
-    }
+
 
     public void CrearAdmin(Administrador admin)
     {

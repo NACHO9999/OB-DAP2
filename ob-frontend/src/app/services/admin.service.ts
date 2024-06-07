@@ -4,12 +4,16 @@ import { Observable } from 'rxjs';
 import { AdminEndpoints } from './endpoints';
 import { ICategoriaModel } from '../interfaces/icategoria-model';
 import { IInvitacionModel } from '../interfaces/iinvitacion-model';
+import { IUserCreate } from '../interfaces/user-create';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   constructor(private http: HttpClient) {}
+  crearAdmin(admin: IUserCreate): Observable<any> {
+    return this.http.post(AdminEndpoints.CREAR_ADMIN, admin);
+  }
 
   getAdminByEmail(email: string): Observable<any> {
     const url = `${AdminEndpoints.GET_ADMIN_BY_EMAIL}/${email}`;

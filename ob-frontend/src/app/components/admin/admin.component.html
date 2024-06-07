@@ -1,0 +1,73 @@
+<div class="admin-container">
+  <h2>Invitar Encargado</h2>
+  <form [formGroup]="inviteForm" (ngSubmit)="submitInvite()">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Enter email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Enter name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role.value">
+          {{ role.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha Límite</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="deadline" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="inviteForm.invalid">
+      Enviar Invitación
+    </button>
+  </form>
+
+  <h2>Alta de Administrador</h2>
+  <form [formGroup]="adminForm" (ngSubmit)="submitAdmin()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="firstName" placeholder="Enter first name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="lastName" placeholder="Enter last name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Enter email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="Enter password" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="adminForm.invalid">
+      Crear Administrador
+    </button>
+  </form>
+
+  <h2>Alta de Categoría</h2>
+  <form [formGroup]="categoryForm" (ngSubmit)="submitCategory()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" placeholder="Enter category name" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="categoryForm.invalid">
+      Crear Categoría
+    </button>
+  </form>
+</div>

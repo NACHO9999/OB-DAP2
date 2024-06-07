@@ -1,7 +1,7 @@
 
 
 export enum PATHS {
-    ADMINCONSTRUCTORA = 'adminconstructora',
+    ADMINCONSTRUCTORA = 'admin_constructora',
     ADMIN = 'admin',
     MANTENIMIENTO = 'mantenimiento',
     ENCARGADO = 'encargado',
@@ -12,9 +12,6 @@ export enum SEGMENTS {
     NEW = 'new',
 }
 
-export enum AUTH {
-    LOGIN = 'login',
-}
 
 
 
@@ -22,7 +19,7 @@ export const ADMINCONSTRUCTORA_URL = PATHS.ADMINCONSTRUCTORA;
 
 export const ADMIN_URL = PATHS.ADMIN;
 
-export const LOGIN_URL = AUTH.LOGIN;
+
 
 export const MANTENIMIENTO_URL = PATHS.MANTENIMIENTO;
 

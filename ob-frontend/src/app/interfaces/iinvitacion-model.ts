@@ -1,6 +1,6 @@
 export interface IInvitacionModel {
-    Email: string;
-    Nombre: string;
-    FechaExpiracion: Date;
-    RolInvitacion: number;
+    email: string;
+    nombre: string;
+    fechaExpiracion: Date;
+    rolInvitacion: number;
 }

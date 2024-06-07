@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { AdminService } from '../../services/admin.service';
 import { LogoutButtonComponent } from '../logout/logout.component';
+import { InvitacionesEliminarComponent } from '../invitaciones-eliminar/invitaciones-eliminar.component';
 
 
 
@@ -26,7 +27,8 @@ import { LogoutButtonComponent } from '../logout/logout.component';
     MatButtonModule,
     MatSelectModule,
     MatOptionModule,
-    LogoutButtonComponent
+    LogoutButtonComponent,
+    InvitacionesEliminarComponent
   ],
 })
 export class AdminComponent implements OnInit {
@@ -41,10 +43,10 @@ export class AdminComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private adminService: AdminService) {
     this.inviteForm = this.fb.group({
-      Email: ['', [Validators.required, Validators.email]],
-      Nombre: ['', Validators.required],
-      RolInvitacion: [null, Validators.required],
-      FechaExpiracion: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      nombre: ['', Validators.required],
+      rolInvitacion: [null, Validators.required],
+      fechaExpiracion: ['', Validators.required],
     });
 
     this.adminForm = this.fb.group({
@@ -59,8 +61,13 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
-
+  ngOnInit(): void { 
+    
+  }
+  dateFilter = (date: Date | null): boolean => {
+    const currentDate = new Date();
+    return (date || currentDate) > currentDate;
+  };
   submitInvite() {
 
     if (this.inviteForm.valid) {

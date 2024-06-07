@@ -1,9 +1,9 @@
-import { IDeptoModel } from "./idepto-model";
+import { IEdificioModel } from "./iedificio-model";
 
 export interface IEncargadoModel {
-    Email: string;
-    Nombre: string;
-    Apellido: string;
-    Contrasena: string;
-    Deptos: IDeptoModel[];
+    email: string;
+    nombre: string;
+    apellido: string;
+    contrasena: string;
+    edificios: IEdificioModel[];
 }

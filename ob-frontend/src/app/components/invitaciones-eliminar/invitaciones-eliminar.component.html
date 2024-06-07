@@ -1,0 +1,9 @@
+<div class="invitacion-container" *ngFor="let invitacion of invitaciones">
+    <div class="invitacion-info">
+      <p><strong>Email:</strong> {{ invitacion.email }}</p>
+      <p><strong>Nombre:</strong> {{ invitacion.nombre }}</p>
+      <p><strong>Fecha de Expiración:</strong> {{ invitacion.fechaExpiracion | date }}</p>
+      <p><strong>Rol:</strong> {{ invitacion.rolInvitacion }}</p>
+    </div>
+    <button (click)="eliminarInvitacion(invitacion.email)" class="btn btn-danger">Eliminar</button>
+  </div>

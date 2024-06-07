@@ -43,7 +43,7 @@ export class AdminComponent implements OnInit {
     this.inviteForm = this.fb.group({
       Email: ['', [Validators.required, Validators.email]],
       Nombre: ['', Validators.required],
-      RolInvitacion: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      RolInvitacion: [null, Validators.required],
       FechaExpiracion: ['', Validators.required],
     });
 
@@ -62,7 +62,9 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void { }
 
   submitInvite() {
+
     if (this.inviteForm.valid) {
+      console.log(this.inviteForm.value.RolInvitacion)
       const inviteData = this.inviteForm.value;
       this.adminService.invitar(inviteData).subscribe(
         response => {

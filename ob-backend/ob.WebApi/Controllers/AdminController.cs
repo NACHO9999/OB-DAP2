@@ -50,7 +50,7 @@ public class AdministradorController : ControllerBase
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Administrador) })]
     public IActionResult Invitar([FromBody] InvitacionDTO invitacion)
     {
-        _adminService.Invitar(invitacion.Email, invitacion.Nombre, invitacion.FechaExpiracion, invitacion.Rol);
+        _adminService.Invitar(invitacion.Email, invitacion.Nombre, invitacion.FechaExpiracion, invitacion.RolInvitacion);
         return Ok();
     }
 

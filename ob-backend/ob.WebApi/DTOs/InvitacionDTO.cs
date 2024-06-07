@@ -8,7 +8,7 @@ namespace ob.WebApi.DTOs
         public string Email { get; set; }
         public string Nombre { get; set; }
         public DateTime FechaExpiracion { get; set; }
-        public RolInvitaciion Rol { get; set; }
+        public RolInvitaciion RolInvitacion { get; set; }
 
         public InvitacionDTO() { }
 
@@ -17,7 +17,7 @@ namespace ob.WebApi.DTOs
             this.Email = invitacion.Email;
             this.Nombre = invitacion.Nombre;
             this.FechaExpiracion = invitacion.FechaExpiracion;
-            this.Rol = invitacion.Rol;
+            this.RolInvitacion = invitacion.Rol;
         }
     }
     

@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 export class MenuInvitacionesComponent implements OnInit {
   invitacionForm: FormGroup;
   resultMessage = '';
+  funciono: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -35,19 +36,21 @@ export class MenuInvitacionesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   buscarInvitacion() {
     if (this.invitacionForm.valid) {
       const { Email, Contrasena } = this.invitacionForm.value;
-      this.invitacionService.invitacionAccepted(Email, Contrasena).subscribe(
-        (data: any) => {
-          this.resultMessage = 'Invitación aceptada';
+      this.invitacionService.invitacionAccepted(Email, Contrasena).subscribe({
+        next: () => {
+          this.resultMessage = 'Invitación aceptada correctamente.';
+          this.router.navigate(['/']);
         },
-        (error: any) => {
-          this.resultMessage = 'No se encontró la invitación';
-        }
-      );
+          complete: () => {
+            this.resultMessage = 'Invitación no encotrada.';
+          }
+        
+      });
     } else {
       this.resultMessage = 'Por favor ingrese un email y contraseña válidos.';
     }

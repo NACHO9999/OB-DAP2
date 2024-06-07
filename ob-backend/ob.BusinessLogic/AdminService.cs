@@ -65,5 +65,9 @@ public class AdminService : IAdminService
     {
         _categoriaService.CrearCategoria(categoria);
     }
+    public List<Invitacion> GetInvitacionesParaEliminar()
+    {
+        return _invitacionService.GetInvitaciones().Where(i => i.FechaExpiracion < DateTime.Now).ToList();
+    }
 
 }

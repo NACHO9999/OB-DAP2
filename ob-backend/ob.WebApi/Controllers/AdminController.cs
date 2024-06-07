@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ob.IBusinessLogic;
 using ob.Domain;
 using Enums;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace ob.WebApi.Controllers;
 
@@ -70,5 +71,14 @@ public class AdministradorController : ControllerBase
     {
         _adminService.AltaCategoria(categoria);
         return Ok();
+    }
+    [HttpGet("invitaciones")]
+    [ServiceFilter(typeof(AuthenticationFilter))]
+    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Administrador) })]
+    public IActionResult GetEliminacionesParaEliminar()
+    {
+        var lista = _adminService.GetInvitacionesParaEliminar();
+        var retorno = lista.Select(i => new InvitacionDTO(i));
+        return Ok(retorno);
     }
 }

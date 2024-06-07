@@ -26,6 +26,7 @@ export enum AdminConstructoraEndpoints {
     INVITAR = 'administrador/invitar',
     ELIMINAR_INVITACION = 'administrador/invitar',
     ALTA_CATEGORIA = 'administrador/categoria',
+    INVITACIONES_PARA_ELIMINAR = 'administrador/invitaciones',
   }
 
   export enum CategoriaEndpoints {

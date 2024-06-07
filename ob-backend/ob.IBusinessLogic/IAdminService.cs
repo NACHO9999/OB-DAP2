@@ -11,4 +11,5 @@ public interface IAdminService
     void Invitar(string email, string nombre, DateTime fechaLimite, RolInvitaciion rol);
     void EliminarInvitacion(string email);
     void AltaCategoria(Categoria categoria);
+    List<Invitacion> GetInvitacionesParaEliminar();
 }

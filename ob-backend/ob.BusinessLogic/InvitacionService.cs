@@ -31,7 +31,7 @@ public class InvitacionService : IInvitacionService
         var invitacion = _repository.Get(i => i.Email.ToLower() == email.ToLower());
         if (invitacion == null)
         {
-            throw new KeyNotFoundException("No se encontró la invitacion.");
+            throw new KeyNotFoundException("No se encontrï¿½ la invitacion.");
         }
         return invitacion;
     }
@@ -39,7 +39,7 @@ public class InvitacionService : IInvitacionService
     {
         if (!InvitacionExiste(email))
         {
-            throw new KeyNotFoundException("No se encontró la invitacion.");
+            throw new KeyNotFoundException("No se encontrï¿½ la invitacion.");
         }
         var invitacion = _repository.Get(i => i.Email.ToLower() == email.ToLower());
         _repository.Delete(invitacion);
@@ -68,6 +68,9 @@ public class InvitacionService : IInvitacionService
     {
         return _repository.Get(i => i.Email.ToLower() == email.ToLower()) != null;
     }
-
+    public List<Invitacion> GetInvitaciones()
+    {
+        return _repository.GetAll<Invitacion>().ToList();
+    }
 
 }

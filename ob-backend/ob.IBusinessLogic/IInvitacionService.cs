@@ -9,5 +9,6 @@ public interface IInvitacionService
     void EliminarInvitacion(string email);
     void InvitacionAceptada(string email, string contrasena);
     bool InvitacionExiste(string email);
+    List<Invitacion> GetInvitaciones();
 
 }

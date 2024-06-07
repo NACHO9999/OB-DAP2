@@ -34,4 +34,7 @@ export class AdminService {
     const url = AdminEndpoints.ALTA_CATEGORIA;
     return this.http.post(url, categoria);
   }
+  getInvitacionesParaEliminar(): Observable<any> {
+    return this.http.get(AdminEndpoints.INVITACIONES_PARA_ELIMINAR);
+  }
 }

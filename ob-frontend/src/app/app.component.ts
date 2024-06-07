@@ -48,17 +48,7 @@ export class AppComponent implements OnInit {
           this._authService.setToken(data.token);
           this._authService.setUserRole(data.role);
           this.saveUserInfo(JSON.stringify({ email }));
-          let urlToGo;
-          this._route.queryParams.subscribe((params) => {
-            if (params['returnUrl']) {
-              urlToGo = params['returnUrl'];
-            }
-          });
-          if (urlToGo) {
-            this._router.navigate([urlToGo]);
-          } else {
-            this._router.navigate(['/']);
-          }
+          this._router.navigate(['/'+ data.role]);
         },
         (error: string) => {
           console.error('Login error', error);

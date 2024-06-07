@@ -14,7 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';  // Import BrowserAnimationsModule
 import { MatNativeDateModule } from '@angular/material/core';  // Import MatNativeDateModule
-
+import { TokenInterceptor } from './interceptors/token.interceptor';
+ 
 export const appConfig: ApplicationConfig = {
   
   providers: [
@@ -40,7 +41,13 @@ export const appConfig: ApplicationConfig = {
       useClass: ResponseInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
     AuthService,
+
     AuthGuard,
     RoleGuard,
   ]

@@ -8,9 +8,8 @@ import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { AdminService } from '../../services/admin.service';
-import { IUserCreate } from '../../interfaces/user-create';
-import { ICategoriaModel } from '../../interfaces/icategoria-model';
-import { IInvitacionModel } from '../../interfaces/iinvitacion-model';
+import { LogoutButtonComponent } from '../logout/logout.component';
+
 
 
 @Component({
@@ -27,6 +26,7 @@ import { IInvitacionModel } from '../../interfaces/iinvitacion-model';
     MatButtonModule,
     MatSelectModule,
     MatOptionModule,
+    LogoutButtonComponent
   ],
 })
 export class AdminComponent implements OnInit {

@@ -1,0 +1,38 @@
+/* menu-invitaciones.component.css */
+.invitacion-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  button {
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .status-message {
+    margin-top: 20px;
+    padding: 10px;
+    color: #fff;
+    background-color: #28a745;
+    border-radius: 5px;
+  }
+  

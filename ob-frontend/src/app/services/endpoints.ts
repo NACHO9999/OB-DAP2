@@ -25,7 +25,7 @@ export enum AdminConstructoraEndpoints {
     GET_ADMIN_BY_EMAIL = 'administrador',
     INVITAR = 'administrador/invitar',
     ELIMINAR_INVITACION = 'administrador/invitar',
-    ALTA_CATEGORIA = 'admininistrador/categoria',
+    ALTA_CATEGORIA = 'administrador/categoria',
   }
 
   export enum CategoriaEndpoints {

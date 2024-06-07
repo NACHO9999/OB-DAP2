@@ -19,6 +19,6 @@ export class UsersService implements IUserService {
   }
 
   logout(): Observable<any> {
-    return this._httpService.post(`${UsersEndpoints.LOGOUT}`, {});
+    return this._httpService.delete(`${UsersEndpoints.LOGOUT}`, {});
   }
 }

@@ -5,7 +5,7 @@ export enum PATHS {
     ADMIN = 'admin',
     MANTENIMIENTO = 'mantenimiento',
     ENCARGADO = 'encargado',
-    INVITACION = 'invitacion',
+    INVITACION = 'invitaciones',
 }
 
 export enum SEGMENTS {

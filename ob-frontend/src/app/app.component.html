@@ -16,6 +16,7 @@
       </div>
     </div>
     <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+    <button *ngIf="!isLoggedIn()" type="button" class="btn btn-secondary" (click)="goToInvitaciones()">¿Cree estar invitado?</button>
     <div *ngIf="resultMessage" class="status-message">{{ resultMessage }}</div>
     <div *ngIf="isLoggedIn()" >
       Ya esta loggeado

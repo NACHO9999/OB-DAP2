@@ -1,0 +1,23 @@
+<div class="invitacion-container">
+    <h2>Buscar Invitación</h2>
+    <form [formGroup]="invitacionForm" (ngSubmit)="buscarInvitacion()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="Email" placeholder="Enter email" />
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="Contrasena" placeholder="Enter password" />
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="invitacionForm.invalid">
+        Buscar Invitación
+      </button>
+      <button mat-raised-button color="accent" type="button" (click)="goToLogin()">
+        Ir al Login
+      </button>
+      <div *ngIf="resultMessage" class="status-message">{{ resultMessage }}</div>
+    </form>
+  </div>
+  

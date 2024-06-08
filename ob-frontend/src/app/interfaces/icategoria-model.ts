@@ -1,3 +1,3 @@
 export interface ICategoriaModel {
-    Nombre: string;
+    nombre: string;
 }

@@ -35,6 +35,6 @@ export class AdminService {
     return this.http.post(url, categoria);
   }
   getInvitacionesParaEliminar(): Observable<any> {
-    return this.http.get(AdminEndpoints.INVITACIONES_PARA_ELIMINAR);
+    return this.http.get<any>(AdminEndpoints.INVITACIONES_PARA_ELIMINAR);
   }
 }

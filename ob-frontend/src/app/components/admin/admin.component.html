@@ -4,17 +4,17 @@
   <form [formGroup]="inviteForm" (ngSubmit)="submitInvite()">
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="Email" placeholder="Enter email" />
+      <input matInput formControlName="email" placeholder="Enter email" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Nombre</mat-label>
-      <input matInput formControlName="Nombre" placeholder="Enter name" />
+      <input matInput formControlName="nombre" placeholder="Enter name" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Rol</mat-label>
-      <mat-select formControlName="RolInvitacion">
+      <mat-select formControlName="rolInvitacion">
         <mat-option *ngFor="let role of roles" [value]="role.value">
           {{ role.viewValue }}
         </mat-option>
@@ -23,7 +23,7 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Fecha Límite</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="FechaExpiracion" />
+      <input matInput [matDatepicker]="picker" formControlName="fechaExpiracion" [matDatepickerFilter]="dateFilter"/>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -71,4 +71,6 @@
       Crear Categoría
     </button>
   </form>
+  <h2>Invitaciones para Eliminar</h2>
+  <app-invitaciones-eliminar></app-invitaciones-eliminar>
 </div>

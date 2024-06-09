@@ -30,7 +30,7 @@ public class SolicitudService : ISolicitudService
         }
         else
         {
-            throw new KeyNotFoundException("No se encontró la solicitud.");
+            throw new KeyNotFoundException("No se encontrï¿½ la solicitud.");
         }
     }
     private bool SolicitudExists(Guid id)
@@ -41,7 +41,7 @@ public class SolicitudService : ISolicitudService
     {
         List<Solicitud> solicitudesInEdificio = new List<Solicitud>();
 
-        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud => true, new List<string> { "Depto" }))
+        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud => true, new List<string> { "Depto","PerMan", "Categoria" }))
         {
             if (edificio.Deptos.Contains(solicitud.Depto))
             {
@@ -60,7 +60,7 @@ public class SolicitudService : ISolicitudService
     {
         List<Solicitud> solicitudesByCategoria = new List<Solicitud>();
 
-        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud => true, new List<string> { "Categoria" }))
+        foreach (var solicitud in _repository.GetAll<Solicitud>(solicitud => true, new List<string> { "Categoria", "PerMan", "Depto"}))
         {
             if (solicitud.Categoria == categoria)
             {

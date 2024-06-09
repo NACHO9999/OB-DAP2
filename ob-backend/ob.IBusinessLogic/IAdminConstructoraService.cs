@@ -5,7 +5,7 @@ public interface IAdminConstructoraService
 {
     void CrearAdminConstructora(AdminConstructora adminConstructora);
     AdminConstructora GetAdminConstructoraByEmail(string email);
-    void CrearConstructora(Constructora constructora, string email);
+    void CrearConstructora(string nombre, string email);
     void CrearEdificio(Edificio edificio, string email);
     void BorrarEdificio(string nombre, string direccion, string email);
     void EditarEdificio(Edificio edificio, string email);
@@ -21,6 +21,9 @@ public interface IAdminConstructoraService
     List<Edificio> GetEdificiosPorAdmin(string email);
     List<Edificio> GetEdificiosSinEncargado(string email);
     List<Edificio> GetEdificiosConEncargado(string email);
-    List<Edificio> FiltrarPorNombreDeEdificio(List<Edificio> edificios, string nombre);
-    List<Edificio> FiltrarPorNombreDeEncargado(List<Edificio> edificios, string nombreEncargado);
+    List<Edificio> FiltrarPorNombreDeEncargado(string email, string nombreEncargado);
+    bool TieneConstructora(string email);
+    void ElegirConstructora(string email, string nombre);
+    Constructora GetConstructora(string email);
+    List<Constructora> GetConstructoras();
 }

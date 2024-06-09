@@ -39,6 +39,15 @@ namespace ob.BusinessLogic
             _repository.Insert(adminConstructora);
             _repository.Save();
         }
+        public Constructora GetConstructora(string email)
+        {
+            var usuario = GetAdminConstructoraByEmail(email);
+            if (usuario.Constructora == null)
+            {
+                throw new KeyNotFoundException("El usuario no tiene constructora.");
+            }
+            return usuario.Constructora;
+        }
         public AdminConstructora GetAdminConstructoraByEmail(string email)
         {
             var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower(), new List<string> { "Constructora" });
@@ -48,15 +57,35 @@ namespace ob.BusinessLogic
             }
             throw new KeyNotFoundException("El administrador de constructora no existe.");
         }
-        public void CrearConstructora(Constructora constructora, string email)
+        public void CrearConstructora(string nombre, string email)
         {
             var usuario = GetAdminConstructoraByEmail(email);
             if (usuario.Constructora != null)
             {
                 throw new AlreadyExistsException("El usuario ya tiene constructora.");
             }
-            _constructoraService.CrearConstructora(constructora);
+
+            _constructoraService.CrearConstructora(nombre);
+            usuario.Constructora = _constructoraService.GetConstructoraByNombre(nombre);
+            _repository.Update(usuario);
             _repository.Save();
+        }
+        public void ElegirConstructora(string email, string nombre)
+        {
+            var usuario = GetAdminConstructoraByEmail(email);
+            var constructora = _constructoraService.GetConstructoraByNombre(nombre);
+            if (constructora == null)
+            {
+                throw new KeyNotFoundException("No se encontró la constructora.");
+            }
+            usuario.Constructora = constructora;
+            _repository.Update(usuario);
+            _repository.Save();
+        }
+        public bool TieneConstructora(string email)
+        {
+            var usuario = GetAdminConstructoraByEmail(email);
+            return usuario.Constructora != null;
         }
         public void CrearEdificio(Edificio edificio, string email)
         {
@@ -86,7 +115,7 @@ namespace ob.BusinessLogic
             {
                 throw new KeyNotFoundException("El usuario no tiene constructora.");
             }
-            if (edificio.EmpresaConstructora != usuario.Constructora)
+            if (edificio.EmpresaConstructora.Nombre != usuario.Constructora.Nombre)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
             }
@@ -109,6 +138,7 @@ namespace ob.BusinessLogic
             var admin = GetAdminConstructoraByEmail(email);
 
             var edificio = _edificioService.GetEdificioByNombreYDireccion(depto.EdificioNombre, depto.EdificioDireccion);
+
             if (admin.Constructora != edificio.EmpresaConstructora)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
@@ -122,7 +152,7 @@ namespace ob.BusinessLogic
         {
             var usuario = GetAdminConstructoraByEmail(email);
             var edificio = _edificioService.GetEdificioByNombreYDireccion(depto.EdificioNombre, depto.EdificioDireccion);
-            if (edificio.EmpresaConstructora != usuario.Constructora)
+            if (edificio.EmpresaConstructora.Nombre != usuario.Constructora?.Nombre)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
             }
@@ -133,7 +163,7 @@ namespace ob.BusinessLogic
         {
             var usuario = GetAdminConstructoraByEmail(email);
             var edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
-            if (edificio.EmpresaConstructora != usuario.Constructora)
+            if (edificio.EmpresaConstructora.Nombre != usuario.Constructora.Nombre)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
             }
@@ -144,7 +174,7 @@ namespace ob.BusinessLogic
         {
             var usuario = GetAdminConstructoraByEmail(email);
             var edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
-            if (edificio.EmpresaConstructora != usuario.Constructora)
+            if (edificio.EmpresaConstructora.Nombre != usuario.Constructora?.Nombre)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
             }
@@ -200,7 +230,7 @@ namespace ob.BusinessLogic
             var usuario = GetAdminConstructoraByEmail(email);
             var encargado = _encargadoService.GetEncargadoByEmail(emailEncargado);
             var edificio = _edificioService.GetEdificioByNombreYDireccion(nombreEdificio, direccionEdificio);
-            if (edificio.EmpresaConstructora != usuario.Constructora)
+            if (edificio.EmpresaConstructora.Nombre != usuario.Constructora?.Nombre)
             {
                 throw new InvalidOperationException("El edificio no pertenece a la constructora del usuario.");
             }
@@ -256,54 +286,49 @@ namespace ob.BusinessLogic
             {
                 throw new KeyNotFoundException("El usuario no tiene constructora.");
             }
-            var listaEdificios = GetEdificiosPorAdmin(email);
+
             var listaEncargados = _encargadoService.GetAllEncargados();
+
+
             var listaEdificiosConEncargado = new List<Edificio>();
+
             foreach (var encargado in listaEncargados)
             {
+
                 foreach (var edificio in encargado.Edificios)
                 {
-                    if (listaEdificios.Contains(edificio))
+                    if (edificio.EmpresaConstructora == usuario.Constructora)
                     {
                         listaEdificiosConEncargado.Add(edificio);
                     }
                 }
             }
+
             return listaEdificiosConEncargado;
         }
-        public List<Edificio> FiltrarPorNombreDeEdificio(List<Edificio> edificios, string nombre)
+
+        public List<Edificio> FiltrarPorNombreDeEncargado(string  email, string nombreEncargado)
         {
-            if (edificios == null)
-            {
-                throw new InvalidOperationException("La lista no puede ser nula.");
-            }
-            return edificios.Where(e => e.Nombre.ToLower() == nombre.ToLower()).ToList();
-        }
-        public List<Edificio> FiltrarPorNombreDeEncargado(List<Edificio> edificios, string nombreEncargado)
-        {
-            if (edificios == null)
-            {
-                throw new InvalidOperationException("La lista no puede ser nula.");
-            }
+            var usuario = GetAdminConstructoraByEmail(email);
             var listaEncargados = _encargadoService.GetAllEncargados();
-            var encargados = listaEncargados.Where(e => e.Nombre == nombreEncargado);
+            var encargados = listaEncargados.Where(e => e.Nombre.ToLower().Contains(nombreEncargado.ToLower()));
             var retorno = new List<Edificio>();
 
-            if (encargados.Count() == 0)
-            {
-                throw new KeyNotFoundException("No se encontró el encargado.");
-            }
             foreach (var encargado in encargados)
             {
-                foreach (var edificio in edificios)
+                foreach (var edificio in encargado.Edificios)
                 {
-                    if (encargado.Edificios.Contains(edificio))
+                    if (edificio.EmpresaConstructora == usuario.Constructora)
                     {
                         retorno.Add(edificio);
                     }
                 }
             }
             return retorno;
+        }
+        public List<Constructora> GetConstructoras()
+        {
+            return _constructoraService.GetAllConstructoras().ToList();
         }
     }
 }

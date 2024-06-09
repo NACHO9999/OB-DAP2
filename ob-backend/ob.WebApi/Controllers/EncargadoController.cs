@@ -27,9 +27,18 @@ public class EncargadoController : BaseController
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
     public IActionResult GetEncargados()
     {
-        var encargados = _encargadoService.GetAllEncargados();
-        var retorno = encargados.Select(e => new EncargadoDTO(e)).ToList();
-        return Ok(retorno);
+        try
+        {
+            var encargados = _encargadoService.GetAllEncargados();
+            var retorno = encargados.Select(e => new EncargadoDTO(e)).ToList();
+            return Ok(retorno);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception details
+            Console.WriteLine($"Error in GetEncargados: {ex.Message}");
+            return StatusCode(500, new { message = "We encountered some issues, try again later" });
+        }
     }
 
     [HttpGet("{email}")]
@@ -112,7 +121,7 @@ public class EncargadoController : BaseController
         var result = new DuenoDTO(dueno);
         return Ok(result);
     }
-    [HttpPut("asignar-dueno/{numero}/{edNombre}/{edDireccion}/{emailDueno}/{email}")]
+    [HttpPut("asignar-dueno/{numero}/{edNombre}/{edDireccion}/{emailDueno}")]
     [ServiceFilter(typeof(AuthenticationFilter))]
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Encargado) })]
     public IActionResult AsignarDueno([FromRoute] int numero, [FromRoute] string edNombre, [FromRoute] string edDireccion, [FromRoute] string emailDueno)

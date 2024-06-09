@@ -38,7 +38,7 @@ public class EncargadoService : IEncargadoService
 
     public Encargado GetEncargadoByEmail(string email)
     {
-        var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower(), new List<string> { "Edificios.Deptos" });
+        var usuario = _repository.Get(u => u.Email.ToLower() == email.ToLower(), new List<string> { "Edificios.Deptos.Dueno", "Edificios.EmpresaConstructora" });
         if (usuario is Encargado encargado)
         {
             return encargado;
@@ -50,7 +50,7 @@ public class EncargadoService : IEncargadoService
     }
     public IEnumerable<Encargado> GetAllEncargados()
     {
-        return _repository.GetAll<Encargado>(encargado => true, new List<string> { "Edificios.Deptos" });
+        return _repository.GetAll<Encargado>(encargado => true, new List<string> { "Edificios.Deptos.Dueno", "Edificios.EmpresaConstructora", "Edificios" });
     }
 
 
@@ -61,85 +61,140 @@ public class EncargadoService : IEncargadoService
     public void CrearSolicitud(Solicitud solicitud, string email)
     {
         var encargado = GetEncargadoByEmail(email);
-        if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
+
+        bool isEncargadoInCharge = encargado.Edificios
+            .SelectMany(e => e.Deptos)
+            .Any(d => d.Numero == solicitud.Depto.Numero
+                   && d.EdificioDireccion == solicitud.Depto.EdificioDireccion
+                   && d.EdificioNombre == solicitud.Depto.EdificioNombre);
+
+        if (isEncargadoInCharge)
+        {
+            _solicitudService.CrearSolicitud(solicitud);
+        }
+        else
         {
             throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
         }
-        _solicitudService.CrearSolicitud(solicitud);
     }
     public void AsignarSolicitud(Guid solicitudId, string email, string emailEncargado)
     {
+        var encargado = GetEncargadoByEmail(emailEncargado);
+        var solicitud = _solicitudService.GetSolicitudById(solicitudId);
+        var perMan = _mantenimientoService.GetMantenimientoByEmail(email);
 
-        Encargado encargado = GetEncargadoByEmail(emailEncargado);
-        Solicitud solicitud = _solicitudService.GetSolicitudById(solicitudId);
-        Mantenimiento perMan = _mantenimientoService.GetMantenimientoByEmail(email);
-
-        if (solicitud == null || perMan == null || encargado == null)
+        if (solicitud == null)
         {
-            throw new KeyNotFoundException("Solicitud or Mantenimiento not found.");
+            throw new KeyNotFoundException("Solicitud not found.");
         }
-        if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
+
+        if (perMan == null)
+        {
+            throw new KeyNotFoundException("Mantenimiento not found.");
+        }
+
+        if (encargado == null)
+        {
+            throw new KeyNotFoundException("Encargado not found.");
+        }
+
+        bool isEncargadoInCharge = encargado.Edificios
+            .SelectMany(e => e.Deptos)
+            .Any(d => d.Numero == solicitud.Depto.Numero
+                   && d.EdificioDireccion == solicitud.Depto.EdificioDireccion
+                   && d.EdificioNombre == solicitud.Depto.EdificioNombre);
+
+        if (!isEncargadoInCharge)
         {
             throw new InvalidOperationException("The Encargado is not in charge of the building of the request.");
         }
-        solicitud.PerMan = perMan;
-    }
 
+        solicitud.PerMan = perMan;
+        _solicitudService.EditarSolicitud(solicitud);  // Assuming you need to save changes
+    }
 
 
 
     public int[] GetSolicitudByEdificio(string nombre, string direccion, string email)
     {
         Encargado encargado = GetEncargadoByEmail(email);
-        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
-        if (!encargado.Edificios.Contains(edificio))
+        if (encargado == null)
         {
-            throw new InvalidOperationException("The Encargado is not in charge of the building.");
+            throw new KeyNotFoundException("Encargado no encontrado.");
         }
+
+        Edificio edificio = _edificioService.GetEdificioByNombreYDireccion(nombre, direccion);
+        if (edificio == null)
+        {
+            throw new KeyNotFoundException("Edificio no encontrado.");
+        }
+
+        if (!encargado.Edificios.Any(e => e.Nombre == edificio.Nombre && e.Direccion == edificio.Direccion))
+        {
+            throw new InvalidOperationException("El encargado no está a cargo del edificio.");
+        }
+
         int[] array = new int[3];
         var lista = _solicitudService.GetSolicitudesByEdificio(edificio);
+
         foreach (var solicitud in lista)
         {
-            if (solicitud.Estado == EstadoSolicitud.Abierto)
+            switch (solicitud.Estado)
             {
-                array[0]++;
-            }
-            else if (solicitud.Estado == EstadoSolicitud.Atendiendo)
-            {
-                array[1]++;
-            }
-            else if (solicitud.Estado == EstadoSolicitud.Cerrado)
-            {
-                array[2]++;
+                case EstadoSolicitud.Abierto:
+                    array[0]++;
+                    break;
+                case EstadoSolicitud.Atendiendo:
+                    array[1]++;
+                    break;
+                case EstadoSolicitud.Cerrado:
+                    array[2]++;
+                    break;
             }
         }
+
         return array;
     }
+
     public int[] GetSolicitudByMantenimiento(string email, string emailEncargado)
     {
         Mantenimiento mantenimiento = _mantenimientoService.GetMantenimientoByEmail(email);
+        if (mantenimiento == null)
+        {
+            throw new KeyNotFoundException("Mantenimiento no encontrado.");
+        }
+
         Encargado encargado = GetEncargadoByEmail(emailEncargado);
+        if (encargado == null)
+        {
+            throw new KeyNotFoundException("Encargado no encontrado.");
+        }
+
         int[] retorno = new int[3];
         var lista = _solicitudService.GetSolicitudesByMantenimiento(mantenimiento);
+
         foreach (var solicitud in lista)
         {
-            if (encargado.Edificios.Any(edificio => edificio.Deptos.Contains(solicitud.Depto)))
+            if (encargado.Edificios.SelectMany(edificio => edificio.Deptos)
+                                   .Any(depto => depto.Numero == solicitud.Depto.Numero &&
+                                                 depto.EdificioDireccion == solicitud.Depto.EdificioDireccion &&
+                                                 depto.EdificioNombre == solicitud.Depto.EdificioNombre))
             {
-                if (solicitud.Estado == EstadoSolicitud.Abierto)
+                switch (solicitud.Estado)
                 {
-                    retorno[0]++;
-                }
-                else if (solicitud.Estado == EstadoSolicitud.Atendiendo)
-                {
-                    retorno[1]++;
-                }
-                else if (solicitud.Estado == EstadoSolicitud.Cerrado)
-                {
-                    retorno[2]++;
+                    case EstadoSolicitud.Abierto:
+                        retorno[0]++;
+                        break;
+                    case EstadoSolicitud.Atendiendo:
+                        retorno[1]++;
+                        break;
+                    case EstadoSolicitud.Cerrado:
+                        retorno[2]++;
+                        break;
                 }
             }
-
         }
+
         return retorno;
     }
     public TimeSpan? TiempoPromedioAtencion(string email)
@@ -171,15 +226,38 @@ public class EncargadoService : IEncargadoService
     public void AsignarDueno(int numero, string edNombre, string edDireccion, string emailDueno, string email)
     {
         var depto = _deptoService.GetDepto(numero, edNombre, edDireccion);
-        var dueno = _duenoService.GetDuenoByEmail(emailDueno);
-        var encargado = GetEncargadoByEmail(email);
-        if (!encargado.Edificios.Any(edificio => edificio.Deptos.Contains(depto)))
+        if (depto == null)
         {
-            throw new InvalidOperationException("El encargado no esta a cargo del edificio");
+            throw new KeyNotFoundException("Departamento no encontrado.");
         }
+
+        var dueno = _duenoService.GetDuenoByEmail(emailDueno);
+        if (dueno == null)
+        {
+            throw new KeyNotFoundException("Dueño no encontrado.");
+        }
+
+        var encargado = GetEncargadoByEmail(email);
+        if (encargado == null)
+        {
+            throw new KeyNotFoundException("Encargado no encontrado.");
+        }
+
+        bool isEncargadoInCharge = encargado.Edificios
+            .SelectMany(e => e.Deptos)
+            .Any(d => d.Numero == depto.Numero
+                   && d.EdificioDireccion == depto.EdificioDireccion
+                   && d.EdificioNombre == depto.EdificioNombre);
+
+        if (!isEncargadoInCharge)
+        {
+            throw new InvalidOperationException("El encargado no está a cargo del edificio.");
+        }
+
         depto.Dueno = dueno;
         _deptoService.EditarDepto(depto);
     }
+
     public Dueno GetDueno(string email)
     {
         return _duenoService.GetDuenoByEmail(email);

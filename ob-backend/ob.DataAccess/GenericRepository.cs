@@ -12,7 +12,7 @@ namespace ob.DataAccess
             return Context.Set<U>().ToList();
         }
 
-        public virtual IEnumerable<U> GetAll<U>(Func<U, bool> searchCondition, List<string> includes = null) where U : class
+        public virtual IEnumerable<U> GetAll<U>(Func<U, bool> searchCondition, List<string>? includes = null) where U : class
         {
             IQueryable<U> query = Context.Set<U>();
             if (includes != null)
@@ -20,6 +20,8 @@ namespace ob.DataAccess
                 foreach (var include in includes)
                 {
                     query = query.Include(include);
+                    
+                    Console.WriteLine($"Included {include}");
                 }
             }
             return query.Where(searchCondition).Select(x => x).ToList();

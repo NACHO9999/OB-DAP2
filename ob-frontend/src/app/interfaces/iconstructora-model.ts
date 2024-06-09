@@ -1,4 +1,4 @@
 export interface IConstructoraModel {
     Id: string;
-    Nombre: string;
+    nombre: string;
 }

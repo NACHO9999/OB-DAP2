@@ -17,7 +17,7 @@ public class EdificioService : IEdificioService
 
     public List<Edificio> GetAllEdificios()
     {
-        return _repository.GetAll<Edificio>(e => true, new List<string> { "Deptos" }).ToList();
+        return _repository.GetAll<Edificio>(e => true, new List<string> { "Deptos", "EmpresaConstructora" }).ToList();
     }
 
     public void CrearEdificio(Edificio edificio)
@@ -25,7 +25,7 @@ public class EdificioService : IEdificioService
 
         if (_constructoraService.GetConstructoraByNombre(edificio.EmpresaConstructora.Nombre) == null)
         {
-            throw new KeyNotFoundException("No se encontró la empresa constructora.");
+            throw new KeyNotFoundException("No se encontro la empresa constructora.");
         }
 
         if (EdificioExists(edificio.Nombre, edificio.Direccion))
@@ -58,7 +58,7 @@ public class EdificioService : IEdificioService
         if (empresaConstructora == null)
         {
 
-            throw new KeyNotFoundException("No se encontró la empresa constructora.");
+            throw new KeyNotFoundException("No se encontrï¿½ la empresa constructora.");
         }
 
         // Crear el edificio y asociarlo con la empresa constructora
@@ -66,24 +66,47 @@ public class EdificioService : IEdificioService
         CrearEdificio(edificio);
     }
     public void EditarEdificio(Edificio edificio)
+{
+    var edificioExistente = _repository.Get(e => e.Nombre.ToLower() == edificio.Nombre.ToLower() && e.Direccion.ToLower() == edificio.Direccion.ToLower(), new List<string> { "Deptos" });
+
+    if (edificioExistente == null)
     {
-        var constructora = _constructoraService.GetConstructoraByNombre(edificio.EmpresaConstructora.Nombre);
-        var edificioExistente = _repository.Get(e => e.Nombre.ToLower() == edificio.Nombre.ToLower() && e.Direccion.ToLower() == edificio.Direccion.ToLower(), new List<string> { "Deptos" });
-        if (edificioExistente == null)
-        {
-            throw new KeyNotFoundException("No se encontró el edificio.");
-        }
-        if (constructora == null)
-        {
-            throw new KeyNotFoundException("No se encontró la empresa constructora.");
-        }
-        if (edificio.Deptos.Count == 0 && edificioExistente.Deptos.Count != 0)
-        {
-            edificio.Deptos = edificioExistente.Deptos;
-        }
-        _repository.Update(edificio);
-        _repository.Save();
+        throw new KeyNotFoundException("No se encontrÃ³ el edificio.");
     }
+
+    // Update the properties of the existing Edificio with the new values
+    edificioExistente.UbicaciÃ³n = edificio.UbicaciÃ³n;
+    edificioExistente.GastosComunes = edificio.GastosComunes;
+
+    // If the new Edificio has Deptos, update the existing Edificio's Deptos
+    if (edificio.Deptos != null && edificio.Deptos.Count > 0)
+    {
+        // Clear the existing Deptos to avoid conflict
+        edificioExistente.Deptos.Clear();
+
+        // Attach the new Deptos to the existing Edificio
+        foreach (var depto in edificio.Deptos)
+        {
+            var existingDepto = _deptoService.GetDepto(depto.Numero, edificio.Nombre, edificio.Direccion);
+            if (existingDepto != null)
+            {
+                Console.WriteLine("banos " + depto.CantidadBanos);
+                existingDepto.CantidadBanos = depto.CantidadBanos;
+                existingDepto.CantidadCuartos = depto.CantidadCuartos;
+                existingDepto.ConTerraza = depto.ConTerraza;
+                existingDepto.Piso = depto.Piso;
+                edificioExistente.Deptos.Add(existingDepto);
+            }
+            else
+            {
+                edificioExistente.Deptos.Add(depto);
+            }
+        }
+    }
+
+    _repository.Update(edificioExistente);
+    _repository.Save();
+}
     public void BorrarEdificio(Edificio edificio)
     {
         _repository.Delete(edificio);
@@ -94,18 +117,18 @@ public class EdificioService : IEdificioService
     {
         if (EdificioExists(nombre, direccion))
         {
-            var edificio = _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower(), new List<string> { "Deptos" });
+            var edificio = _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower(), new List<string> { "Deptos.Dueno", "EmpresaConstructora" });
             return edificio;
         }
         else
         {
-            throw new KeyNotFoundException("No se encontró el edificio.");
+            throw new KeyNotFoundException("No se encontrï¿½ el edificio.");
         }
 
     }
     public bool EdificioExists(string nombre, string direccion)
     {
-        var edificio = _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower(), new List<string> { "Deptos" });
+        var edificio = _repository.Get(e => e.Nombre.ToLower() == nombre.ToLower() && e.Direccion.ToLower() == direccion.ToLower());
         return edificio != null;
     }
 

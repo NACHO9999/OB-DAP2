@@ -1,0 +1,148 @@
+<app-logout></app-logout>
+<div class="admin-container">
+  <h2>Constructoras</h2>
+  <form *ngIf="tieneConstructora" [formGroup]="editConstructoraForm"
+      (ngSubmit)="editConstructora()">
+      <mat-form-field appearance="fill">
+        <mat-label>Editar constructora</mat-label>
+        <input matInput formControlName="nombreConstructora" placeholder="Nombre de la constructora" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Editar</button>
+    </form>
+  <h4 *ngIf="!tieneConstructora">Crear o Seleccionar Constructora</h4>
+  <mat-radio-group *ngIf="!tieneConstructora" [(ngModel)]="selectConstructora" name="selectConstructoraGroup">
+    <mat-radio-button [value]="true">Seleccionar Constructora</mat-radio-button>
+    <mat-radio-button [value]="false">Crear Nueva Constructora</mat-radio-button>
+  </mat-radio-group>
+  <div>
+    <form *ngIf="selectConstructora === true&&!tieneConstructora" [formGroup]="selectConstructoraForm"
+      (ngSubmit)="selectExistingConstructora()">
+      <mat-form-field appearance="fill">
+        <mat-label>Seleccionar Constructora</mat-label>
+        <mat-select formControlName="nombreConstructora">
+          <mat-option *ngFor="let const of constructoras" [value]="const.nombre">
+            {{ const.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Seleccionar</button>
+    </form>
+
+    <form *ngIf="selectConstructora === false&&!tieneConstructora" [formGroup]="createConstructoraForm"
+      (ngSubmit)="createNewConstructora()">
+      <mat-form-field appearance="fill">
+        <mat-label>Crear Nueva Constructora</mat-label>
+        <input matInput formControlName="nombreConstructora" placeholder="Nombre de la constructora" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Crear</button>
+    </form>
+  </div>
+
+  <h2>Edificios</h2>
+  <h4>Filtrar Edificios</h4>
+  <div>
+    <mat-checkbox [(ngModel)]="buscaConEncargado">Con Encargado</mat-checkbox>
+    <mat-checkbox [(ngModel)]="buscaSinEncargado">Sin Encargado</mat-checkbox>
+    <mat-radio-group [(ngModel)]="buscaPorNombreEncargado">
+      <mat-radio-button [value]="true">Buscar por nombre del encargado</mat-radio-button>
+      <mat-radio-button [value]="false">Buscar por nombre del edificio</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="nombreBusqueda" placeholder="Ingrese nombre" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="aplicarFiltros()">Aplicar Filtros</button>
+    <button mat-raised-button color="warn" (click)="limpiarFiltros()">Limpiar Filtros</button>
+  </div>
+  <div *ngFor="let edificio of edificios">
+    <app-edificio-list-item [edificio]="edificio" (select)="selectEdificio($event)">
+    </app-edificio-list-item>
+  </div>
+
+  <form [formGroup]="edificioForm" (ngSubmit)="createEdificio()" class="edificio-form">
+    <h3>Crear/Editar Edificio</h3>
+    <p>Solo se puede editar los gastos comunes y la ubicacion</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" placeholder="Nombre del edificio" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccion" placeholder="Dirección del edificio" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Ubicación</mat-label>
+      <input matInput formControlName="ubicacion" placeholder="Ubicación del edificio" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Gastos Comunes</mat-label>
+      <input matInput formControlName="gastosComunes" placeholder="Gastos comunes" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!tieneConstructora" type="submit">Crear Edificio</button>
+    
+  </form>
+  <div>
+    <button mat-raised-button color="accent" type="button" (click)="editEdificio()"
+      [disabled]="!selectedEdificio">Editar Edificio</button>
+    <button mat-raised-button color="warn" [disabled]="!selectedEdificio"
+      (click)="deleteEdificio(selectedEdificio?.nombre ?? '', selectedEdificio?.direccion?? '')">Eliminar</button>
+      <button mat-raised-button color="accent" type="button" (click)="desasignarEncargado()"
+      [disabled]="!selectedEdificio">Desasignar Encargado</button>
+      <p class="result-message">{{edificioResultMessage}}</p>
+  </div>
+
+
+  <form [formGroup]="asignarEncargadoForm" (ngSubmit)="asignarEncargado()" class="encargado-form">
+    <h3>Asignar Encargado</h3>
+    <mat-form-field appearance="fill">
+      <mat-label>Seleccionar Encargado</mat-label>
+      <mat-select formControlName="encargado">
+        <mat-option *ngFor="let encargado of encargados" [value]="encargado">
+          {{ encargado.nombre + ", " + encargado.email }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit"
+      [disabled]="!selectedEdificio || asignarEncargadoForm.invalid">Asignar Encargado</button>
+  </form>
+  <form *ngIf="isEdificioSelected" [formGroup]="deptoForm" (ngSubmit)="createDepto()" class="edificio-form">
+    <h3>Crear/Editar Depto</h3>
+    <p>Solo se puede editar los gastos comunes y la ubicacion</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Piso</mat-label>
+      <input matInput formControlName="piso" placeholder="Piso del apartamento" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Numero</mat-label>
+      <input matInput formControlName="numero" placeholder="Numero del apartamento" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Cuartos</mat-label>
+      <input matInput formControlName="cantidadCuartos" placeholder="Cantidad de cuartos" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Baños</mat-label>
+      <input matInput formControlName="cantidadBanos" placeholder="Cantidad de cuartos" />
+    </mat-form-field>
+    <div>
+      <mat-label>Terraza</mat-label>
+      <mat-radio-group formControlName="conTerraza">
+        <mat-radio-button [value]="true">Con terraza</mat-radio-button>
+        <mat-radio-button [value]="false">Sin terraza</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="!tieneConstructora" type="submit">Crear Depto</button>
+    
+  </form>
+  <div>
+    <button mat-raised-button color="accent" type="button" (click)="editDepto()" [disabled]="!selectedEdificio">Editar
+      Depto</button>
+    <button mat-raised-button color="warn" [disabled]="!selectedDepto"
+      (click)="deleteDepto(selectedDepto?.numero?? 0, selectedDepto?.edificioNombre?? '', selectedDepto?.edificioDireccion??'')">Eliminar</button>
+    </div>
+  <h2>Departamentos</h2>
+  <div *ngFor="let depto of deptos">
+    <app-depto-list-item [depto]="depto" (select)="selectDepto($event)">
+    </app-depto-list-item>
+  </div>
+</div>

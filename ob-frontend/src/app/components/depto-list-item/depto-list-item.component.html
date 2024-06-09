@@ -1,0 +1,11 @@
+<div class="depto-container">
+    <div class="depto-info">
+      <p><strong>Piso:</strong> {{ depto.piso }}</p>
+      <p><strong>Número:</strong> {{ depto.numero }}</p>
+      <p><strong>Dueño:</strong> {{ depto.dueno?.nombre ?? 'Sin dueño' }}</p>
+      <p><strong>Cantidad de Cuartos:</strong> {{ depto.cantidadCuartos }}</p>
+      <p><strong>Cantidad de Baños:</strong> {{ depto.cantidadBanos }}</p>
+      <p><strong>Con Terraza:</strong> {{ depto.conTerraza ? 'Sí' : 'No' }}</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="onSelect()">Seleccionar</button>
+  </div>

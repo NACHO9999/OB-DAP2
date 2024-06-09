@@ -21,13 +21,13 @@ namespace ob.Domain
         public int CantidadCuartos
         {
             get { return _cantidadCuartos; }
-            set { Validator.ValidateInt(value, 1, 40); _cantidadCuartos = value; }
+            set { Validator.ValidateInt(value, 0, 41); _cantidadCuartos = value; }
         }
         private int _cantidadBanos;
         public int CantidadBanos
         {
             get { return _cantidadBanos; }
-            set { Validator.ValidateInt(value, 1, 40); _cantidadBanos = value; }
+            set { Validator.ValidateInt(value, 0, 41); _cantidadBanos = value; }
         }
         private bool _conTerraza;
 

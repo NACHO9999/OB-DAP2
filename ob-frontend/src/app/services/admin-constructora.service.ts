@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AdminConstructoraEndpoints } from './endpoints';
 import { IEdificioModel } from '../interfaces/iedificio-model'; 
 import { IDeptoModel } from '../interfaces/idepto-model'; 
+import { IConstructoraModel } from '../interfaces/iconstructora-model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,13 @@ export class AdminConstructoraService {
 
   borrarEdificio(nombre: string, direccion: string): Observable<any> {
     const url = `${AdminConstructoraEndpoints.BORRAR_EDIFICIO}/${nombre}/${direccion}`;
+    console.log(url);
     return this.http.delete(url);
   }
-
+  borrarDepto(numero: number, nombre: string, direccion: string): Observable<any> {
+    const url = `${AdminConstructoraEndpoints.BORRAR_DEPTO}/${numero}/${nombre}/${direccion}`;
+    return this.http.delete(url);
+  }
   getEdificio(nombre: string, direccion: string): Observable<IEdificioModel> {
     const url = `${AdminConstructoraEndpoints.GET_EDIFICIO}/${nombre}/${direccion}`;
     return this.http.get<IEdificioModel>(url);
@@ -61,16 +66,15 @@ export class AdminConstructoraService {
     return this.http.get<IEdificioModel[]>(url);
   }
 
-  filtrarPorNombreEdificio(nombre: string, lista: IEdificioModel[]): Observable<IEdificioModel[]> {
-    const url = `${AdminConstructoraEndpoints.FILTRAR_POR_NOMBRE_EDIFICIO}/${nombre}`;
-    return this.http.post<IEdificioModel[]>(url, lista);
-  }
+  editarConstructora(nombre: string): Observable<any> {
+    const url = `${AdminConstructoraEndpoints.EDIT_CONSTRUCTORA}/${nombre}`;
+    return this.http.put(url, { id: '3DA3FEFB-383D-4E54-9DF7-CBF9E3CF8F33', nombre: 'Constructora 1' });
+}
 
-  filtrarPorNombreEncargado(nombre: string, lista: IEdificioModel[]): Observable<IEdificioModel[]> {
+  filtrarPorNombreEncargado(nombre: string): Observable<IEdificioModel[]> {
     const url = `${AdminConstructoraEndpoints.FILTRAR_POR_NOMBRE_ENCARGADO}/${nombre}`;
-    return this.http.post<IEdificioModel[]>(url, lista);
+    return this.http.get<IEdificioModel[]>(url, {});
   }
-
   asignarEncargado(emailEncargado: string, edNombre: string, edDireccion: string): Observable<any> {
     const url = `${AdminConstructoraEndpoints.ASIGNAR_ENCARGADO}/${emailEncargado}/${edNombre}/${edDireccion}`;
     return this.http.put(url, {});
@@ -79,5 +83,20 @@ export class AdminConstructoraService {
   desasignarEncargado(edNombre: string, edDireccion: string): Observable<any> {
     const url = `${AdminConstructoraEndpoints.DESASIGNAR_ENCARGADO}/${edNombre}/${edDireccion}`;
     return this.http.put(url, {});
+  }
+  elegirConstructora(nombre: string): Observable<any> {
+    const url = `${AdminConstructoraEndpoints.ELEGIR_CONSTRUCTORA}/${nombre}`;
+    return this.http.put(url, {});
+  }
+
+  tieneConstructora(): Observable<boolean> {
+    return this.http.get<boolean>(AdminConstructoraEndpoints.TIENE_CONSTRUCTORA);
+  }
+  getConstructoras(): Observable<IConstructoraModel[]> {
+    return this.http.get<IConstructoraModel[]>(AdminConstructoraEndpoints.GET_CONSTRUCTORAS);
+  }
+  crearConstructora(nombre: string): Observable<any> {
+    const url = `${AdminConstructoraEndpoints.CREAR_CONSTRUCTORA}/${nombre}`;
+    return this.http.post(url, {});
   }
 }

@@ -48,6 +48,9 @@ export class MenuInvitacionesComponent implements OnInit {
         },
           complete: () => {
             this.resultMessage = 'Invitación no encotrada.';
+          },
+          error: (err) => {
+            this.resultMessage = 'Error al aceptar la invitación.';
           }
         
       });

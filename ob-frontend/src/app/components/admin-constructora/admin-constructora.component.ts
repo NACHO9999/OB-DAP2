@@ -67,6 +67,7 @@ export class AdminConstructoraComponent implements OnInit {
   buscaConEncargado: boolean = false;
   buscaSinEncargado: boolean = false;
   nombreBusqueda: string = '';
+  deptoResultMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -201,6 +202,7 @@ export class AdminConstructoraComponent implements OnInit {
         take(1),
         catchError((err) => {
           console.error('Error in crearEdificio:', err);
+          this.edificioResultMessage = 'Error al crear edificio';
           return of(null);
         }),
         finalize(() => {
@@ -256,6 +258,7 @@ export class AdminConstructoraComponent implements OnInit {
         take(1),
         catchError((err) => {
           console.error('Error in editarEdificio:', err);
+          this.edificioResultMessage = 'Error al editar edificio';
           return of(null);
         })
       ).subscribe(() => {
@@ -310,6 +313,7 @@ export class AdminConstructoraComponent implements OnInit {
         take(1),
         catchError((err) => {
           console.error('Error in crearDepto:', err);
+          this.deptoResultMessage = 'Error al crear depto';
           return of(null);
         }),
         finalize(() => {
@@ -346,6 +350,7 @@ export class AdminConstructoraComponent implements OnInit {
         take(1),
         catchError((err) => {
           console.error('Error in editarDepto:', err);
+          this.deptoResultMessage = 'Error al editar depto';
           return of(null);
         }),
         finalize(() => {

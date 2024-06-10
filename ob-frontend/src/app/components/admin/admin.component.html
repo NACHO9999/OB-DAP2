@@ -31,6 +31,7 @@
     <button mat-raised-button color="primary" type="submit" [disabled]="inviteForm.invalid">
       Enviar Invitación
     </button>
+    <p class="result-message">{{invitacionResultMessage}}</p>
   </form>
 
   <h2>Alta de Administrador</h2>
@@ -58,6 +59,7 @@
     <button mat-raised-button color="primary" type="submit" [disabled]="adminForm.invalid">
       Crear Administrador
     </button>
+    <p class="result-message">{{administradorResultMessage}}</p>
   </form>
 
   <h2>Alta de Categoría</h2>
@@ -70,6 +72,7 @@
     <button mat-raised-button color="primary" type="submit" [disabled]="categoryForm.invalid">
       Crear Categoría
     </button>
+    <p class="result-message">{{categoriaResultMessage}}</p>
   </form>
   <h2>Invitaciones para Eliminar</h2>
   <app-invitaciones-eliminar></app-invitaciones-eliminar>

@@ -58,6 +58,8 @@ export class EncargadoComponent implements OnInit {
   displayedColumnsEdificio: string[] = ['edificio', 'abiertas', 'cerradas', 'atendiendo'];
   solicitudesEdificio: any[] = [];
   duenoForm: FormGroup;
+  solicitudResultMessage: string = '';
+  mantenimientoResultMessage: string = '';
 
 
   displayedColumnsMantenimiento: string[] = ['persona', 'abiertas', 'cerradas', 'atendiendo', 'tiempo'];
@@ -92,6 +94,7 @@ export class EncargadoComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error in createMantenimiento:', err);
+          this.mantenimientoResultMessage = 'Error al crear el mantenimiento';
         }
       });
     }
@@ -214,6 +217,7 @@ export class EncargadoComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error in createSolicitud:', err);
+          this.solicitudResultMessage = 'Error al crear la solicitud';
         }
       });
     }

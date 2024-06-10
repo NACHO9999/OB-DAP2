@@ -223,7 +223,7 @@ var assemblies = [
     "classes": [
       { "name": "ob.BusinessLogic.AdminConstructoraService", "rp": "ob.BusinessLogic_AdminConstructoraService.html", "cl": 188, "ucl": 66, "cal": 254, "tl": 334, "cb": 59, "tb": 84, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.BusinessLogic.AdminService", "rp": "ob.BusinessLogic_AdminService.html", "cl": 31, "ucl": 9, "cal": 40, "tl": 73, "cb": 3, "tb": 4, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.BusinessLogic.CategoriaService", "rp": "ob.BusinessLogic_CategoriaService.html", "cl": 24, "ucl": 0, "cal": 24, "tl": 46, "cb": 4, "tb": 4, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.BusinessLogic.CategoriaService", "rp": "ob.BusinessLogic_CategoriaService.html", "cl": 11, "ucl": 13, "cal": 24, "tl": 46, "cb": 2, "tb": 4, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.BusinessLogic.ConstructoraService", "rp": "ob.BusinessLogic_ConstructoraService.html", "cl": 34, "ucl": 0, "cal": 34, "tl": 57, "cb": 6, "tb": 6, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.BusinessLogic.DeptoService", "rp": "ob.BusinessLogic_DeptoService.html", "cl": 42, "ucl": 20, "cal": 62, "tl": 93, "cb": 7, "tb": 16, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.BusinessLogic.DuenoService", "rp": "ob.BusinessLogic_DuenoService.html", "cl": 22, "ucl": 2, "cal": 24, "tl": 43, "cb": 3, "tb": 4, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
@@ -237,21 +237,21 @@ var assemblies = [
   {
     "name": "ob.DataAccess",
     "classes": [
-      { "name": "ob.DataAccess.AppContext", "rp": "ob.DataAccess_AppContext.html", "cl": 0, "ucl": 100, "cal": 100, "tl": 150, "cb": 0, "tb": 14, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.CategoriaRepository", "rp": "ob.DataAccess_CategoriaRepository.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.ConstructoraRepository", "rp": "ob.DataAccess_ConstructoraRepository.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 17, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.DeptoRepository", "rp": "ob.DataAccess_DeptoRepository.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.DuenoRepository", "rp": "ob.DataAccess_DuenoRepository.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.EdificioRepository", "rp": "ob.DataAccess_EdificioRepository.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.GenericRepository<T>", "rp": "ob.DataAccess_GenericRepository_1.html", "cl": 0, "ucl": 43, "cal": 43, "tl": 70, "cb": 0, "tb": 10, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.InvitacionRepository", "rp": "ob.DataAccess_InvitacionRepository.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.AppContext", "rp": "ob.DataAccess_AppContext.html", "cl": 87, "ucl": 13, "cal": 100, "tl": 150, "cb": 4, "tb": 14, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.CategoriaRepository", "rp": "ob.DataAccess_CategoriaRepository.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.ConstructoraRepository", "rp": "ob.DataAccess_ConstructoraRepository.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 17, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.DeptoRepository", "rp": "ob.DataAccess_DeptoRepository.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.DuenoRepository", "rp": "ob.DataAccess_DuenoRepository.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.EdificioRepository", "rp": "ob.DataAccess_EdificioRepository.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.GenericRepository<T>", "rp": "ob.DataAccess_GenericRepository_1.html", "cl": 13, "ucl": 30, "cal": 43, "tl": 70, "cb": 1, "tb": 10, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.InvitacionRepository", "rp": "ob.DataAccess_InvitacionRepository.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.DataAccess.Migrations.AppContextModelSnapshot", "rp": "ob.DataAccess_AppContextModelSnapshot.html", "cl": 0, "ucl": 331, "cal": 331, "tl": 372, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.DataAccess.Migrations.InitialCreate", "rp": "ob.DataAccess_InitialCreate.html", "cl": 0, "ucl": 514, "cal": 514, "tl": 596, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.DataAccess.Migrations.migracion_v2", "rp": "ob.DataAccess_migracion_v2.html", "cl": 0, "ucl": 386, "cal": 386, "tl": 459, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.DataAccess.Migrations.MigrationOB2", "rp": "ob.DataAccess_MigrationOB2.html", "cl": 0, "ucl": 386, "cal": 386, "tl": 455, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.SessionRepository", "rp": "ob.DataAccess_SessionRepository.html", "cl": 0, "ucl": 11, "cal": 11, "tl": 21, "cb": 0, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.SolicitudRepository", "rp": "ob.DataAccess_SolicitudRepository.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.DataAccess.UsuarioRepository", "rp": "ob.DataAccess_UsuarioRepository.html", "cl": 0, "ucl": 7, "cal": 7, "tl": 17, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.SessionRepository", "rp": "ob.DataAccess_SessionRepository.html", "cl": 11, "ucl": 0, "cal": 11, "tl": 21, "cb": 2, "tb": 2, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.SolicitudRepository", "rp": "ob.DataAccess_SolicitudRepository.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.DataAccess.UsuarioRepository", "rp": "ob.DataAccess_UsuarioRepository.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 17, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
     ]},
   {
     "name": "ob.Domain",
@@ -260,14 +260,14 @@ var assemblies = [
       { "name": "ob.Domain.Administrador", "rp": "ob.Domain_Administrador.html", "cl": 3, "ucl": 0, "cal": 3, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Categoria", "rp": "ob.Domain_Categoria.html", "cl": 6, "ucl": 0, "cal": 6, "tl": 19, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Constructora", "rp": "ob.Domain_Constructora.html", "cl": 12, "ucl": 0, "cal": 12, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.Domain.Depto", "rp": "ob.Domain_Depto.html", "cl": 24, "ucl": 1, "cal": 25, "tl": 59, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.Domain.Depto", "rp": "ob.Domain_Depto.html", "cl": 25, "ucl": 0, "cal": 25, "tl": 59, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Dueno", "rp": "ob.Domain_Dueno.html", "cl": 24, "ucl": 0, "cal": 24, "tl": 48, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.Domain.Edificio", "rp": "ob.Domain_Edificio.html", "cl": 42, "ucl": 1, "cal": 43, "tl": 81, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.Domain.Edificio", "rp": "ob.Domain_Edificio.html", "cl": 43, "ucl": 0, "cal": 43, "tl": 81, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Encargado", "rp": "ob.Domain_Encargado.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Invitacion", "rp": "ob.Domain_Invitacion.html", "cl": 25, "ucl": 0, "cal": 25, "tl": 49, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Mantenimiento", "rp": "ob.Domain_Mantenimiento.html", "cl": 3, "ucl": 0, "cal": 3, "tl": 10, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Session", "rp": "ob.Domain_Session.html", "cl": 6, "ucl": 1, "cal": 7, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
-      { "name": "ob.Domain.Solicitud", "rp": "ob.Domain_Solicitud.html", "cl": 48, "ucl": 5, "cal": 53, "tl": 91, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
+      { "name": "ob.Domain.Solicitud", "rp": "ob.Domain_Solicitud.html", "cl": 49, "ucl": 4, "cal": 53, "tl": 91, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Usuario", "rp": "ob.Domain_Usuario.html", "cl": 26, "ucl": 0, "cal": 26, "tl": 47, "cb": 0, "tb": 0, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
       { "name": "ob.Domain.Validator", "rp": "ob.Domain_Validator.html", "cl": 33, "ucl": 7, "cal": 40, "tl": 69, "cb": 19, "tb": 22, "cm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "hc": [], "metrics": { } },
     ]},
@@ -351,12 +351,6 @@ var riskHotspots = [
       { "value": 10, "exceeded": false },
     ]},
   {
-    "assembly": "ob.DataAccess", "class": "ob.DataAccess.AppContext", "reportPath": "ob.DataAccess_AppContext.html", "methodName": "OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)", "methodShortName": "OnConfiguring(...)", "fileIndex": 0, "line": 27,
-    "metrics": [
-      { "value": 110, "exceeded": true },
-      { "value": 10, "exceeded": false },
-    ]},
-  {
     "assembly": "ob.WebApi", "class": "ob.WebApi.Filters.AuthorizationFilter", "reportPath": "ob.WebApi_AuthorizationFilter.html", "methodName": "OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)", "methodShortName": "OnAuthorization(...)", "fileIndex": 0, "line": 16,
     "metrics": [
       { "value": 110, "exceeded": true },
@@ -393,22 +387,16 @@ var riskHotspots = [
       { "value": 6, "exceeded": false },
     ]},
   {
+    "assembly": "ob.DataAccess", "class": "ob.DataAccess.AppContext", "reportPath": "ob.DataAccess_AppContext.html", "methodName": "OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)", "methodShortName": "OnConfiguring(...)", "fileIndex": 0, "line": 27,
+    "metrics": [
+      { "value": 35.77, "exceeded": true },
+      { "value": 10, "exceeded": false },
+    ]},
+  {
     "assembly": "ob.BusinessLogic", "class": "ob.BusinessLogic.AdminConstructoraService", "reportPath": "ob.BusinessLogic_AdminConstructoraService.html", "methodName": "FiltrarPorNombreDeEncargado(System.String,System.String)", "methodShortName": "FiltrarPorNombreDeEncargado(...)", "fileIndex": 0, "line": 311,
     "metrics": [
       { "value": 30.73, "exceeded": true },
       { "value": 6, "exceeded": false },
-    ]},
-  {
-    "assembly": "ob.DataAccess", "class": "ob.DataAccess.AppContext", "reportPath": "ob.DataAccess_AppContext.html", "methodName": "InitializeAsync()", "methodShortName": "InitializeAsync()", "fileIndex": 0, "line": 138,
-    "metrics": [
-      { "value": 20, "exceeded": true },
-      { "value": 4, "exceeded": false },
-    ]},
-  {
-    "assembly": "ob.DataAccess", "class": "ob.DataAccess.GenericRepository<T>", "reportPath": "ob.DataAccess_GenericRepository_1.html", "methodName": "Get(System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>>,System.Collections.Generic.List`1<System.String>)", "methodShortName": "Get(...)", "fileIndex": 0, "line": 52,
-    "metrics": [
-      { "value": 20, "exceeded": true },
-      { "value": 4, "exceeded": false },
     ]},
   {
     "assembly": "ob.WebApi", "class": "ob.WebApi.DTOs.EdificioDTO", "reportPath": "ob.WebApi_EdificioDTO.html", "methodName": ".ctor(ob.Domain.Edificio)", "methodShortName": ".ctor(...)", "fileIndex": 0, "line": 23,

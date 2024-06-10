@@ -1,0 +1,22 @@
+<app-logout></app-logout>
+<div>
+  <h2>Solicitudes para atender</h2>
+  <div class="adjustable-content">
+    <app-solicitud-list-item class="item-container" *ngFor="let solicitud of solicitudesParaAtender"
+                             [solicitud]="solicitud" (select)="selectSolicitudParaAtender($event)">
+    </app-solicitud-list-item>
+  </div>
+  <button mat-raised-button color="primary" (click)="atenderSolicitud()" [disabled]="!selectedSolicitudParaAtender">
+    Atender Solicitud
+  </button>
+
+  <h2>Solicitudes para completar</h2>
+  <div class="adjustable-content">
+    <app-solicitud-list-item class="item-container" *ngFor="let solicitud of solicitudesAtendiendo"
+                             [solicitud]="solicitud" (select)="selectSolicitudAtendiendo($event)">
+    </app-solicitud-list-item>
+  </div>
+  <button mat-raised-button color="primary" (click)="finalizarSolicitud()" [disabled]="!selectedSolicitudAtendiendo">
+    Finalizar Solicitud
+  </button>
+</div>

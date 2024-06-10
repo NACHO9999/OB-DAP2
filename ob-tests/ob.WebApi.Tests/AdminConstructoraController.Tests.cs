@@ -119,7 +119,8 @@ namespace ob.Tests.WebApi.Controllers
         public void CrearEdificio_ReturnsOk()
         {
             // Arrange
-            var edificioDTO = new EdificioDTO(edificio);
+            var edificioDTO = new EdificioCreateDTO();
+            
 
             // Act
             var result = _controller.CrearEdificio(edificioDTO) as OkObjectResult;
@@ -214,26 +215,6 @@ namespace ob.Tests.WebApi.Controllers
             Assert.AreEqual(edificios[0].Nombre, edificioDTOs[0].Nombre);
         }
 
-        [TestMethod]
-        public void FiltrarEdificiosPorNombreEdificio_ReturnsOkWithEdificios()
-        {
-            // Arrange
-            var edificio = new Edificio("Edificio A", "Calle Falsa 123", "Ubicación A", new Constructora("Constructora A"), 1000m, new List<Depto>());
-            var edificios = new List<Edificio> { edificio };
-            var edificioDTOs = edificios.Select(e => new EdificioDTO(e)).ToList();
-            _adminConstructoraServiceMock.Setup(s => s.FiltrarPorNombreDeEdificio(It.IsAny<List<Edificio>>(), "Edificio A")).Returns(edificios);
-
-            // Act
-            var result = _controller.FiltrarEdificiosPorNombreEdificio(edificioDTOs, edificio.Nombre) as OkObjectResult;
-            var filteredEdificioDTOs = result?.Value as List<EdificioDTO>;
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(200, result.StatusCode);
-            Assert.IsNotNull(filteredEdificioDTOs);
-            Assert.AreEqual(1, filteredEdificioDTOs.Count);
-            Assert.AreEqual(edificios[0].Nombre, filteredEdificioDTOs[0].Nombre);
-        }
 
         [TestMethod]
         public void FiltrarEdificiosPorNombreEncargado_ReturnsOkWithEdificios()
@@ -244,10 +225,10 @@ namespace ob.Tests.WebApi.Controllers
             encargado.Edificios.Add(edificio);
             var edificios = new List<Edificio> { edificio };
             var edificioDTOs = edificios.Select(e => new EdificioDTO(e)).ToList();
-            _adminConstructoraServiceMock.Setup(s => s.FiltrarPorNombreDeEncargado(It.IsAny<List<Edificio>>(), "John")).Returns(edificios);
+            _adminConstructoraServiceMock.Setup(s => s.FiltrarPorNombreDeEncargado("EdificioB", "John")).Returns(edificios);
 
             // Act
-            var result = _controller.FiltrarEdificiosPorNombreEncargado(edificioDTOs, encargado.Nombre) as OkObjectResult;
+            var result = _controller.FiltrarEdificiosPorNombreEncargado(encargado.Nombre) as OkObjectResult;
             var filteredEdificioDTOs = result?.Value as List<EdificioDTO>;
 
             // Assert

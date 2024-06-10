@@ -7,3 +7,7 @@ Crear Archivo Test
 Crear Archivo
     //dotnet new classlib -o ob.BusinessLogic
     //dotnet sln add ob-backend/ob.BusinessLogic/
+
+Test Coverage
+    //dotnet test --collect:"XPlat Code Coverage"
+    //reportgenerator -reports:".\*\*\TestResults\*\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html

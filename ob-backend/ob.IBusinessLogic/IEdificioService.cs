@@ -10,5 +10,6 @@ namespace ob.IBusinessLogic
         void BorrarEdificio(Edificio edificio);
         Edificio GetEdificioByNombreYDireccion(string nombre, string direccion);
         bool EdificioExists(string nombre, string direccion);
+        void AgregarDepto(Edificio edificio, Depto depto);
     }
 }

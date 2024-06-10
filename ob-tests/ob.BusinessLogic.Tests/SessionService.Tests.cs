@@ -111,4 +111,67 @@ public class SessionServiceTests
         // Assert
         Assert.IsNull(result);
     }
+    [TestMethod]
+    public void GetUserRole_ValidAdminCredentials_ReturnsAdminRole()
+    {
+        // Arrange
+        var email = "admin@example.com";
+        var password = "adminpassword";
+        var user = new Administrador("nom", "ape", "admin@example.com", "adminpassword");
+
+        _mockUsuarioRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Usuario, bool>>>(), null)).Returns(user);
+
+        // Act
+        var result = _sessionService.GetUserRole(email, password);
+
+        // Assert
+        Assert.AreEqual("admin", result);
+    }
+
+    [TestMethod]
+    public void GetUserRole_InvalidCredentials_ThrowsInvalidCredentialException()
+    {
+        // Arrange
+        var email = "wrong@example.com";
+        var password = "wrongpassword";
+
+        _mockUsuarioRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Usuario, bool>>>(), null)).Returns((Usuario)null);
+
+        // Act & Assert
+        Assert.ThrowsException<InvalidCredentialException>(() => _sessionService.GetUserRole(email, password));
+    }
+
+    [TestMethod]
+    public void Logout_ValidAuthToken_DeletesSession()
+    {
+        // Arrange
+        var authToken = Guid.NewGuid();
+        var session = new Session { AuthToken = authToken };
+
+        _mockSessionRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Session, bool>>>(), null)).Returns(session);
+
+        // Act
+        _sessionService.Logout(authToken);
+
+        // Assert
+        _mockSessionRepository.Verify(repo => repo.Delete(It.IsAny<Session>()), Times.Once);
+        _mockSessionRepository.Verify(repo => repo.Save(), Times.Once);
+    }
+
+    [TestMethod]
+    public void Logout_InvalidAuthToken_NoSessionDeleted()
+    {
+        // Arrange
+        var authToken = Guid.NewGuid();
+
+        _mockSessionRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Session, bool>>>(), null)).Returns((Session)null);
+
+        // Act
+        _sessionService.Logout(authToken);
+
+        // Assert
+        _mockSessionRepository.Verify(repo => repo.Delete(It.IsAny<Session>()), Times.Never);
+        _mockSessionRepository.Verify(repo => repo.Save(), Times.Never);
+    }
+
 }

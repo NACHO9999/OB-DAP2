@@ -10,7 +10,6 @@ public interface ISolicitudService
     List<Solicitud> GetSolicitudesByCategoria(Categoria categoria);
     IEnumerable<Solicitud> GetSolicitudes();
     Solicitud GetSolicitudById(Guid id);
-
-
+    bool SolicitudExists(Guid id);
 
 }

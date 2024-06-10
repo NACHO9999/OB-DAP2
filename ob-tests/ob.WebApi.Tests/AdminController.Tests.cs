@@ -70,7 +70,7 @@ namespace ob.WebApi.Tests.Controllers
                 Email = "invitee@example.com",
                 Nombre = "Invitee",
                 FechaExpiracion = DateTime.Now.AddDays(1),
-                Rol = RolInvitaciion.Encargado
+                RolInvitacion = RolInvitaciion.Encargado
             };
 
             // Act
@@ -79,7 +79,7 @@ namespace ob.WebApi.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(200, result.StatusCode);
-            _mockAdminService.Verify(service => service.Invitar(invitacionDTO.Email, invitacionDTO.Nombre, invitacionDTO.FechaExpiracion, invitacionDTO.Rol), Times.Once);
+            _mockAdminService.Verify(service => service.Invitar(invitacionDTO.Email, invitacionDTO.Nombre, invitacionDTO.FechaExpiracion, invitacionDTO.RolInvitacion), Times.Once);
         }
 
         [TestMethod]

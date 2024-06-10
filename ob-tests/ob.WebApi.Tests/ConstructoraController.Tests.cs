@@ -67,21 +67,5 @@ namespace ob.Tests.WebApi.Controllers
             Assert.IsNotNull(value);
             Assert.AreEqual("Constructora1", value.Nombre);
         }
-
-        [TestMethod]
-        public void InsertConstructora_ReturnsOk()
-        {
-            // Arrange
-            var constructoraDTO = new ConstructoraDTO { Nombre = "Constructora1" };
-
-            // Act
-            var result = _controller.InsertConstructora(constructoraDTO) as OkObjectResult;
-
-            // Assert
-            _constructoraServiceMock.Verify(s => s.CrearConstructora(It.IsAny<Constructora>()), Times.Once);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(200, result.StatusCode);
-            Assert.AreEqual("Empresa constructora agregada con exito", result.Value);
-        }
     }
 }

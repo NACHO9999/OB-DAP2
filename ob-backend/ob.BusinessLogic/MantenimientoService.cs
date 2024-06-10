@@ -25,14 +25,17 @@ public class MantenimientoService : IMantenimientoService
         _repository.Save();
     }
 
-    public List<Solicitud> GetSolicitudesParaAtender()
+    public List<Solicitud> GetSolicitudesParaAtender(string email)
     {
-        return _solicitudService.GetSolicitudes().Where(s => s.Estado == EstadoSolicitud.Abierto).ToList();
+        var mantenimiento = GetMantenimientoByEmail(email);
+        var lista = _solicitudService.GetSolicitudes().Where(s => s.PerMan != null).ToList();
+        return lista.Where(s => s.Estado == EstadoSolicitud.Abierto).ToList();
     }
     public List<Solicitud> GetSolicitudesAtendiendo(string email)
     {
         var mantenimiento = GetMantenimientoByEmail(email);
-        return _solicitudService.GetSolicitudes().Where(s => s.Estado == EstadoSolicitud.Atendiendo && s.PerMan == mantenimiento).ToList();
+        var lista = _solicitudService.GetSolicitudes().Where(s => s.PerMan!=null).ToList();
+        return lista.Where(s => s.Estado == EstadoSolicitud.Atendiendo && s.PerMan.Email == mantenimiento.Email).ToList();
     }
     
     public Mantenimiento GetMantenimientoByEmail(string email)
@@ -71,7 +74,11 @@ public class MantenimientoService : IMantenimientoService
     {
         var mantenimiento = GetMantenimientoByEmail(email);
         var solicitud = _solicitudService.GetSolicitudById(solicitudId);
-        if (solicitud.PerMan != mantenimiento)
+        if (solicitud.PerMan == null)
+        {
+            throw new InvalidOperationException("La solicitud no tiene un mantenimiento asignado");
+        }
+        if (solicitud.PerMan.Email != mantenimiento.Email)
         {
             throw new InvalidOperationException("El mantenimiento no puede atender la solicitud");
         }
@@ -86,5 +93,9 @@ public class MantenimientoService : IMantenimientoService
         {
             throw new InvalidOperationException("La solicitud no esta en estado de atendiendo");
         }
+    }
+    public List<Mantenimiento> GetAllMantenimiento()
+    {
+        return _repository.GetAll<Mantenimiento>().ToList();
     }
 }

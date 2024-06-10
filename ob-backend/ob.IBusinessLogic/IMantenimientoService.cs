@@ -8,7 +8,8 @@ namespace ob.IBusinessLogic
         void AtenderSolicitud(Guid solicitudId, string email); 
         void CompletarSolicitud(Guid solicitudId, string email);
         List<Solicitud> GetSolicitudesAtendiendo(string email);
-        List<Solicitud> GetSolicitudesParaAtender();
+        List<Solicitud> GetSolicitudesParaAtender(string email);
+        List<Mantenimiento> GetAllMantenimiento();
     }
     
 }

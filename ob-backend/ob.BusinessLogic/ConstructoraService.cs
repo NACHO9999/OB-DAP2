@@ -10,12 +10,13 @@ public class ConstructoraService : IConstructoraService
     {
         _repository = constructoraRepository;
     }
-    public void CrearConstructora(Constructora constructora)
+    public void CrearConstructora(string nombre)
     {
-        if (ConstructoraExists(constructora.Nombre))
+        if (ConstructoraExists(nombre))
         {
             throw new AlreadyExistsException("La constructora ya existe");
         }
+        var constructora = new Constructora(nombre);
         _repository.Insert(constructora);
         _repository.Save();
     }
@@ -37,9 +38,20 @@ public class ConstructoraService : IConstructoraService
     {
         return _repository.Get(c => c.Nombre.ToLower() == nombre.ToLower()) != null;
     }
-    public void EditarConstructora(Constructora constructora)
+public void EditarConstructora(Constructora constructora)
+{
+    var existingConstructora = _repository.Get(c => c.Id == constructora.Id);
+    if (existingConstructora == null)
     {
-        _repository.Update(constructora);
-        _repository.Save();
+        throw new KeyNotFoundException("Constructora no encontrada");
     }
+
+    // Update properties of the existing constructora with new values
+    existingConstructora.Nombre = constructora.Nombre;
+    // Add other properties that need to be updated
+
+    // Save the changes to the repository
+    _repository.Update(existingConstructora);
+    _repository.Save();
+}
 }

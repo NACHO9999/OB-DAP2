@@ -37,26 +37,45 @@ public class DeptoService : IDeptoService
 
         _repository.Save();
     }
+    public IEnumerable<Depto> GetDeptosPorEdificio(Edificio edificio)
+    {
+        return _repository.GetAll<Depto>(d => d.EdificioNombre == edificio.Nombre && d.EdificioDireccion == edificio.Direccion);
+    }
     public bool ExisteDepto(Depto depto)
     {
         return _repository.Get(d => d.Numero == depto.Numero && d.EdificioNombre == depto.EdificioNombre && d.EdificioDireccion == depto.EdificioDireccion) != null;
     }
-    public void EditarDepto(Depto depto)
+public void EditarDepto(Depto depto)
+{
+    var existingDepto = _repository.Get(d => d.Numero == depto.Numero && d.EdificioNombre == depto.EdificioNombre && d.EdificioDireccion == depto.EdificioDireccion);
+    if (existingDepto == null)
     {
-        if (!ExisteDepto(depto))
-        {
-            throw new KeyNotFoundException("Departamento no encontrado");
-        }
-        if (depto.Dueno != null)
-        {
-            if (!_duenoService.DuenoExists(depto.Dueno.Email))
-            {
-                _duenoService.CrearDueno(depto.Dueno);
-            }
-        }
-        _repository.Update(depto);
-        _repository.Save();
+        throw new KeyNotFoundException("Departamento no encontrado");
     }
+
+    if (depto.Dueno != null)
+    {
+        if (!_duenoService.DuenoExists(depto.Dueno.Email))
+        {
+            _duenoService.CrearDueno(depto.Dueno);
+        }
+        else
+        {
+            // Ensure the Dueno entity is tracked
+            depto.Dueno = _duenoService.GetDuenoByEmail(depto.Dueno.Email);
+        }
+    }
+
+    existingDepto.CantidadBanos = depto.CantidadBanos;
+    existingDepto.CantidadCuartos = depto.CantidadCuartos;
+    existingDepto.ConTerraza = depto.ConTerraza;
+    existingDepto.Piso = depto.Piso;
+    existingDepto.Dueno = depto.Dueno; // Assign updated or existing Dueno
+
+    _repository.Update(existingDepto);
+    _repository.Save();
+}
+
     public void BorrarDepto(Depto depto)
     {
         _repository.Delete(depto);

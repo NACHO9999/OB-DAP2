@@ -1,0 +1,197 @@
+<app-logout></app-logout>
+<button class="navigate-button" mat-raised-button color="primary" (click)="navigateToSolicitudes()">Visualizar
+    Solicitudes</button>
+<div class="all-content">
+    <h2>Elegir Departamento</h2>
+    <div class="adjustable-content">
+        <div class="item-container">
+            <div *ngFor="let depto of deptos">
+                <app-depto-list-item [depto]="depto" (select)="selectDepto($event)"></app-depto-list-item>
+                <button mat-raised-button color="primary" type="submit" (click)="desasignarDueno(depto)">Sacar
+                    Dueño</button>
+            </div>
+        </div>
+    </div>
+
+    <h2>Asignar Dueño</h2>
+    <form [formGroup]="duenoForm" (ngSubmit)="asignarDueno()">
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Email" />
+            <mat-error *ngIf="duenoForm.get('email')?.hasError('required')">
+                El email es requerido.
+            </mat-error>
+            <mat-error *ngIf="duenoForm.get('email')?.hasError('email')">
+                Por favor ingrese un email válido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" placeholder="Nombre" />
+            <mat-error *ngIf="duenoForm.get('nombre')?.hasError('required')">
+                El nombre es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Apellido</mat-label>
+            <input matInput formControlName="apellido" placeholder="Apellido" />
+            <mat-error *ngIf="duenoForm.get('apellido')?.hasError('required')">
+                El apellido es requerido.
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="duenoForm.invalid">Crear Dueño</button>
+    </form>
+    <h2>Crear Solicitud</h2>
+    <form [formGroup]="solicitudForm" (ngSubmit)="createSolicitud()">
+        <mat-form-field appearance="fill">
+            <mat-label>Descripción</mat-label>
+            <input matInput formControlName="descripcion" placeholder="Descripción" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Categoría</mat-label>
+            <mat-select formControlName="categoria">
+                <mat-option *ngFor="let categoria of categorias" [value]="categoria.nombre">{{ categoria.nombre
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Mantenimiento</mat-label>
+            <mat-select formControlName="mantenimiento">
+                <mat-option [value]="null">No asignar por ahora</mat-option>
+                <mat-option *ngFor="let mantenimiento of mantenimientos" [value]="mantenimiento">{{
+                    mantenimiento?.nombre }} {{ mantenimiento?.apellido }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button [disabled]="selectedDepto==null||solicitudForm.invalid" mat-raised-button color="primary"
+            type="submit">Crear Solicitud</button>
+    </form>
+    <h2>Crear Persona de Mantenimiento</h2>
+    <div>
+        <form [formGroup]="mantenimientoForm" (ngSubmit)="createMantenimiento()">
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" placeholder="Nombre" />
+                <mat-error *ngIf="mantenimientoForm.get('nombre')?.hasError('required')">
+                    El nombre es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Apellido</mat-label>
+                <input matInput formControlName="apellido" placeholder="Apellido" />
+                <mat-error *ngIf="mantenimientoForm.get('apellido')?.hasError('required')">
+                    El apellido es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="Email" />
+                <mat-error *ngIf="mantenimientoForm.get('email')?.hasError('required')">
+                    El email es requerido.
+                </mat-error>
+                <mat-error *ngIf="mantenimientoForm.get('email')?.hasError('email')">
+                    Por favor ingrese un email válido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="contrasena"
+                    placeholder="Contraseña" />
+                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="mantenimientoForm.get('contrasena')?.hasError('required')">
+                    La contraseña es requerida.
+                </mat-error>
+                <mat-error *ngIf="mantenimientoForm.get('contrasena')?.hasError('minlength')">
+                    La contraseña debe tener al menos 6 caracteres.
+                </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="mantenimientoForm.invalid">Crear
+                Mantenimiento</button>
+        </form>
+    </div>
+
+    <h2>Personas De Mantenimiento</h2>
+    <div class="adjustable-content">
+        <div class="item-container" *ngFor="let mantenimiento of mantenimientos">
+            <app-mantenimiento-item-list [mantenimiento]="mantenimiento"
+                (select)="selectMantenimiento($event)"></app-mantenimiento-item-list>
+        </div>
+    </div>
+
+    <h2>Solicitudes</h2>
+    <div class="adjustable-content">
+        <div class="item-container" *ngFor="let solicitud of solicitudes">
+            <app-solicitud-list-item *ngIf="solicitud.perMan == null" [solicitud]="solicitud"
+                (select)="selectSolicitud($event)"></app-solicitud-list-item>
+        </div>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="selectedMantenimiento == null || selectedSolicitud == null"
+        (click)="onAsignarSolicitud()">Asignar Solicitud</button>
+
+    <h2>Solicitudes agrupadas por edificio</h2>
+    <table mat-table [dataSource]="solicitudesEdificio" class="mat-elevation-z8">
+        <ng-container matColumnDef="edificio">
+            <th mat-header-cell *matHeaderCellDef> Edificio </th>
+            <td mat-cell *matCellDef="let element"> {{element.edificio}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="abiertas">
+            <th mat-header-cell *matHeaderCellDef> Solicitudes abiertas </th>
+            <td mat-cell *matCellDef="let element"> {{element.abiertas}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cerradas">
+            <th mat-header-cell *matHeaderCellDef> Solicitudes cerradas </th>
+            <td mat-cell *matCellDef="let element"> {{element.cerradas}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="atendiendo">
+            <th mat-header-cell *matHeaderCellDef> Solicitudes atendiendo </th>
+            <td mat-cell *matCellDef="let element"> {{element.atendiendo}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsEdificio"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsEdificio;"></tr>
+    </table>
+
+    <h2>Solicitudes por persona de mantenimiento</h2>
+    <table mat-table [dataSource]="solicitudesMantenimiento" class="mat-elevation-z8">
+        <ng-container matColumnDef="persona">
+            <th mat-header-cell *matHeaderCellDef> Persona de mantenimiento </th>
+            <td mat-cell *matCellDef="let element"> {{element.persona}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="abiertas">
+            <th mat-header-cell *matHeaderCellDef> Solicitudes abiertas </th>
+            <td mat-cell *matCellDef="let element"> {{element.abiertas}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cerradas">
+            <th mat-header-cell *matHeaderCellDef> Solicitudes cerradas </th>
+            <td mat-cell *matCellDef="let element"> {{element.cerradas}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="atendiendo">
+            <th mat-header-cell *matHeaderCellDef> Solicitudes atendiendo </th>
+            <td mat-cell *matCellDef="let element"> {{element.atendiendo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tiempo">
+            <th mat-header-cell *matHeaderCellDef> Tiempo promedio de cierre </th>
+            <td mat-cell *matCellDef="let element"> {{element.tiempo}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsMantenimiento"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsMantenimiento;"></tr>
+    </table>
+</div>

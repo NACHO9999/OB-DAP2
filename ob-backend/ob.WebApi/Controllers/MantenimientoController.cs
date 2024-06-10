@@ -47,7 +47,7 @@ public class MantenimientoController : BaseController
     [AuthorizationFilter(RoleNeeded = new Type[] { typeof(Mantenimiento) })]
     public IActionResult GetSolicitudesParaAtender()
     {
-        var solicitudes = _mantenimientoService.GetSolicitudesParaAtender();
+        var solicitudes = _mantenimientoService.GetSolicitudesParaAtender(GetCurrentUser().Email);
         var retorno = solicitudes.Select(s => new SolicitudDTO(s)).ToList();
         return Ok(retorno);
     }

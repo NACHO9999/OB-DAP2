@@ -1,0 +1,19 @@
+<app-logout></app-logout>
+<button mat-raised-button color="primary" (click)="navigateBack()">Volver</button>
+<div>
+    <form [formGroup]="filterForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Categoría</mat-label>
+            <mat-select formControlName="categoria">
+                <mat-option value="">Todas</mat-option>
+                <mat-option *ngFor="let categoria of categorias" [value]="categoria.nombre">{{ categoria.nombre
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <div class="adjustable-content">
+        <div class="item-container" *ngFor="let solicitud of filteredSolicitudes">
+            <app-solicitud-list-item [solicitud]="solicitud"></app-solicitud-list-item>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,7 @@ export interface ISolicitudModel {
     descripcion: string;
     depto: IDeptoModel;
     categoria: ICategoriaModel;
-    fechaCreacion: Date;
-    fechaCierre: Date | null;
+    estado: number;
+    fechaInicio: string; // Changed to string to ensure ISO string format
+    fechaFin: string | null; // Changed to string to ensure ISO string format
 }

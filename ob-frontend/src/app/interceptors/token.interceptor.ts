@@ -8,7 +8,6 @@ export class TokenInterceptor implements HttpInterceptor{
   constructor(private authService: AuthService) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
-    console.log('TokenInterceptor: ', token);
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -17,7 +16,7 @@ export class TokenInterceptor implements HttpInterceptor{
         }
         
       });
-      console.log('TokenInterceptor: ', token);
+      
     }
     return next.handle(request);
   }

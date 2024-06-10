@@ -8,13 +8,23 @@ namespace ob.WebApi.DTOs
         public string Email { get; set; }
         public string Contrasena { get; set; }
         public List<EdificioDTO> Edificios { get; set; }
+
         public EncargadoDTO() { }
+
         public EncargadoDTO(Encargado encargado)
         {
-            this.Nombre = encargado.Nombre;
-            this.Email = encargado.Email;
-            this.Contrasena = encargado.Contrasena;
-            this.Edificios = encargado.Edificios.Select(e => new EdificioDTO(e)).ToList();
+            if (encargado == null)
+            {
+                throw new ArgumentNullException(nameof(encargado), "The provided encargado is null.");
+            }
+
+            this.Nombre = encargado.Nombre ?? string.Empty;
+            this.Email = encargado.Email ?? string.Empty;
+            this.Contrasena = encargado.Contrasena ?? string.Empty;
+            this.Edificios = encargado.Edificios?.Select(e => new EdificioDTO(e)).ToList() ?? new List<EdificioDTO>();
+
+            // Log the state of the object
+            Console.WriteLine($"Created EncargadoDTO: Nombre={this.Nombre}, Email={this.Email}");
         }
     }
 }

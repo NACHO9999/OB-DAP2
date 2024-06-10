@@ -39,13 +39,5 @@ public class ConstructoraController : ControllerBase
     }
 
 
-    [HttpPost]
-    [ServiceFilter(typeof(AuthenticationFilter))]
-    [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
-    public IActionResult InsertConstructora([FromBody] ConstructoraDTO newConstructora)
-    {
-        _constructoraService.CrearConstructora(new Constructora(newConstructora.Nombre));
-        return Ok("Empresa constructora agregada con exito");
-    }
 
 }

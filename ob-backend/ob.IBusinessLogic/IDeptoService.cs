@@ -7,5 +7,6 @@ public interface IDeptoService
     void BorrarDepto(Depto depto);
     void EditarDepto(Depto depto);
     Depto GetDepto(int numero, string edificioNombre, string edificioDireccion);
+    IEnumerable<Depto> GetDeptosPorEdificio(Edificio edificio);
 
 }

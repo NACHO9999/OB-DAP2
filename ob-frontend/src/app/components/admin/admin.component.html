@@ -37,22 +37,22 @@
   <form [formGroup]="adminForm" (ngSubmit)="submitAdmin()">
     <mat-form-field appearance="fill">
       <mat-label>Nombre</mat-label>
-      <input matInput formControlName="Nombre" placeholder="Enter first name" />
+      <input matInput formControlName="nombre" placeholder="Enter first name" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Apellido</mat-label>
-      <input matInput formControlName="Apellido" placeholder="Enter last name" />
+      <input matInput formControlName="apellido" placeholder="Enter last name" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="Email" placeholder="Enter email" />
+      <input matInput formControlName="email" placeholder="Enter email" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Contraseña</mat-label>
-      <input matInput type="password" formControlName="Contrasena" placeholder="Enter password" />
+      <input matInput type="password" formControlName="contrasena" placeholder="Enter password" />
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit" [disabled]="adminForm.invalid">

@@ -15,43 +15,45 @@ using Microsoft.AspNetCore.Http;
 namespace ob.Tests.WebApi.Controllers
 {
     [TestClass]
-    public class AdminConstructoraControllerTests
+public class AdminConstructoraControllerTests
+{
+    private Mock<ISessionService> _sessionServiceMock;
+    private Mock<IAdminConstructoraService> _adminConstructoraServiceMock;
+    private Mock<IEdificioService> _edificioServiceMock;
+    private Mock<IConstructoraService> _constructoraServiceMock;
+    private Mock<IImporterLogic> _importerLogicServiceMock;
+    private AdminConstructoraController _controller;
+    private Constructora constructora = new Constructora("Constructora1");
+    private AdminConstructora admin;
+    private Edificio edificio;
+
+    [TestInitialize]
+    public void Setup()
     {
-        private Mock<ISessionService> _sessionServiceMock;
-        private Mock<IAdminConstructoraService> _adminConstructoraServiceMock;
-        private Mock<IEdificioService> _edificioServiceMock;
-        private Mock<IConstructoraService> _constructoraServiceMock;
-        private AdminConstructoraController _controller;
-        private Constructora constructora = new Constructora("Constructora1");
-        private AdminConstructora admin;
-        private Edificio edificio;
+        _sessionServiceMock = new Mock<ISessionService>();
+        _constructoraServiceMock  = new Mock<IConstructoraService>();
+        _edificioServiceMock = new Mock<IEdificioService>();
+        _adminConstructoraServiceMock = new Mock<IAdminConstructoraService>();
+        _importerLogicServiceMock = new Mock<IImporterLogic>();
+        _controller = new AdminConstructoraController(_sessionServiceMock.Object, _adminConstructoraServiceMock.Object, _importerLogicServiceMock.Object);
+        Constructora constructora = new Constructora("Constructora1");
+        admin = new AdminConstructora("jo", "test@test.com", "Contra1234") { Constructora=constructora};
+        edificio = new Edificio("Edificio1", "Direccion1", "ubi1", constructora, 1000, new List<Depto>());
+        HttpContext httpContext = new DefaultHttpContext();
+        var guid = Guid.NewGuid();
+        httpContext.Request.Headers["Authorization"] = guid.ToString();
 
-        [TestInitialize]
-        public void Setup()
+        _controller.ControllerContext = new ControllerContext
         {
-            _sessionServiceMock = new Mock<ISessionService>();
-            _constructoraServiceMock  = new Mock<IConstructoraService>();
-            _edificioServiceMock = new Mock<IEdificioService>();
-            _adminConstructoraServiceMock = new Mock<IAdminConstructoraService>();
-            _controller = new AdminConstructoraController(_sessionServiceMock.Object, _adminConstructoraServiceMock.Object);
-            Constructora constructora = new Constructora("Constructora1");
-            admin = new AdminConstructora("jo", "test@test.com", "Contra1234") { Constructora=constructora};
-            edificio = new Edificio("Edificio1", "Direccion1", "ubi1", constructora, 1000, new List<Depto>());
-            HttpContext httpContext = new DefaultHttpContext();
-            var guid = Guid.NewGuid();
-            httpContext.Request.Headers["Authorization"] = guid.ToString();
+            HttpContext = httpContext,
+        };
 
-            _controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = httpContext,
-            };
-
-            // Setup the GetCurrentUser method to return a mock user
-            _sessionServiceMock.Setup(s => s.GetCurrentUser(It.IsAny<Guid>())).Returns(admin);
-            _adminConstructoraServiceMock.Setup(a => a.GetAdminConstructoraByEmail(It.IsAny<string>())).Returns(admin);
-            _constructoraServiceMock.Setup(c => c.GetConstructoraByNombre(It.IsAny<string>())).Returns(constructora);
-            _edificioServiceMock.Setup(e => e.GetEdificioByNombreYDireccion(It.IsAny<string>(), It.IsAny<string>())).Returns(edificio);
-        }
+        // Setup the GetCurrentUser method to return a mock user
+        _sessionServiceMock.Setup(s => s.GetCurrentUser(It.IsAny<Guid>())).Returns(admin);
+        _adminConstructoraServiceMock.Setup(a => a.GetAdminConstructoraByEmail(It.IsAny<string>())).Returns(admin);
+        _constructoraServiceMock.Setup(c => c.GetConstructoraByNombre(It.IsAny<string>())).Returns(constructora);
+        _edificioServiceMock.Setup(e => e.GetEdificioByNombreYDireccion(It.IsAny<string>(), It.IsAny<string>())).Returns(edificio);
+    }
 
         [TestMethod]
         public void BorrarEdificio_ReturnsOk()

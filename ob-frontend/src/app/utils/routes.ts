@@ -2,6 +2,7 @@
 
 export enum PATHS {
     ADMINCONSTRUCTORA = 'admin_constructora',
+    IMPORTAR = 'admin_constructora/importar',
     ADMIN = 'admin',
     MANTENIMIENTO = 'mantenimiento',
     ENCARGADO = 'encargado',
@@ -9,9 +10,6 @@ export enum PATHS {
     ENCARGADO_SOLICITUDES = 'encargado/solicitudes',
 }
 
-export enum SEGMENTS {
-    NEW = 'new',
-}
 
 
 
@@ -21,6 +19,7 @@ export const ADMINCONSTRUCTORA_URL = PATHS.ADMINCONSTRUCTORA;
 export const ADMIN_URL = PATHS.ADMIN;
 export const ENCARGADO_SOLICITUDES_URL = PATHS.ENCARGADO_SOLICITUDES;
 
+export const IMPORTAR_URL = PATHS.IMPORTAR;
 
 
 export const MANTENIMIENTO_URL = PATHS.MANTENIMIENTO;

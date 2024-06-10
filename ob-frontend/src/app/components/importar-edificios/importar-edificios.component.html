@@ -1,0 +1,23 @@
+<button class="navigate-button" mat-raised-button color="primary" (click)="volver()">Importar Edificios</button>
+<app-logout></app-logout>
+<div class="all">
+    
+    <h2>Importar Edificios</h2>
+    <h3>Importadores</h3>
+    <p *ngFor="let importer of importers">{{importer.nombre}}</p>
+    <form [formGroup]="importForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Path</mat-label>
+        <input matInput formControlName="path" required>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="importForm.invalid">Send</button>
+      <p class="result-message">{{resultMessage}}</p>
+    </form>
+</div>
+  

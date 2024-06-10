@@ -3,6 +3,7 @@ using ob.IBusinessLogic;
 using ob.IDataAccess;
 using ob.Exceptions.BusinessLogicExceptions;
 using System.Net;
+using ob.Reflection.ImportData;
 
 namespace ob.BusinessLogic
 {
@@ -22,6 +23,44 @@ namespace ob.BusinessLogic
             _constructoraService = constructoraService;
             _encargadoService = encargadoService;
             _deptoService = deptoService;
+        }
+
+        public void ImportarEdificios(List<EdificioData> edificioData, string email)
+        {
+            var admin = GetAdminConstructoraByEmail(email);
+            if (admin.Constructora == null) {
+                throw new InvalidOperationException("El admin no puede importar edificios");
+            }
+            foreach (var edificio in edificioData)
+            {
+                var deptos = new List<Depto>();
+                foreach (var dep in edificio.Departamentos)
+                {
+                    var dueno = new Dueno("Desconocido", "Desconocido", dep.PropietarioEmail);
+                    var depto = new Depto(dep.Piso, dep.numero_puerta, dueno, dep.Habitaciones,dep.Baños, dep.ConTerraza,edificio.Nombre, edificio.Direccion.calle_principal + " " + edificio.Direccion.numero_puerta + ", esq " + edificio.Direccion.calle_secundaria);
+
+                }
+                var edificioImportado = new Edificio(
+                    edificio.Nombre,
+                    edificio.Direccion.calle_principal + " " + edificio.Direccion.numero_puerta + ", esq " + edificio.Direccion.calle_secundaria,
+                    edificio.Gps.Latitud + ", " + edificio.Gps.Longitud,
+                    admin.Constructora,
+                    edificio.gastos_comunes,
+                    deptos
+
+                    );
+                _edificioService.CrearEdificio(edificioImportado);
+                if (edificio.Encargado!= null){
+                    try
+                    {
+                        AsignarEncargado(email, edificio.Encargado, edificio.Nombre, edificio.Direccion.calle_principal + " " + edificio.Direccion.numero_puerta + ", esq " + edificio.Direccion.calle_secundaria);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                
+            }
         }
         public void CrearAdminConstructora(AdminConstructora adminConstructora)
         {

@@ -21,6 +21,7 @@ import { IDeptoModel } from '../../interfaces/idepto-model';
 import { LogoutButtonComponent } from '../logout/logout.component';
 import { DeptoListItemComponent } from '../depto-list-item/depto-list-item.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-constructora',
@@ -67,12 +68,14 @@ export class AdminConstructoraComponent implements OnInit {
   buscaConEncargado: boolean = false;
   buscaSinEncargado: boolean = false;
   nombreBusqueda: string = '';
+  deptoResultMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
     private encargadoService: EncargadoService,
     private adminConstructoraService: AdminConstructoraService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private router: Router
   ) {
     this.createConstructoraForm = this.fb.group({
       nombreConstructora: ['', Validators.required]
@@ -201,6 +204,7 @@ export class AdminConstructoraComponent implements OnInit {
         take(1),
         catchError((err) => {
           console.error('Error in crearEdificio:', err);
+          this.edificioResultMessage = 'Error al crear edificio';
           return of(null);
         }),
         finalize(() => {
@@ -256,6 +260,7 @@ export class AdminConstructoraComponent implements OnInit {
         take(1),
         catchError((err) => {
           console.error('Error in editarEdificio:', err);
+          this.edificioResultMessage = 'Error al editar edificio';
           return of(null);
         })
       ).subscribe(() => {
@@ -310,6 +315,7 @@ export class AdminConstructoraComponent implements OnInit {
         take(1),
         catchError((err) => {
           console.error('Error in crearDepto:', err);
+          this.deptoResultMessage = 'Error al crear depto';
           return of(null);
         }),
         finalize(() => {
@@ -346,6 +352,7 @@ export class AdminConstructoraComponent implements OnInit {
         take(1),
         catchError((err) => {
           console.error('Error in editarDepto:', err);
+          this.deptoResultMessage = 'Error al editar depto';
           return of(null);
         }),
         finalize(() => {
@@ -460,5 +467,8 @@ export class AdminConstructoraComponent implements OnInit {
         this.selectedDepto = null;
       }
     });
+  }
+  navigateToImportar(): void {
+    this.router.navigate(['admin_constructora/importar']);
   }
 }

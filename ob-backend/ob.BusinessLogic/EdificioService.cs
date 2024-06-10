@@ -2,6 +2,7 @@ using ob.Domain;
 using ob.IDataAccess;
 using ob.IBusinessLogic;
 namespace ob.BusinessLogic;
+using ob.Reflection.ImportData;
 public class EdificioService : IEdificioService
 {
     private readonly IGenericRepository<Edificio> _repository;
@@ -14,6 +15,7 @@ public class EdificioService : IEdificioService
         _deptoService = deptoService;
     }
 
+ 
 
     public List<Edificio> GetAllEdificios()
     {
@@ -27,6 +29,7 @@ public class EdificioService : IEdificioService
         {
             throw new KeyNotFoundException("No se encontro la empresa constructora.");
         }
+        edificio.EmpresaConstructora = _constructoraService.GetConstructoraByNombre(edificio.EmpresaConstructora.Nombre);
 
         if (EdificioExists(edificio.Nombre, edificio.Direccion))
         {

@@ -8,6 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ob-reflection\ob-reflection.csproj" />
     <ProjectReference Include="..\ob.Domain\ob.Domain.csproj" />
   </ItemGroup>
 

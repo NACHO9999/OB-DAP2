@@ -68,6 +68,7 @@
         </mat-form-field>
         <button [disabled]="selectedDepto==null||solicitudForm.invalid" mat-raised-button color="primary"
             type="submit">Crear Solicitud</button>
+            <p class="result-message"> {{solicitudResultMessage}}</p>
     </form>
     <h2>Crear Persona de Mantenimiento</h2>
     <div>
@@ -117,6 +118,7 @@
 
             <button mat-raised-button color="primary" type="submit" [disabled]="mantenimientoForm.invalid">Crear
                 Mantenimiento</button>
+                <p class="result-message" >{{mantenimientoResultMessage}}</p>
         </form>
     </div>
 

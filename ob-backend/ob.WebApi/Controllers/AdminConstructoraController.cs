@@ -8,6 +8,7 @@ using ob.IBusinessLogic;
 using ob.Domain;
 using Enums;
 using ob.BusinessLogic;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace ob.WebApi.Controllers
 {
@@ -17,10 +18,12 @@ namespace ob.WebApi.Controllers
     public class AdminConstructoraController : BaseController
     {
         private IAdminConstructoraService _adminConstructoraService;
+        private IImporterLogic _importerLogic;
 
-        public AdminConstructoraController(ISessionService sessionService, IAdminConstructoraService adminConstructoraService) : base(sessionService)
+        public AdminConstructoraController(ISessionService sessionService, IAdminConstructoraService adminConstructoraService, IImporterLogic importerLogic) : base(sessionService)
         {
             _adminConstructoraService = adminConstructoraService;
+            _importerLogic = importerLogic;
         }
 
         [HttpDelete("borrar-edificio/{nombre}/{direccion}")]
@@ -205,6 +208,24 @@ namespace ob.WebApi.Controllers
         {
             _adminConstructoraService.CrearConstructora(nombre, GetCurrentUser().Email);
             return Ok(new { message = "Constructora creada exitosamente." });
+        }
+        [HttpPost("importar-edificios")]
+        [ServiceFilter(typeof(AuthenticationFilter))]
+        [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+        public IActionResult ImportarEdificios([FromBody] ImportRequestDTO request)
+        {
+            var edificios = _importerLogic.ImportEdificios(request.Nombre, request.Path);
+            _adminConstructoraService.ImportarEdificios(edificios, GetCurrentUser().Email);
+            return Ok(new { message = "Edificios importados extosamente" });
+        }
+        [HttpGet("get-importers")]
+        [ServiceFilter(typeof(AuthenticationFilter))]
+        [AuthorizationFilter(RoleNeeded = new Type[] { typeof(AdminConstructora) })]
+        public IActionResult GetImporters()
+        {
+            var lista = _importerLogic.GetAllImporters();
+            var retorno = lista.Select(i => new ImportTypeDTO() { Nombre = i.Name }).ToList();
+            return Ok(retorno);
         }
     }
 }

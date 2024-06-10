@@ -4,6 +4,9 @@ using ob.ServicesFactory;
 var builder = WebApplication.CreateBuilder(args);
 Console.WriteLine(DateTime.Now);
 
+Console.WriteLine("current directory: program webapi " + Directory.GetCurrentDirectory());
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

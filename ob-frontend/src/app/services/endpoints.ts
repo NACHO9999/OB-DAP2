@@ -24,6 +24,8 @@ export enum AdminConstructoraEndpoints {
     TIENE_CONSTRUCTORA = 'adminconstructora/tiene-constructora', // New endpoint
     GET_CONSTRUCTORAS = 'adminconstructora/get-constructoras', // New endpoint
     EDIT_CONSTRUCTORA = 'adminconstructora/editar-constructora', // New endpoint
+    IMPORTAR_EDIFICIOS = 'adminconstructora/importar-edificios', // New endpoint
+    GET_IMPORTERS = 'adminconstructora/get-importers', // New endpoint
     
   }
 

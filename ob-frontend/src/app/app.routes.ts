@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { ADMIN_URL, INVITACION_URL, ADMINCONSTRUCTORA_URL, ENCARGADO_URL, ENCARGADO_SOLICITUDES_URL, MANTENIMIENTO_URL } from './utils/routes';
+import { ADMIN_URL, INVITACION_URL, ADMINCONSTRUCTORA_URL, ENCARGADO_URL, ENCARGADO_SOLICITUDES_URL, MANTENIMIENTO_URL, IMPORTAR_URL } from './utils/routes';
 import { AdminComponent } from './components/admin/admin.component';
 import { RoleGuard } from './guards/role.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -8,6 +8,7 @@ import { AdminConstructoraComponent } from './components/admin-constructora/admi
 import { EncargadoComponent } from './components/encargado/encargado.component';
 import { VisualizarSolicitudesComponent } from './components/visualizar-solicitudes/visualizar-solicitudes.component';
 import { MantenimientoComponent } from './components/mantenimiento/mantenimiento.component';
+import { ImportComponent } from './components/importar-edificios/importar-edificios.component';
 
 const routes: Route[] = [
   {
@@ -43,6 +44,12 @@ const routes: Route[] = [
     component: MantenimientoComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'mantenimiento'}
+  },
+  {
+    path: IMPORTAR_URL,
+    component: ImportComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'admin_constructora' }
   }
 
 

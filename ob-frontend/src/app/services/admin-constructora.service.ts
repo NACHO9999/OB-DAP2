@@ -5,6 +5,8 @@ import { AdminConstructoraEndpoints } from './endpoints';
 import { IEdificioModel } from '../interfaces/iedificio-model'; 
 import { IDeptoModel } from '../interfaces/idepto-model'; 
 import { IConstructoraModel } from '../interfaces/iconstructora-model';
+import { IImportRequestModel } from '../interfaces/iimport-request-model';
+import { IImporter } from '../interfaces/iimporter';
 
 @Injectable({
   providedIn: 'root'
@@ -98,5 +100,12 @@ export class AdminConstructoraService {
   crearConstructora(nombre: string): Observable<any> {
     const url = `${AdminConstructoraEndpoints.CREAR_CONSTRUCTORA}/${nombre}`;
     return this.http.post(url, {});
+  }
+  importarEdificios(request: IImportRequestModel): Observable<any> {
+    const url = `${AdminConstructoraEndpoints.IMPORTAR_EDIFICIOS}`;
+    return this.http.post(url, request);
+  }
+  getImporters(): Observable<IImporter[]> {
+    return this.http.get<IImporter[]>(AdminConstructoraEndpoints.GET_IMPORTERS);
   }
 }

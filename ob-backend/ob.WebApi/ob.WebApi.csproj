@@ -12,10 +12,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ob-reflection\ob-reflection.csproj" />
     <ProjectReference Include="..\..\ob.ServicesFactory\ob.ServicesFactory.csproj" />
     <ProjectReference Include="..\Exceptions\ob.Exceptions.csproj" />
     <ProjectReference Include="..\ob.Domain\ob.Domain.csproj" />

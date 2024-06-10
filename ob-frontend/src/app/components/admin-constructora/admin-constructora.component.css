@@ -2,6 +2,7 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    margin-top: 50px;
   }
   
   
@@ -46,4 +47,21 @@
     flex: 1 1 calc(33.333% - 20px); /* Ensure items don't take more than a third of the row minus the gap */
     box-sizing: border-box;
    
+}
+.navigate-button {
+  position: absolute; /* Ensures the button can be placed precisely */
+  top: 10px;
+  left: 20px; /* Stick the button to the left */
+  padding: 10px 20px; /* Adjust padding for a better fit */
+  font-size: 14px; /* Adjust font size for better readability */
+  background-color: #007bff; /* Set background color */
+  color: #ffffff; /* Set text color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Optional: add rounded corners */
+  z-index: 1000; /* Ensure the button is above other elements */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  max-width: 200px; /* Restrict the button’s width */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
 }

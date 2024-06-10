@@ -33,6 +33,7 @@ namespace ob.ServicesFactory
             serviceCollection.AddScoped<IGenericRepository<Invitacion>, InvitacionRepository>();
             serviceCollection.AddScoped<IGenericRepository<Solicitud>, SolicitudRepository>();
 
+            serviceCollection.AddScoped<IImporterLogic, ImporterLogic>();
             serviceCollection.AddScoped<IInvitacionService, InvitacionService>();
             serviceCollection.AddScoped<ISolicitudService, SolicitudService>();
             serviceCollection.AddScoped<IDuenoService, DuenoService>();

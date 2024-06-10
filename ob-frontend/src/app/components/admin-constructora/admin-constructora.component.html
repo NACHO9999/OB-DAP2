@@ -1,4 +1,5 @@
 <app-logout></app-logout>
+<button class="navigate-button" mat-raised-button color="primary" (click)="navigateToImportar()">Importar Edificios</button>
 <div class="admin-container">
   <h2>Constructoras</h2>
   <form *ngIf="tieneConstructora" [formGroup]="editConstructoraForm" (ngSubmit)="editConstructora()">
@@ -133,7 +134,7 @@
       </mat-radio-group>
     </div>
     <button mat-raised-button color="primary" [disabled]="!tieneConstructora" type="submit">Crear Depto</button>
-
+<p class="result-message" >{{deptoResultMessage}}</p>
   </form>
   <div>
     <button mat-raised-button color="accent" type="button" (click)="editDepto()" [disabled]="!selectedEdificio">Editar

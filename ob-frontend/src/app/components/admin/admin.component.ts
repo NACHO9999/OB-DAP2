@@ -35,6 +35,9 @@ export class AdminComponent implements OnInit {
   inviteForm: FormGroup;
   adminForm: FormGroup;
   categoryForm: FormGroup;
+  invitacionResultMessage: string = '';
+  administradorResultMessage: string = '';
+  categoriaResultMessage: string = '';
 
   roles = [
     { value: 0, viewValue: 'Encargado' },
@@ -80,7 +83,7 @@ export class AdminComponent implements OnInit {
         },
         error => {
           console.error('Error al enviar invitación', error);
-          // Handle error response
+          this.invitacionResultMessage = 'Error al enviar invitación';
         }
       );
     }
@@ -95,6 +98,7 @@ export class AdminComponent implements OnInit {
         },
         error => {
           console.error('Error al crear admin', error);
+          this.administradorResultMessage = 'Error al crear administrador';
         }
       );
     }
@@ -110,7 +114,7 @@ export class AdminComponent implements OnInit {
         },
         error => {
           console.error('Error al crear categoría', error);
-          // Handle error response
+          this.categoriaResultMessage = 'Error al crear categoría';
         }
       );
     }

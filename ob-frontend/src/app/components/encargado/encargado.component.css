@@ -78,6 +78,9 @@ button.mat-raised-button:hover {
     gap: 20px;
 }
 
+.result-message{
+    color: red;
+}
 .item-container {
     
     display: flex;

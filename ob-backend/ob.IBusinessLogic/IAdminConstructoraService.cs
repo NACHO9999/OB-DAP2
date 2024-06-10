@@ -1,4 +1,5 @@
 ﻿using ob.Domain;
+using ob.Reflection.ImportData;
 namespace ob.IBusinessLogic;
 
 public interface IAdminConstructoraService
@@ -24,6 +25,7 @@ public interface IAdminConstructoraService
     List<Edificio> FiltrarPorNombreDeEncargado(string email, string nombreEncargado);
     bool TieneConstructora(string email);
     void ElegirConstructora(string email, string nombre);
-    Constructora GetConstructora(string email);
+    Constructora GetConstructora(string email); 
     List<Constructora> GetConstructoras();
+    void ImportarEdificios(List<EdificioData> edificioData, string email);
 }

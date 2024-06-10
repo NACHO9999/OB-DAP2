@@ -11,6 +11,7 @@ import { ICategoriaModel } from '../../interfaces/icategoria-model';
 import { CategoriaService } from '../../services/categoria.service';
 import { LogoutButtonComponent } from '../logout/logout.component';
 import { Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-visualizar-solicitudes',
@@ -54,14 +55,24 @@ export class VisualizarSolicitudesComponent implements OnInit {
   }
 
   loadSolicitudes(): void {
-    this.encargadoService.getAllSolicitudes().subscribe((solicitudes: ISolicitudModel[]) => {
+    this.encargadoService.getAllSolicitudes().pipe(
+      catchError((err) => {
+        console.error('Error in getAllSolicitudes:', err);
+        return of([]); // Return an empty array as a fallback
+      })
+    ).subscribe((solicitudes: ISolicitudModel[]) => {
       this.solicitudes = solicitudes;
       this.filteredSolicitudes = solicitudes;
     });
   }
-
+  
   loadCategorias(): void {
-    this.categoriaService.getCategorias().subscribe((categorias: ICategoriaModel[]) => {
+    this.categoriaService.getCategorias().pipe(
+      catchError((err) => {
+        console.error('Error in getCategorias:', err);
+        return of([]); // Return an empty array as a fallback
+      })
+    ).subscribe((categorias: ICategoriaModel[]) => {
       this.categorias = categorias;
     });
   }

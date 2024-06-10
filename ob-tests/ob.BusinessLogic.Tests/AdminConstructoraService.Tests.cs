@@ -109,10 +109,10 @@ namespace ob.Tests
             _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Usuario, bool>>>(), It.IsAny<List<string>>())).Returns(admin);
 
             // Act
-            _adminConstructoraService.CrearConstructora(constructora, "admin@example.com");
+            _adminConstructoraService.CrearConstructora("Constructora1", "admin@example.com");
 
             // Assert
-            _mockConstructoraService.Verify(service => service.CrearConstructora(constructora), Times.Once);
+            _mockConstructoraService.Verify(service => service.CrearConstructora("Constructora1"), Times.Once);
             _mockRepository.Verify(repo => repo.Save(), Times.Once);
         }
 
@@ -130,7 +130,7 @@ namespace ob.Tests
             _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Usuario, bool>>>(), It.IsAny<List<string>>())).Returns(admin);
 
             // Act
-            _adminConstructoraService.CrearConstructora(constructora, "admin@example.com");
+            _adminConstructoraService.CrearConstructora("Constructora1", "admin@example.com");
         }
 
         [TestMethod]
@@ -539,10 +539,10 @@ namespace ob.Tests
                            .Returns(admin);
 
             // Act
-            _adminConstructoraService.CrearConstructora(new Constructora("Constructora1"), "admin@example.com");
+            _adminConstructoraService.CrearConstructora("Constructora1", "admin@example.com");
 
             // Assert
-            _mockConstructoraService.Verify(service => service.CrearConstructora(It.IsAny<Constructora>()), Times.Once);
+            _mockConstructoraService.Verify(service => service.CrearConstructora("Constructora1"), Times.Once);
             _mockRepository.Verify(repo => repo.Save(), Times.Once);
         }
 
@@ -1224,22 +1224,6 @@ namespace ob.Tests
         }
 
         [TestMethod]
-        public void FiltrarPorNmobreDeEdificio_ValidNombre_ReturnsEdificios()
-        {
-            // Arrange
-            var constructora = new Constructora("Constructora1");
-            var edificio1 = new Edificio("Edificio1", "Direccion1", "Ubicacion1", constructora, 1000, new List<Depto>());
-            var edificio2 = new Edificio("Edificio2", "Direccion2", "Ubicacion2", constructora, 2000, new List<Depto>());
-            var edificios = new List<Edificio> { edificio1, edificio2 };
-
-            // Act
-            var result = _adminConstructoraService.FiltrarPorNombreDeEdificio(edificios, "Edificio1");
-
-            // Assert
-            CollectionAssert.AreEqual(new List<Edificio> { edificio1 }, result);
-        }
-
-        [TestMethod]
         public void FiltrarPorNombreDeEncargado_ValidNombre_ReturnsEdificios()
         {
             // Arrange
@@ -1253,7 +1237,7 @@ namespace ob.Tests
                                  .Returns(new List<Encargado> { encargado });
 
             // Act
-            var result = _adminConstructoraService.FiltrarPorNombreDeEncargado(edificios, "Encargado1");
+            var result = _adminConstructoraService.FiltrarPorNombreDeEncargado("Edificio1", "Encargado1");
 
             // Assert
             CollectionAssert.AreEqual(new List<Edificio> { edificio1 }, result);
@@ -1273,7 +1257,7 @@ namespace ob.Tests
                                  .Returns(new List<Encargado>());
 
             // Act
-            _adminConstructoraService.FiltrarPorNombreDeEncargado(edificios, "EncargadoInexistente");
+            _adminConstructoraService.FiltrarPorNombreDeEncargado("Edificio1", "EncargadoInexistente");
         }
     }
 }

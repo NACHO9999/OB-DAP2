@@ -7,6 +7,7 @@ using ob.IBusinessLogic;
 using ob.IDataAccess;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 [TestClass]
@@ -38,7 +39,6 @@ public class EdificioServiceTests
 
         _mockRepository.Setup(repo => repo.GetAll(It.IsAny<Func<Edificio, bool>>(), It.IsAny<List<string>>()))
             .Returns((Func<Edificio, bool> predicate, List<string> includes) => edificios.Where(predicate).ToList());
-
 
         // Act
         var result = _edificioService.GetAllEdificios();
@@ -84,6 +84,35 @@ public class EdificioServiceTests
     }
 
     [TestMethod]
+    public void CrearEdificioConDatos_CreatesAndSavesEdificio()
+    {
+        // Arrange
+        var constructora = new Constructora("Constructora Principal");
+        var deptos = new List<Depto>();
+        _mockConstructoraService.Setup(s => s.GetConstructoraByNombre(It.IsAny<string>())).Returns(constructora);
+        _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Edificio, bool>>>(), null)).Returns((Edificio)null);
+
+        // Act
+        _edificioService.CrearEdificioConDatos("Edificio Central", "Calle Principal 123", "Centro", "Constructora Principal", 50000M, deptos);
+
+        // Assert
+        _mockRepository.Verify(repo => repo.Insert(It.IsAny<Edificio>()), Times.Once);
+        _mockRepository.Verify(repo => repo.Save(), Times.Once);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(KeyNotFoundException), "No se encontr√≥ la empresa constructora.")]
+    public void CrearEdificioConDatos_ConstructoraNotFound_ThrowsException()
+    {
+        // Arrange
+        var deptos = new List<Depto>();
+        _mockConstructoraService.Setup(s => s.GetConstructoraByNombre(It.IsAny<string>())).Returns((Constructora)null);
+
+        // Act
+        _edificioService.CrearEdificioConDatos("Edificio Central", "Calle Principal 123", "Centro", "Constructora Principal", 50000M, deptos);
+    }
+
+    [TestMethod]
     public void EditarEdificio_UpdatesEdificio()
     {
         // Arrange
@@ -103,7 +132,7 @@ public class EdificioServiceTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(KeyNotFoundException), "No se encontrÛ el edificio.")]
+    [ExpectedException(typeof(KeyNotFoundException), "No se encontr√≥ el edificio.")]
     public void EditarEdificio_NotFound_ThrowsException()
     {
         // Arrange
@@ -112,7 +141,6 @@ public class EdificioServiceTests
         var newEdificio = new Edificio("Edificio Central", "Calle Principal 123", "Centro", constructora, 50000M, deptos);
 
         _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Edificio, bool>>>(), It.IsAny<List<string>>())).Returns((Edificio)null);
-        
 
         // Act
         _edificioService.EditarEdificio(newEdificio);
@@ -152,7 +180,7 @@ public class EdificioServiceTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(KeyNotFoundException), "No se encontrÛ el edificio.")]
+    [ExpectedException(typeof(KeyNotFoundException), "No se encontr√≥ el edificio.")]
     public void GetEdificioByNombreYDireccion_NotFound_ThrowsException()
     {
         // Arrange
@@ -160,6 +188,128 @@ public class EdificioServiceTests
 
         // Act
         _edificioService.GetEdificioByNombreYDireccion("NonExisting", "NonExisting");
+    }
+
+    [TestMethod]
+    public void EdificioExists_ReturnsTrue()
+    {
+        // Arrange
+        var constructora = new Constructora("Constructora Principal");
+        var deptos = new List<Depto>();
+        var existingEdificio = new Edificio("Edificio Central", "Calle Principal 123", "Centro", constructora, 50000M, deptos);
+
+        _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Edificio, bool>>>(), null)).Returns(existingEdificio);
+
+        // Act
+        var result = _edificioService.EdificioExists("Edificio Central", "Calle Principal 123");
+
+        // Assert
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public void EdificioExists_ReturnsFalse()
+    {
+        // Arrange
+        _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Edificio, bool>>>(), null)).Returns((Edificio)null);
+
+        // Act
+        var result = _edificioService.EdificioExists("NonExisting", "NonExisting");
+
+        // Assert
+        Assert.IsFalse(result);
+    }
+
+    [TestMethod]
+    public void AgregarDepto_AddsDeptoToEdificio()
+    {
+        // Arrange
+        var constructora = new Constructora("Constructora Principal");
+        var deptos = new List<Depto>();
+        var existingEdificio = new Edificio("Edificio Central", "Calle Principal 123", "Centro", constructora, 50000M, deptos);
+        var newDepto = new Depto(1, 101, null, 2, 1, true, "Edificio Central", "Calle Principal 123");
+
+        _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Edificio, bool>>>(), It.IsAny<List<string>>())).Returns(existingEdificio);
+        _mockDeptoService.Setup(s => s.CrearDepto(It.IsAny<Depto>()));
+
+        // Act
+        _edificioService.AgregarDepto(existingEdificio, newDepto);
+
+        // Assert
+        Assert.AreEqual(1, existingEdificio.Deptos.Count);
+        Assert.AreEqual(newDepto, existingEdificio.Deptos.First());
+        _mockDeptoService.Verify(s => s.CrearDepto(newDepto), Times.Once);
+    }
+
+    [TestMethod]
+    public void CrearEdificio_SinConstructora_ThrowsException()
+    {
+        // Arrange
+        var constructora = new Constructora("Constructora Principal");
+        var deptos = new List<Depto>();
+        var newEdificio = new Edificio("Edificio Central", "Calle Principal 123", "Centro", constructora, 50000M, deptos);
+
+        _mockConstructoraService.Setup(s => s.GetConstructoraByNombre(It.IsAny<string>())).Returns((Constructora)null);
+
+        // Act & Assert
+        Assert.ThrowsException<KeyNotFoundException>(() => _edificioService.CrearEdificio(newEdificio));
+    }
+
+    [TestMethod]
+    public void EditarEdificio_ActualizaDeptos()
+    {
+        // Arrange
+        var constructora = new Constructora("Constructora Principal");
+        var deptos = new List<Depto>
+        {
+            new Depto(1, 101, null, 2, 1, true, "Edificio Central", "Calle Principal 123"),
+            new Depto(2, 102, null, 3, 2, false, "Edificio Central", "Calle Principal 123")
+        };
+        var existingEdificio = new Edificio("Edificio Central", "Calle Principal 123", "Centro", constructora, 50000M, deptos);
+
+        _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Edificio, bool>>>(), It.IsAny<List<string>>())).Returns(existingEdificio);
+        _mockConstructoraService.Setup(s => s.GetConstructoraByNombre(It.IsAny<string>())).Returns(constructora);
+
+        var updatedEdificio = new Edificio("Edificio Central", "Calle Principal 123", "Centro", constructora, 60000M, new List<Depto>
+        {
+            new Depto(1, 101, null, 2, 2, true, "Edificio Central", "Calle Principal 123")
+        });
+
+        // Act
+        _edificioService.EditarEdificio(updatedEdificio);
+
+        // Assert
+        _mockRepository.Verify(repo => repo.Update(existingEdificio), Times.Once);
+        _mockRepository.Verify(repo => repo.Save(), Times.Once);
+        Assert.AreEqual(1, existingEdificio.Deptos.Count);
+        Assert.AreEqual(2, existingEdificio.Deptos.First().CantidadBanos);
+    }
+
+    [TestMethod]
+    public void AgregarDepto_DeptoExiste_ActualizaDepto()
+    {
+        // Arrange
+        var constructora = new Constructora("Constructora Principal");
+        var deptos = new List<Depto>
+        {
+            new Depto(1, 101, null, 2, 1, true, "Edificio Central", "Calle Principal 123")
+        };
+        var existingEdificio = new Edificio("Edificio Central", "Calle Principal 123", "Centro", constructora, 50000M, deptos);
+
+        var existingDepto = new Depto(1, 101, null, 2, 1, true, "Edificio Central", "Calle Principal 123");
+        _mockDeptoService.Setup(s => s.GetDepto(101, "Edificio Central", "Calle Principal 123")).Returns(existingDepto);
+
+        var newDepto = new Depto(1, 101, null, 3, 2, true, "Edificio Central", "Calle Principal 123");
+
+        _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Edificio, bool>>>(), It.IsAny<List<string>>())).Returns(existingEdificio);
+
+        // Act
+        _edificioService.AgregarDepto(existingEdificio, newDepto);
+
+        // Assert
+        Assert.AreEqual(1, existingEdificio.Deptos.Count);
+        Assert.AreEqual(3, existingEdificio.Deptos.First().CantidadCuartos);
+        _mockDeptoService.Verify(s => s.EditarDepto(existingDepto), Times.Once);
     }
 
 }

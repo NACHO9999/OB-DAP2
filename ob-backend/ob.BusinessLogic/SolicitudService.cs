@@ -12,6 +12,8 @@ public class SolicitudService : ISolicitudService
     private readonly IDeptoService _deptoService;
     private readonly ICategoriaService _categoriaService;
     private readonly IGenericRepository<Usuario> _usuarioRepository;
+    private IGenericRepository<Solicitud> @object;
+
     public SolicitudService(IGenericRepository<Solicitud> solicitudRepository, IDeptoService deptoService, ICategoriaService categoriaService, IGenericRepository<Usuario> usuarioRepository)
     {
         _repository = solicitudRepository;
@@ -19,8 +21,12 @@ public class SolicitudService : ISolicitudService
         _categoriaService = categoriaService;
         _usuarioRepository = usuarioRepository;
     }
- 
-    
+
+    public SolicitudService(IGenericRepository<Solicitud> @object)
+    {
+        this.@object = @object;
+    }
+
     public void CrearSolicitud(Solicitud solicitud)
     {
         var depto = _deptoService.GetDepto(solicitud.Depto.Numero, solicitud.Depto.EdificioNombre, solicitud.Depto.EdificioDireccion);
@@ -64,7 +70,7 @@ public class SolicitudService : ISolicitudService
             throw new KeyNotFoundException("No se encontr� la solicitud.");
         }
     }
-    private bool SolicitudExists(Guid id)
+    public bool SolicitudExists(Guid id)
     {
         return _repository.Get(s => s.Id == id) != null;
     }

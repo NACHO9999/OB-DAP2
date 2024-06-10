@@ -30,7 +30,7 @@ namespace ob.Tests
         {
             // Arrange
             var categoria = new Categoria("Categoria1");
-            var depto = new Depto(1,101,null,4,3,true,"ed","di");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
             var solicitud = new Solicitud("Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now);
 
             // Act
@@ -46,7 +46,7 @@ namespace ob.Tests
         {
             // Arrange
             var categoria = new Categoria("Categoria1");
-            var depto = new Depto(1,101,null,4,3,true,"ed","di");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
             var solicitud = new Solicitud("Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now);
 
             // Act
@@ -62,7 +62,7 @@ namespace ob.Tests
         {
             // Arrange
             var categoria = new Categoria("Categoria1");
-            var depto = new Depto(1,101,null,4,3,true,"ed","di");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
             var solicitud = new Solicitud("Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now);
             solicitud.Id = Guid.NewGuid();
             _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Solicitud, bool>>>(), It.IsAny<List<string>>())).Returns(solicitud);
@@ -75,11 +75,11 @@ namespace ob.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(KeyNotFoundException), "No se encontró la solicitud.")]
+        [ExpectedException(typeof(KeyNotFoundException), "No se encontrï¿½ la solicitud.")]
         public void GetSolicitudById_DoesNotExist_ThrowsException()
         {
             // Arrange
-            _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Solicitud, bool>>>(),It.IsAny<List<string>>())).Returns((Solicitud)null);
+            _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Solicitud, bool>>>(), It.IsAny<List<string>>())).Returns((Solicitud)null);
 
             // Act
             _solicitudService.GetSolicitudById(Guid.NewGuid());
@@ -89,8 +89,8 @@ namespace ob.Tests
         public void GetSolicitudesByEdificio_ReturnsSolicitudesInEdificio()
         {
             // Arrange
-            var depto = new Depto(1,101,null,4,3,true,"ed","di");
-            var edificio = new Edificio("ed", "di", "ubi", new Constructora("const"), 1000, new List<Depto> { depto});
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
+            var edificio = new Edificio("ed", "di", "ubi", new Constructora("const"), 1000, new List<Depto> { depto });
             var categoria = new Categoria("Categoria1");
             var solicitud = new Solicitud("Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now);
             var solicitudes = new List<Solicitud> { solicitud };
@@ -108,7 +108,7 @@ namespace ob.Tests
         {
             // Arrange
             var categoria = new Categoria("Categoria1");
-            var depto = new Depto(1,101,null,4,3,true,"ed","di");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
             var solicitudes = new List<Solicitud> { new Solicitud("Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now) };
             _mockRepository.Setup(repo => repo.GetAll(It.IsAny<Func<Solicitud, bool>>(), It.IsAny<List<string>>())).Returns(solicitudes);
 
@@ -124,7 +124,7 @@ namespace ob.Tests
         {
             // Arrange
             var categoria = new Categoria("Categoria1");
-            var depto = new Depto(1,101,null,4,3,true,"ed","di");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
             var solicitud = new Solicitud("Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now);
             var solicitudes = new List<Solicitud> { solicitud };
             _mockRepository.Setup(repo => repo.GetAll(It.IsAny<Func<Solicitud, bool>>(), It.IsAny<List<string>>())).Returns(solicitudes);
@@ -141,7 +141,7 @@ namespace ob.Tests
         {
             // Arrange
             var categoria = new Categoria("Categoria1");
-            var depto = new Depto(1,101,null,4,3,true,"ed","di");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
             var mantenimiento = new Mantenimiento("Nombre", "Apellido", "email@example.com", "password");
             var solicitud = new Solicitud(mantenimiento, "Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now);
             var solicitudes = new List<Solicitud> { solicitud };
@@ -153,5 +153,82 @@ namespace ob.Tests
             // Assert
             CollectionAssert.Contains(result, solicitud);
         }
+
+        [TestMethod]
+        public void CrearSolicitud_ConPerMan_CreatesSolicitud()
+        {
+            // Arrange
+            var categoria = new Categoria("Categoria1");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
+            var perMan = new Mantenimiento("Nombre", "Apellido", "email@example.com", "password");
+            var solicitud = new Solicitud(perMan, "Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now);
+
+            // Act
+            _solicitudService.CrearSolicitud(solicitud);
+
+            // Assert
+            _mockRepository.Verify(repo => repo.Insert(solicitud), Times.Once);
+            _mockRepository.Verify(repo => repo.Save(), Times.Once);
+        }
+
+        [TestMethod]
+        public void EditarSolicitud_ConPerMan_UpdatesSolicitud()
+        {
+            // Arrange
+            var categoria = new Categoria("Categoria1");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
+            var perMan = new Mantenimiento("Nombre", "Apellido", "email@example.com", "password");
+            var solicitud = new Solicitud(perMan, "Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now);
+
+            // Act
+            _solicitudService.EditarSolicitud(solicitud);
+
+            // Assert
+            _mockRepository.Verify(repo => repo.Update(solicitud), Times.Once);
+            _mockRepository.Verify(repo => repo.Save(), Times.Once);
+        }
+
+        [TestMethod]
+        public void SolicitudExists_ReturnsTrueIfSolicitudExists()
+        {
+            // Arrange
+            var categoria = new Categoria("Categoria1");
+            var depto = new Depto(1, 101, null, 4, 3, true, "ed", "di");
+            var solicitudId = Guid.NewGuid();
+            var solicitud = new Solicitud("Descripcion1", depto, categoria, EstadoSolicitud.Abierto, DateTime.Now) { Id = solicitudId };
+            _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Solicitud, bool>>>(), null)).Returns(solicitud);
+
+            // Act
+            var result = _solicitudService.SolicitudExists(solicitudId);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void SolicitudExists_ReturnsFalseIfSolicitudDoesNotExist()
+        {
+            // Arrange
+            _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Solicitud, bool>>>(), null)).Returns((Solicitud)null);
+
+            // Act
+            var result = _solicitudService.SolicitudExists(Guid.NewGuid());
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+        [TestMethod]
+        public void SolicitudExists_ReturnsFalse()
+        {
+            // Arrange
+            _mockRepository.Setup(repo => repo.Get(It.IsAny<Expression<Func<Solicitud, bool>>>(), null)).Returns((Solicitud)null);
+
+            // Act
+            var result = _solicitudService.SolicitudExists(Guid.NewGuid());
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
     }
 }

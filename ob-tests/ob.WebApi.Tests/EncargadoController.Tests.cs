@@ -55,7 +55,7 @@ namespace ob.Tests.WebApi.Controllers
             _encargadoServiceMock.Setup(s => s.GetEncargadoByEmail(email)).Returns(encargado);
 
             // Act
-            var result = _controller.GetEncargadoByEmail(email);
+            var result = _controller.GetEncargadoByEmail();
 
             // Assert
             Assert.IsNotNull(result, "Expected non-null result.");
@@ -198,20 +198,22 @@ namespace ob.Tests.WebApi.Controllers
             var numero = 1;
             var depto = new Depto(1, 1, null, 1, 1, false, "Edificio A", "123 Main St");
             var emailDueno = "dueno@example.com";
+            var duenox = new Dueno("Jane", "Doe", emailDueno);
+            var dueno = new DuenoDTO(duenox);
             var currentUser = _sessionServiceMock.Object.GetCurrentUser(Guid.NewGuid());
             _duenoServiceMock.Setup(s => s.GetDuenoByEmail(emailDueno)).Returns(new Dueno("Jane", "Doe", emailDueno));
             _deptoServiceMock.Setup(s => s.GetDepto(numero, depto.EdificioNombre, depto.EdificioDireccion)).Returns(depto);
 
 
             // Act
-            var result = _controller.AsignarDueno(numero, depto.EdificioNombre, depto.EdificioDireccion, emailDueno);
+            var result = _controller.AsignarDueno(numero, depto.EdificioNombre, depto.EdificioDireccion, dueno);
 
             // Assert
             Assert.IsNotNull(result);
             var okResult = result as OkObjectResult;
             Assert.IsNotNull(okResult);
             Assert.AreEqual("Dueno asignado exitosamente.", okResult.Value);
-            _encargadoServiceMock.Verify(s => s.AsignarDueno(numero, depto.EdificioNombre, depto.EdificioDireccion, emailDueno, currentUser.Email), Times.Once);
+            _encargadoServiceMock.Verify(s => s.AsignarDueno(numero, depto.EdificioNombre, depto.EdificioDireccion, duenox, currentUser.Email), Times.Once);
         }
 
 

@@ -7,6 +7,7 @@ public interface IConstructoraService
     IEnumerable<Constructora> GetAllConstructoras();
     public void EditarConstructora(Constructora constructora);
 
+    public bool ConstructoraExists(string nombre);
 
 
 }

@@ -206,5 +206,10 @@ namespace ob.WebApi.Controllers
             _adminConstructoraService.CrearConstructora(nombre, GetCurrentUser().Email);
             return Ok(new { message = "Constructora creada exitosamente." });
         }
+
+        public OkObjectResult FiltrarEdificiosPorNombreEdificio(List<EdificioDTO> edificioDTOs, string nombre)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

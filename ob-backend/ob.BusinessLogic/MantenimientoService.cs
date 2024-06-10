@@ -87,4 +87,8 @@ public class MantenimientoService : IMantenimientoService
             throw new InvalidOperationException("La solicitud no esta en estado de atendiendo");
         }
     }
+    public List<Mantenimiento> GetAllMantenimiento()
+    {
+        return _repository.GetAll<Mantenimiento>().ToList();
+    }
 }

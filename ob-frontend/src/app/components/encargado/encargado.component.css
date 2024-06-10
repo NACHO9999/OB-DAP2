@@ -1,0 +1,96 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+}
+
+.solicitud-info {
+    margin-bottom: 10px;
+}
+
+.solicitud-info p {
+    margin: 5px 0;
+}
+
+button.mat-raised-button {
+    background-color: #007bff;
+    color: white;
+    margin-top: 10px;
+}
+
+.all-content {
+    margin-top: 50px;
+}
+
+button.mat-raised-button:hover {
+    background-color: #0056b3;
+}
+
+.navigate-button {
+    position: absolute; /* Ensures the button can be placed precisely */
+    top: 10px;
+    left: 20px; /* Stick the button to the left */
+    padding: 10px 20px; /* Adjust padding for a better fit */
+    font-size: 14px; /* Adjust font size for better readability */
+    background-color: #007bff; /* Set background color */
+    color: #ffffff; /* Set text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Optional: add rounded corners */
+    z-index: 1000; /* Ensure the button is above other elements */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    max-width: 200px; /* Restrict the button’s width */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+}
+
+.navigate-button:hover {
+    background-color: #0056b3; /* Darken background on hover */
+}
+
+.adjustable-content {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.item-container {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 calc(33.333% - 20px); /* Ensure items don't take more than a third of the row minus the gap */
+    box-sizing: border-box;
+   
+}
+
+
+
+.item-button {
+    margin-top: 10px;
+    width: 100%;
+}

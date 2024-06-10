@@ -37,8 +37,8 @@ export enum AdminConstructoraEndpoints {
   }
 
   export enum CategoriaEndpoints {
-    GET_CATEGORIAS = 'categorias',
-    GET_CATEGORIA_BY_NOMBRE = 'categorias',  // Placeholder for dynamic part
+    GET_CATEGORIAS = 'categoria',
+    GET_CATEGORIA_BY_NOMBRE = 'categoria',  // Placeholder for dynamic part
   }
 
   export enum DuenoEndpoints {
@@ -55,7 +55,7 @@ export enum AdminConstructoraEndpoints {
 
   export enum EncargadoEndpoints {
     GET_ENCARGADOS = 'encargado',
-    GET_ENCARGADO_BY_EMAIL = 'encargado',
+    GET_CURRENT_ENCARGADO = 'encargado/current-encargado',
     CREAR_MANTENIMIENTO = 'encargado/mantenimiento',
     CREAR_SOLICITUD = 'encargado/solicitud',
     ASIGNAR_SOLICITUD = 'encargado/asignar',
@@ -64,6 +64,10 @@ export enum AdminConstructoraEndpoints {
     GET_TIEMPO_PROMEDIO_ATENCION = 'encargado/tiempo-promedio-atencion',
     GET_DUENO = 'encargado/Dueno',
     ASIGNAR_DUENO = 'encargado/asignar-dueno',
+    GET_ALL_MANTENIMIENTOS = 'encargado/mantenimiento',
+    GET_SOLICITUDES = 'encargado/solicitudes',
+    DESASIGNAR_DUENO = 'encargado/desasignar-dueno',
+    GET_ALL_SOLICITUDES = 'encargado/solicitudes/encargado',
   }
 
   export enum InvitacionEndpoints {

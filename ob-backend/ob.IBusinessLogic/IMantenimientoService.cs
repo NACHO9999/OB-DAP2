@@ -9,6 +9,7 @@ namespace ob.IBusinessLogic
         void CompletarSolicitud(Guid solicitudId, string email);
         List<Solicitud> GetSolicitudesAtendiendo(string email);
         List<Solicitud> GetSolicitudesParaAtender();
+        List<Mantenimiento> GetAllMantenimiento();
     }
     
 }

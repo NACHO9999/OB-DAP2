@@ -2,6 +2,7 @@ using ob.WebApi.Filters;
 using ob.ServicesFactory;
 
 var builder = WebApplication.CreateBuilder(args);
+Console.WriteLine(DateTime.Now);
 
 
 builder.Services.AddControllers();

@@ -1,14 +1,13 @@
 <app-logout></app-logout>
 <div class="admin-container">
   <h2>Constructoras</h2>
-  <form *ngIf="tieneConstructora" [formGroup]="editConstructoraForm"
-      (ngSubmit)="editConstructora()">
-      <mat-form-field appearance="fill">
-        <mat-label>Editar constructora</mat-label>
-        <input matInput formControlName="nombreConstructora" placeholder="Nombre de la constructora" />
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Editar</button>
-    </form>
+  <form *ngIf="tieneConstructora" [formGroup]="editConstructoraForm" (ngSubmit)="editConstructora()">
+    <mat-form-field appearance="fill">
+      <mat-label>Editar constructora</mat-label>
+      <input matInput formControlName="nombreConstructora" placeholder="Nombre de la constructora" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Editar</button>
+  </form>
   <h4 *ngIf="!tieneConstructora">Crear o Seleccionar Constructora</h4>
   <mat-radio-group *ngIf="!tieneConstructora" [(ngModel)]="selectConstructora" name="selectConstructoraGroup">
     <mat-radio-button [value]="true">Seleccionar Constructora</mat-radio-button>
@@ -54,9 +53,11 @@
     <button mat-raised-button color="primary" (click)="aplicarFiltros()">Aplicar Filtros</button>
     <button mat-raised-button color="warn" (click)="limpiarFiltros()">Limpiar Filtros</button>
   </div>
-  <div *ngFor="let edificio of edificios">
-    <app-edificio-list-item [edificio]="edificio" (select)="selectEdificio($event)">
-    </app-edificio-list-item>
+  <div class="adjustable-content">
+    <div class="item-container" *ngFor="let edificio of edificios">
+      <app-edificio-list-item [edificio]="edificio" (select)="selectEdificio($event)">
+      </app-edificio-list-item>
+    </div>
   </div>
 
   <form [formGroup]="edificioForm" (ngSubmit)="createEdificio()" class="edificio-form">
@@ -79,16 +80,16 @@
       <input matInput formControlName="gastosComunes" placeholder="Gastos comunes" />
     </mat-form-field>
     <button mat-raised-button color="primary" [disabled]="!tieneConstructora" type="submit">Crear Edificio</button>
-    
+
   </form>
   <div>
     <button mat-raised-button color="accent" type="button" (click)="editEdificio()"
       [disabled]="!selectedEdificio">Editar Edificio</button>
     <button mat-raised-button color="warn" [disabled]="!selectedEdificio"
       (click)="deleteEdificio(selectedEdificio?.nombre ?? '', selectedEdificio?.direccion?? '')">Eliminar</button>
-      <button mat-raised-button color="accent" type="button" (click)="desasignarEncargado()"
+    <button mat-raised-button color="accent" type="button" (click)="desasignarEncargado()"
       [disabled]="!selectedEdificio">Desasignar Encargado</button>
-      <p class="result-message">{{edificioResultMessage}}</p>
+    <p class="result-message">{{edificioResultMessage}}</p>
   </div>
 
 
@@ -132,17 +133,19 @@
       </mat-radio-group>
     </div>
     <button mat-raised-button color="primary" [disabled]="!tieneConstructora" type="submit">Crear Depto</button>
-    
+
   </form>
   <div>
     <button mat-raised-button color="accent" type="button" (click)="editDepto()" [disabled]="!selectedEdificio">Editar
       Depto</button>
     <button mat-raised-button color="warn" [disabled]="!selectedDepto"
       (click)="deleteDepto(selectedDepto?.numero?? 0, selectedDepto?.edificioNombre?? '', selectedDepto?.edificioDireccion??'')">Eliminar</button>
-    </div>
+  </div>
   <h2>Departamentos</h2>
-  <div *ngFor="let depto of deptos">
-    <app-depto-list-item [depto]="depto" (select)="selectDepto($event)">
-    </app-depto-list-item>
+  <div class="adjustable-content">
+    <div class="item-container" *ngFor="let depto of deptos">
+      <app-depto-list-item [depto]="depto" (select)="selectDepto($event)">
+      </app-depto-list-item>
+    </div>
   </div>
 </div>

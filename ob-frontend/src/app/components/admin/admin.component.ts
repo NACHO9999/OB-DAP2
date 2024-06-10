@@ -50,10 +50,10 @@ export class AdminComponent implements OnInit {
     });
 
     this.adminForm = this.fb.group({
-      Nombre: ['', Validators.required],
-      Apellido: ['', Validators.required],
-      Email: ['', [Validators.required, Validators.email]],
-      Contrasena: ['', [Validators.required, Validators.minLength(6)]],
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      contrasena: ['', [Validators.required, Validators.minLength(6)]],
     });
 
     this.categoryForm = this.fb.group({

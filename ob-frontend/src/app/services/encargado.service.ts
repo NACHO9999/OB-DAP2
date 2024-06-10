@@ -6,6 +6,7 @@ import { IUserCreate } from '../interfaces/user-create';
 import { ISolicitudModel } from '../interfaces/isolicitud-model';
 import { EncargadoEndpoints } from './endpoints';
 import { IDuenoModel } from '../interfaces/idueno-model';
+import { IDeptoModel } from '../interfaces/idepto-model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class EncargadoService {
     return this.http.get<IEncargadoModel[]>(EncargadoEndpoints.GET_ENCARGADOS);
   }
 
-  getEncargadoByEmail(email: string): Observable<IEncargadoModel> {
-    return this.http.get<IEncargadoModel>(`${EncargadoEndpoints.GET_ENCARGADO_BY_EMAIL}/${email}`);
+  getCurrentEncargado(): Observable<IEncargadoModel> {
+    return this.http.get<IEncargadoModel>(EncargadoEndpoints.GET_CURRENT_ENCARGADO);
   }
 
   crearMantenimiento(mantenimiento: IUserCreate): Observable<any> {
@@ -49,7 +50,19 @@ export class EncargadoService {
     return this.http.get<any>(`${EncargadoEndpoints.GET_DUENO}/${email}`);
   }
 
-  asignarDueno(numero: number, edNombre: string, edDireccion: string, emailDueno: string): Observable<any> {
-    return this.http.put(`${EncargadoEndpoints.ASIGNAR_DUENO}/${numero}/${edNombre}/${edDireccion}/${emailDueno}`, {});
+  asignarDueno(numero: number, edNombre: string, edDireccion: string, dueno: IDuenoModel): Observable<any> {
+    return this.http.put(`${EncargadoEndpoints.ASIGNAR_DUENO}/${numero}/${edNombre}/${edDireccion}`, dueno);
+  }
+  getAllMantenimiento(): Observable<IUserCreate[]> {
+    return this.http.get<IUserCreate[]>(EncargadoEndpoints.GET_ALL_MANTENIMIENTOS);
+  }
+  getSolicitudes(): Observable<ISolicitudModel[]> {
+    return this.http.get<ISolicitudModel[]>(EncargadoEndpoints.GET_SOLICITUDES);
+  }
+  desasignarDueno(depto: IDeptoModel): Observable<any> {
+    return this.http.put(`${EncargadoEndpoints.DESASIGNAR_DUENO}`, depto);
+  }
+  getAllSolicitudes(): Observable<ISolicitudModel[]> {
+    return this.http.get<ISolicitudModel[]>(`${EncargadoEndpoints.GET_ALL_SOLICITUDES}`);
   }
 }

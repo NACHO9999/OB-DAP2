@@ -14,6 +14,10 @@ public interface IEncargadoService
     int[] GetSolicitudByMantenimiento(string email, string emailEncargado);
     TimeSpan? TiempoPromedioAtencion(string email);
     Dueno GetDueno(string email);
-    void AsignarDueno(int numero, string edNombre, string edDireccion, string emailDueno, string email);
+    void AsignarDueno(int numero, string edNombre, string edDireccion, Dueno dueno, string email);
+    List<Mantenimiento> GetAllMantenimiento();
+    void DesasignarDueno(int numero, string edNombre, string edDireccion, string email);
+    List<Solicitud> GetSolicitudesSinMantenimiento(string email);
+    List<Solicitud> GetAllEncargadoSolicitudes(string email);
 
 }
